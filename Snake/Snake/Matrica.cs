@@ -219,6 +219,39 @@ namespace Snake
             }
             return ret;
         }
+        //sigmoidna funkcija za aktivaciju neuralne mreže
+        public static double SigmoidFunction(double x)
+        {
+            double y = 1 + Math.Pow(Math.E, -x);
+            return 1 / y;
+        }
+        //primijeni aktivacijsku funkciju na sve elemente matrice
+        public Matrica Activate()
+        {
+            Matrica ret = new Matrica(Rows, Columns);
+            for (int i = 0; i < Rows; ++i)
+                for (int j = 0; j < Columns; ++j)
+                    ret[i, j] = Matrica.SigmoidFunction(this[i, j]);
+            return ret;
+        }
+        //
+        public Matrica SigmoidDerived()
+        {
+            Matrica ret = new Matrica(Rows, Columns);
+            for (int i = 0; i < Rows; ++i)
+                for (int j = 0; j < Columns; ++j)
+                    ret[i, j] = this[i, j] * (1 - this[i, j]);
+            return ret;
+        }
+        //makni najdoljnji red matrice
+        public Matrica RemoveBottomRow()
+        {
+            Matrica ret = new Matrica(Rows-1, Columns);
+            for (int i = 0; i < ret.Rows; ++i)
+                for (int j = 0; j < Columns; ++j)
+                    ret[i, j] = this[i, j];
+            return ret;
+        }
         //randomiziraj vrijednosti matrice izmedu -1 i 1
         public void Randomize()
         {
@@ -247,5 +280,7 @@ namespace Snake
         {
             return data.GetEnumerator();
         }
+
+        //treba dodat crossover, mutation i clone
     }
 }
