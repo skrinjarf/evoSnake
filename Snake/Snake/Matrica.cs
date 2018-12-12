@@ -173,7 +173,52 @@ namespace Snake
             }
             return ret;
         }
-        
+        //od 1D niza napravi vektor stupac
+        public Matrica ToSingleColumn(double[] array)
+        {
+            Matrica ret = new Matrica(array.Length, 1);
+            for (int i = 0; i < array.Length; ++i) ret[i, 0] = array[i];
+            return ret;
+        }
+        //spremi array u matricu
+        public void LoadArray(double[] array)
+        {
+            if(array.Length == data.Length)
+            {
+                for (int i = 0; i < Rows; ++i)
+                    for (int j = 0; j < Columns; ++j)
+                        this[i, j] = array[i * Columns + j];
+            }
+            else
+            {
+                throw new Exception("Nije isti broj elemenata u arrayu i matrici");
+            }
+        }
+        //spremi matricu u array
+        public double[] ToArray()
+        {
+            double[] ret = new double[data.Length];
+            for (int i = 0; i < Rows; ++i)
+                for (int j = 0; j < Columns; ++j)
+                    ret[i * Columns + j] = this[i, j];
+            return ret;
+        }
+        //dodaj bias na vektor stupac
+        public Matrica AddBias()
+        {
+            Matrica ret = new Matrica(Rows + 1, 1);
+            if(Columns == 1)
+            {
+                for (int i = 0; i < Rows; ++i)
+                    ret[i, 0] = this[i, 0];
+                ret[Rows, 0] = 1;
+            }
+            else
+            {
+                throw new Exception("AddBias: Matrica nema samo jedan stupac");
+            }
+            return ret;
+        }
         //randomiziraj vrijednosti matrice izmedu -1 i 1
         public void Randomize()
         {
