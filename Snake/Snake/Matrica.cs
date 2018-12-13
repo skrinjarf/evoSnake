@@ -179,7 +179,7 @@ namespace Snake
         }
 
         //od 1D niza napravi vektor stupac
-        public Matrica ToSingleColumn(double[] array)
+        public static Matrica ToSingleColumn(double[] array)
         {
             Matrica ret = new Matrica(array.Length, 1);
             for (int i = 0; i < array.Length; ++i) ret[i, 0] = array[i];
