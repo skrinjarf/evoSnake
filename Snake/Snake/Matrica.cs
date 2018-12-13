@@ -14,23 +14,18 @@ namespace Snake
         private int columns = 0;
         private double[,] data = new double[0,0];
         private static readonly Random rnd;
-        public int Rows
-        {
-            get;set;
+
+        public int Rows{ get;set; }
+        public int Columns{ get;set;
         }
-        public int Columns
-        {
-            get;set;
-        }
-        static Matrica()
-        {
-            rnd = new Random();
-        }
+        static Matrica(){ rnd = new Random(); }
+
         //konstruktor od broja redaka i stupaca
         public Matrica(int rows, int columns)
         {
             Rows = rows; Columns = columns; data = new double[Rows, Columns];
         }
+
         //konstruktor iz 2D arraya
         public Matrica(double[,] array)
         {
@@ -38,12 +33,14 @@ namespace Snake
             Rows = array.GetLength(0);
             Columns = array.GetLength(1);
         }
+
         //indexer
         public double this[int i, int j]
         {
             get { return data[i, j]; }
             set { data[i, j] = value; }
         }
+
         //ispis na ekran
         public void Print()
         {
@@ -55,6 +52,7 @@ namespace Snake
             }
             Console.WriteLine();
         }
+
         //mnozenje skalarom kroz operator
         public static Matrica operator*(Matrica m, double a)
         {
@@ -63,6 +61,7 @@ namespace Snake
                     m[i, j] *= a;   //u foreachu se ne moze mijenjat vrijednost
             return m;
         }
+
         //mnozenje matrica kroz oprator
         public static Matrica operator*(Matrica A, Matrica B)
         {
@@ -89,6 +88,7 @@ namespace Snake
 
             return ret;
         }
+
         //zbrajanje skalarom kroz operator
         public static Matrica operator+(Matrica A, double x)
         {
@@ -97,6 +97,7 @@ namespace Snake
                     A[i, j] *= x;   //u foreachu se ne moze mijenjat vrijednost
             return A;
         }
+
         //zbrajanje matrica kroz operator
         public static Matrica operator+(Matrica A, Matrica B)
         {
@@ -118,6 +119,7 @@ namespace Snake
 
             return ret;
         }
+
         //oduzimanje matrica kroz operator
         public static Matrica operator -(Matrica A, Matrica B)
         {
@@ -139,6 +141,7 @@ namespace Snake
 
             return ret;
         }
+
         //elementwise multiplication
         public static Matrica elementwiseMultiplication(Matrica A, Matrica B)
         {
@@ -160,6 +163,7 @@ namespace Snake
 
             return ret;
         }
+
         //transponiranje matrice
         public Matrica Transpose()
         {
@@ -173,6 +177,7 @@ namespace Snake
             }
             return ret;
         }
+
         //od 1D niza napravi vektor stupac
         public Matrica ToSingleColumn(double[] array)
         {
@@ -180,6 +185,7 @@ namespace Snake
             for (int i = 0; i < array.Length; ++i) ret[i, 0] = array[i];
             return ret;
         }
+
         //spremi array u matricu
         public void LoadArray(double[] array)
         {
@@ -194,6 +200,7 @@ namespace Snake
                 throw new Exception("Nije isti broj elemenata u arrayu i matrici");
             }
         }
+
         //spremi matricu u array
         public double[] ToArray()
         {
@@ -203,6 +210,7 @@ namespace Snake
                     ret[i * Columns + j] = this[i, j];
             return ret;
         }
+
         //dodaj bias na vektor stupac
         public Matrica AddBias()
         {
@@ -219,12 +227,14 @@ namespace Snake
             }
             return ret;
         }
+
         //sigmoidna funkcija za aktivaciju neuralne mreže
         public static double SigmoidFunction(double x)
         {
             double y = 1 + Math.Pow(Math.E, -x);
             return 1 / y;
         }
+
         //primijeni aktivacijsku funkciju na sve elemente matrice
         public Matrica Activate()
         {
@@ -234,6 +244,7 @@ namespace Snake
                     ret[i, j] = Matrica.SigmoidFunction(this[i, j]);
             return ret;
         }
+
         //
         public Matrica SigmoidDerived()
         {
@@ -243,6 +254,7 @@ namespace Snake
                     ret[i, j] = this[i, j] * (1 - this[i, j]);
             return ret;
         }
+
         //makni najdoljnji red matrice
         public Matrica RemoveBottomRow()
         {
@@ -252,6 +264,7 @@ namespace Snake
                     ret[i, j] = this[i, j];
             return ret;
         }
+
         //randomiziraj vrijednosti matrice izmedu -1 i 1
         public void Randomize()
         {
@@ -264,7 +277,7 @@ namespace Snake
             //}
             for (int i = 0; i < Rows; ++i)
                 for (int j = 0; j < Columns; ++j)
-                    if(rnd.NextDouble() > 0.5)  //next double daje broj iz [0,1]
+                    if(rnd.NextDouble() < 0.5)  //next double daje broj iz [0,1]
                     {
                         this[i, j] = rnd.NextDouble();
                     }
@@ -275,12 +288,60 @@ namespace Snake
                          
                     
         }
+
         //enumerator za foreach
         IEnumerator IEnumerable.GetEnumerator()
         {
             return data.GetEnumerator();
         }
 
-        //treba dodat crossover, mutation i clone
+        //funkcija koja vraca random vrijednost po Gaussu koristeci Box-Muller transformaciju
+        public double stdGaussian()
+        {
+            double u1 = 1.0 - rand.NextDouble(); //uniform(0,1] 
+            double u2 = 1.0 - rand.NextDouble();
+            double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
+            return randStdNormal;
+        }
+
+        //funkcija mutiranja za genetski algoritam
+        public void Mutate(double mutationRate)
+        {
+            for (int i = 0; i < Rows; ++i)
+                for (int j = 0; j < Columns; ++j)
+                {
+                    double randNum = rnd.NextDouble();
+                    if(randNum < mutationRate)
+                    {
+                        this[i, j] += stdGaussian() / 5;
+                        //odrezi vrijednosti na [-1, 1]
+                        if(this[i, j] > 1) this[i, j] = 1;
+                        if(this[i, j] < -1) this[i, j] = -1;
+                    }
+                }
+        }
+
+        //crossover izmedu dvije matrice. nasumicno odaberi mjesto prije kojega idu elementi prve matrice
+        //a poslije kojega idu elementi drgue
+        public Matrica Crossover(Matrica partner)
+        {
+            Matrica child = new Matrica(Rows, Columns);
+            int randR = rnd.Next(Rows); //random redak
+            int randC = rnd.Next(Columns); //random stupac
+
+            for (int i = 0; i < Rows; ++i)
+                for (int j = 0; j < Columns; ++j)
+                    //pozicije prije (randR, randC) su this, poslije su partner
+                    child[i, j] = (i < randR || (i == randR && j < randC) ? this[i, j] : partner[i, j]);
+            return child;
+        }
+        public Matrica Clone()
+        {
+            Matrica ret = new Matrica(Rows, Columns);
+            for (int i = 0; i < Rows; ++i)
+                for (int j = 0; j < Columns; ++j)
+                    ret[i, j] = this[i, j];
+            return ret;
+        }
     }
 }
