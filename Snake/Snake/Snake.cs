@@ -20,9 +20,9 @@ namespace Snake
         private double timeLeft;  //koliko jos moze zivjet prije nego umre od gladi
         private bool isDead;
         private bool isTested;
-        private Vector2 velocity = new Vector2(10, 0);
-        public double VelocityModifier = 1; //kako igra napreduje zmija se krece sve brze. 
+        private Vector2 baseVelocity = new Vector2(10, 0);
 
+        public double VelocityModifier { get; set; } //kako igra napreduje zmija se krece sve brze. 
         public int Length { get; } // iz vana se moze samo procitat vrijednost duljine
         internal Food CurrentFoodUnit { get; set; }
 
@@ -44,11 +44,81 @@ namespace Snake
             BodyParts.Enqueue(new Vector2(_x - 10, _y));
 
             CurrentFoodUnit = new Food();
+            VelocityModifier = 1;
         }
 
+        //mutiraj zmiju
         public void Mutate(double mutationRate)
         {
             brain.Mutate(mutationRate);
+        }
+
+        //odredi gdje ce se iduce pomaknut 
+        public void CalculateNextMove()
+        {
+            brainOutput = brain.ForwardPass(brainInput);
+
+            int maxIdx = Array.IndexOf(brainOutput, brainOutput.Max());
+            switch (maxIdx)
+            {
+                case 0://desno
+                    baseVelocity.X = 10;
+                    baseVelocity.Y = 0;
+                    break;
+                case 1://gore
+                    baseVelocity.X = 0;
+                    baseVelocity.Y = 10;
+                    break;
+                case 2://lijevo
+                    baseVelocity.X = -10;
+                    baseVelocity.Y = 0;
+                    break;
+                default://dole
+                    baseVelocity.X = 0;
+                    baseVelocity.Y = -10;
+                    break;
+                //promijeni odgovarajuce vrijednosti da se opterecujemo GC
+            }
+        }
+
+        //pomocna funkcija, racuna da li ce na poziciji x,y biti tijelo zmije
+        private bool WillEatBody(int x, int y)
+        {
+            foreach( var temp in BodyParts )
+            {
+                if (x == temp.X && y == temp.Y) return true;
+            }
+            return false;
+
+        }
+        //pomocna funkcija, racuna da li ce zmije umrijeti ako ode na poziciju x,y
+        private bool WillDie(int x, int y)
+        {
+            if (x < 0 || y < 0 || x >= 800 || y >= 400)
+            {
+                return true;
+            }
+            return WillEatBody(x, y);
+        }
+        //pomocna funkcija za jest
+        private void Eat(Food food)
+        {
+        //________________________IMPLEMENT_________________________
+        }
+        //napravi izracunati potez
+        public void Move()
+        {
+            age++; timeLeft--;
+            if (timeLeft == 0) isDead = true;
+            Vector2 Velocity = baseVelocity * VelocityModifier;
+
+            Vector2 NewHeadPosition = HeadPosition + Velocity;
+            if(WillDie(NewHeadPosition.X, NewHeadPosition.Y)) isDead = true;
+
+            if(NewHeadPosition == CurrentFoodUnit.Location())
+            {
+                Eat(CurrentFoodUnit);
+            }
         }
     }
 }

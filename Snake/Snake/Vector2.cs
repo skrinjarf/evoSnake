@@ -8,14 +8,14 @@ namespace Snake
 {
     class Vector2
     {
-        public double X { get; set; }
-        public double Y { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
 
         public Vector2() { X = 0; Y = 0;}
-        public Vector2(double _X, double _Y) { X = _X; Y = _Y; }
+        public Vector2(int _X, int _Y) { X = _X; Y = _Y; }
         public Vector2(Vector2 other) { X = other.X; Y = other.Y; }
         
-        public double this[int index]
+        public int this[int index]
         {
             get
             {
@@ -57,13 +57,22 @@ namespace Snake
         {
             return v1.X != v2.X || v1.Y != v2.Y;
         }
-        public static Vector2 operator *(Vector2 v1, double scalar)
+        public static Vector2 operator *(Vector2 v1, int scalar)
         {
             return new Vector2(v1.X * scalar, v1.Y * scalar);
+        }
+        public static Vector2 operator *(int scalar, Vector2 v1)//obrnuti poredak operanada
+        {
+            return v1 * scalar;
+        }
+        public static Vector2 operator *(Vector2 v1, double scalar)
+        {
+            return new Vector2((int)Math.Floor(v1.X * scalar), (int)Math.Floor(v1.Y * scalar));
         }
         public static Vector2 operator *(double scalar, Vector2 v1)//obrnuti poredak operanada
         {
             return v1 * scalar;
         }
+        
     }
 }

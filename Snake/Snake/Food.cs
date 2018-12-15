@@ -9,7 +9,13 @@ namespace Snake
     //klasa koja opisuje hranu
     class Food
     {
+        public int Xpos { get; set; }
+        public int Ypos { get; set; }
 
         public Food() { }
+        public Vector2 Location()
+        {
+            return new Vector2(Xpos, Ypos);
+        }
     }
 }
