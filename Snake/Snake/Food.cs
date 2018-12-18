@@ -17,5 +17,9 @@ namespace Snake
         {
             return new Vector2(Xpos, Ypos);
         }
+        public static Food CreateNewFoodUnit()
+        {
+            return new Food();
+        }
     }
 }

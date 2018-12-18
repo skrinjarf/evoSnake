@@ -22,9 +22,12 @@ namespace Snake
         private bool isTested;
         private Vector2 baseVelocity = new Vector2(10, 0);
 
+        private int TimesToGrow { get; set; }
         public double VelocityModifier { get; set; } //kako igra napreduje zmija se krece sve brze. 
         public int Length { get; } // iz vana se moze samo procitat vrijednost duljine
+        public double Fitness { get; }
         internal Food CurrentFoodUnit { get; set; }
+
 
         public Snake(int _x = 400, int _y=100)
         {
@@ -45,6 +48,7 @@ namespace Snake
 
             CurrentFoodUnit = new Food();
             VelocityModifier = 1;
+            TimesToGrow = 0;
         }
 
         //mutiraj zmiju
@@ -82,44 +86,126 @@ namespace Snake
         }
 
         //pomocna funkcija, racuna da li ce na poziciji x,y biti tijelo zmije
-        private bool WillEatBody(int x, int y)
+        private bool WillEatBody(Vector2 position)
         {
-            foreach( var temp in BodyParts )
+            foreach( var bodyPart in BodyParts )
             {
-                if (x == temp.X && y == temp.Y) return true;
+                if (position.X == bodyPart.X && 
+                    position.Y == bodyPart.Y)
+                    return true;
             }
             return false;
 
         }
         //pomocna funkcija, racuna da li ce zmije umrijeti ako ode na poziciju x,y
-        private bool WillDie(int x, int y)
+        private bool WillDie(Vector2 position)
         {
-            if (x < 0 || y < 0 || x >= 800 || y >= 400)
+            if (position.X < 0 || position.Y < 0 || position.X >= 800 || position.Y >= 400)
             {
                 return true;
             }
-            return WillEatBody(x, y);
+            return WillEatBody(position);
         }
         //pomocna funkcija za jest
-        private void Eat(Food food)
+        private void Eat(Food food, Vector2 NewHeadPosition)
         {
-        //________________________IMPLEMENT_________________________
-        }
+            CurrentFoodUnit = Food.CreateNewFoodUnit(); 
+            
+            //if the food spawned on the snake, spawn it again
+            while( BodyParts.Contains(CurrentFoodUnit.Location()) ||
+                    HeadPosition == CurrentFoodUnit.Location()||
+                    NewHeadPosition == CurrentFoodUnit.Location() )
+            {
+                CurrentFoodUnit = Food.CreateNewFoodUnit();
+            }
+
+            //increase time left before starvation
+            timeLeft += 100;
+
+            //ALL HAIL MAGIC NUMBERS!!!!
+            if( isTested || length > 10 ) TimesToGrow += 4;
+            else TimesToGrow += 1;
+        }     
+        
         //napravi izracunati potez
         public void Move()
         {
             age++; timeLeft--;
             if (timeLeft == 0) isDead = true;
-            Vector2 Velocity = baseVelocity * VelocityModifier;
 
+            Vector2 Velocity = baseVelocity * VelocityModifier;
             Vector2 NewHeadPosition = HeadPosition + Velocity;
-            if(WillDie(NewHeadPosition.X, NewHeadPosition.Y)) isDead = true;
+
+            if(WillDie(NewHeadPosition)) isDead = true;
 
             if(NewHeadPosition == CurrentFoodUnit.Location())
             {
-                Eat(CurrentFoodUnit);
+                Eat(CurrentFoodUnit, NewHeadPosition);
             }
-            //_________CONTINUE IMPLEMENTATION___________
+
+            //if snake needs to grow don't remove the last body part
+            if(TimesToGrow > 0)
+            {
+                TimesToGrow--;
+                Vector2 newBodyPart = new Vector2(HeadPosition); //old head possition becomes new bodyPart
+                BodyParts.Enqueue(newBodyPart); //add to bodyParts old head possition
+                HeadPosition = NewHeadPosition; //update head possition
+                length++;
+            }
+            else
+            {
+                Vector2 newBodyPart = new Vector2(HeadPosition); //old head possition becomes new bodyPart
+                BodyParts.Dequeue();    //remove the last bodyPart
+                BodyParts.Enqueue(newBodyPart); //add to bodyParts old head possition
+                HeadPosition = NewHeadPosition; //update head possition
+            }
+        }
+
+        public void Show()
+        {
+            //___IMPLEMENT___
+        }
+
+        public double CalculateFitness()
+        {
+            //___IMPLEMENT___
+            return Fitness;
+        }
+
+        public Snake Crossover(Snake partner)
+        {
+            Snake Child = new Snake();
+            //___IMPLEMENT___
+            return Child;
+        }
+
+        public Snake Clone()
+        {
+            Snake clonedSnake = new Snake();
+            //___IMPLEMENT___
+            return clonedSnake;
+        }
+
+        public void SaveSnake()
+        {
+            //___IMPLEMENT___
+        }
+
+        public void LoadSnake()
+        {
+            //___IMPLEMENT___
+        }
+
+        public void GetBrainInput()
+        {
+            //___IMPLEMENT___
+        }
+
+        private double[] GetInputFromDirection(Vector2 Direction)
+        {
+            double[] returnInfo = new double[3];
+            //___IMPLEMENT___
+            return returnInfo;
         }
     }
 }
