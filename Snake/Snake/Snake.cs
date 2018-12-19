@@ -21,6 +21,7 @@ namespace Snake
         private bool isDead;
         private bool isTested;
         private Vector2 baseVelocity = new Vector2(10, 0);
+        private static double fitnessKoef = Math.Pow(2, 10);
 
         private int TimesToGrow { get; set; }
         public double VelocityModifier { get; set; } //kako igra napreduje zmija se krece sve brze. 
@@ -166,23 +167,27 @@ namespace Snake
             //___IMPLEMENT___
         }
 
+        //calculate fitness of a snake
         public double CalculateFitness()
         {
-            //___IMPLEMENT___
+            fitness = (Length < 10) ? Math.Pow(age, 2) * Math.Pow(2, length) :
+                                      Math.Pow(age, 2) * fitnessKoef * (Length - 9);
             return Fitness;
         }
 
+        //do crossover with partner Snake
         public Snake Crossover(Snake partner)
         {
             Snake Child = new Snake();
-            //___IMPLEMENT___
+            Child.brain = brain.Crossover(partner.brain);        
             return Child;
         }
 
+        //clone brain of current snake
         public Snake Clone()
         {
             Snake clonedSnake = new Snake();
-            //___IMPLEMENT___
+            clonedSnake.brain = brain.Clone();
             return clonedSnake;
         }
 
@@ -201,9 +206,14 @@ namespace Snake
             //___IMPLEMENT___
         }
 
+        //helper function for getting brain input
         private double[] GetInputFromDirection(Vector2 Direction)
         {
             double[] returnInfo = new double[3];
+            Vector2 tempPosition = HeadPosition;
+            int distance = 0;
+            bool foundFood = false;
+            bool foundBody = false;
             //___IMPLEMENT___
             return returnInfo;
         }
