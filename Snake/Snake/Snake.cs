@@ -18,10 +18,10 @@ namespace Snake
         private int age;    //koliko je zivjela do sad
         private double fitness;
         private double timeLeft;  //koliko jos moze zivjet prije nego umre od gladi
-        private bool isDead;
-        private bool isTested;
         private Vector2 baseVelocity = new Vector2(10, 0);
         private static double fitnessKoef = Math.Pow(2, 10);
+        public bool isDead;
+        public bool isTested;
 
         private int TimesToGrow { get; set; }
         public double VelocityModifier { get; set; } //kako igra napreduje zmija se krece sve brze. 
@@ -169,11 +169,10 @@ namespace Snake
         }
 
         //calculate fitness of a snake
-        public double CalculateFitness()
+        public void CalculateFitness()
         {
             fitness = (Length < 10) ? Math.Pow(age, 2) * Math.Pow(2, length) :
                                       Math.Pow(age, 2) * fitnessKoef * (Length - 9);
-            return Fitness;
         }
 
         //do crossover with partner Snake
