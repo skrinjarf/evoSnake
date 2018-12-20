@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Security.Cryptography //za RNG
+using System.Security.Cryptography; //za RNG
 
 namespace Snake
 {
@@ -298,8 +298,8 @@ namespace Snake
         //funkcija koja vraca random vrijednost po Gaussu koristeci Box-Muller transformaciju
         public double stdGaussian()
         {
-            double u1 = 1.0 - rand.NextDouble(); //uniform(0,1] 
-            double u2 = 1.0 - rand.NextDouble();
+            double u1 = 1.0 - rnd.NextDouble(); //uniform(0,1] 
+            double u2 = 1.0 - rnd.NextDouble();
             double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
             return randStdNormal;
         }

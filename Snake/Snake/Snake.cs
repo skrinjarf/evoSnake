@@ -165,6 +165,7 @@ namespace Snake
         public void Show()
         {
             //___IMPLEMENT___
+            throw new NotImplementedException();
         }
 
         //calculate fitness of a snake
@@ -194,11 +195,13 @@ namespace Snake
         public void SaveSnake()
         {
             //___IMPLEMENT___
+            throw new NotImplementedException();
         }
 
         public void LoadSnake()
         {
             //___IMPLEMENT___
+            throw new NotImplementedException();
         }
 
         public void GetBrainInput()
