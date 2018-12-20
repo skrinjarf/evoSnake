@@ -100,8 +100,8 @@ namespace Snake
         }
         //pomocna funkcija, racuna da li ce zmije umrijeti ako ode na poziciju x,y
         private bool WillDie(Vector2 position)
-        {
-            if (position.X < 0 || position.Y < 0 || position.X >= 800 || position.Y >= 400)
+        { 
+            if (! IsInsideGameArea(position))
             {
                 return true;
             }
@@ -203,19 +203,89 @@ namespace Snake
 
         public void GetBrainInput()
         {
-            //___IMPLEMENT___
+            //overwrite old brainInput to spare GC on every move of every snake
+            //right
+            double[] directionInfo = GetInputFromDirection(new Vector2(10, 0));
+            brainInput[0] = directionInfo[0];
+            brainInput[1] = directionInfo[1];
+            brainInput[2] = directionInfo[2];
+            //right up
+            directionInfo = GetInputFromDirection(new Vector2(10, 10));
+            brainInput[3] = directionInfo[0];
+            brainInput[4] = directionInfo[1];
+            brainInput[5] = directionInfo[2];
+            //up
+            directionInfo = GetInputFromDirection(new Vector2(0, 10));
+            brainInput[6] = directionInfo[0];
+            brainInput[7] = directionInfo[1];
+            brainInput[8] = directionInfo[2];
+            //left up
+            directionInfo = GetInputFromDirection(new Vector2(-10, 10));
+            brainInput[9] = directionInfo[0];
+            brainInput[10] = directionInfo[1];
+            brainInput[11] = directionInfo[2];
+            //left
+            directionInfo = GetInputFromDirection(new Vector2(-10, 0));
+            brainInput[12] = directionInfo[0];
+            brainInput[13] = directionInfo[1];
+            brainInput[14] = directionInfo[2];
+            //left down
+            directionInfo = GetInputFromDirection(new Vector2(-10, -10));
+            brainInput[15] = directionInfo[0];
+            brainInput[16] = directionInfo[1];
+            brainInput[17] = directionInfo[2];
+            //down
+            directionInfo = GetInputFromDirection(new Vector2(0, -10));
+            brainInput[18] = directionInfo[0];
+            brainInput[19] = directionInfo[1];
+            brainInput[20] = directionInfo[2];
+            //down right
+            directionInfo = GetInputFromDirection(new Vector2(10, -10));
+            brainInput[21] = directionInfo[0];
+            brainInput[22] = directionInfo[1];
+            brainInput[23] = directionInfo[2];
+
+            //add current velocity to the imput
+            brainInput[24] = VelocityModifier;
         }
 
         //helper function for getting brain input
         private double[] GetInputFromDirection(Vector2 Direction)
         {
             double[] returnInfo = new double[3];
-            Vector2 tempPosition = HeadPosition;
+            Vector2 SearchPosition = HeadPosition;
             int distance = 0;
             bool foundFood = false;
             bool foundBody = false;
-            //___IMPLEMENT___
+            
+            //Search in the direction until you exit game area
+            while(IsInsideGameArea(SearchPosition+=Direction))
+            {
+                distance++;
+                //if food is found return info about it
+                if(!foundFood && SearchPosition == CurrentFoodUnit.Location())
+                {
+                    returnInfo[0] = 1;
+                    foundFood = true;
+                }
+                //if bodypart is found, return info about it
+                if(!foundBody && WillEatBody(SearchPosition))
+                {
+                    returnInfo[1] = 1 / distance;
+                }
+            }
+            //after reaching the wall return info about it
+            returnInfo[2] = 1 / distance;
+
             return returnInfo;
+        }
+
+        //helper function, check if snake is inside game area
+        private bool IsInsideGameArea(Vector2 position)
+        {
+            //za sada je ploca dimenzija [0..800> x [0..400> kasnije dodaj za dinamicko mjenjanje
+            if (position.X < 0 || position.Y < 0 || position.X >= 800 || position.Y >= 400) return false;
+            return true;
         }
     }
 }
