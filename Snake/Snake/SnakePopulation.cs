@@ -23,7 +23,7 @@ namespace Snake
         static SnakePopulation() { rnd = new Random(); }
 
         //construct
-        public SnakePopulation(int size, double mutationRate = 1)
+        public SnakePopulation(int size, double mutationRate = 0.05) //default mutation rate 5% ->guess
         {
             //odredi snakePopulationId na random
             using (RNGCryptoServiceProvider rg = new RNGCryptoServiceProvider())
