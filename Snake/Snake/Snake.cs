@@ -11,10 +11,10 @@ namespace Snake
     {
         private int length;
         private Vector2 HeadPosition;
-        private Queue<Vector2> BodyParts; 
-        private ANN brain; 
-        private double[] brainInput = new double[25]; //za 8 smjerova gledanja, udaljenost do tijela, zida i hrane + trenutna brzina kretanja zmije
-        private double[] brainOutput = new double[4]; //iduci korak, gore, dolje, lijevo, desno
+        private Queue<Vector2> BodyParts;
+        private ANN brain;
+        private double [] brainInput = new double [25]; //za 8 smjerova gledanja, udaljenost do tijela, zida i hrane + trenutna brzina kretanja zmije
+        private double [] brainOutput = new double [4]; //iduci korak, gore, dolje, lijevo, desno
         private int age;    //koliko je zivjela do sad
         private double fitness;
         private double timeLeft;  //koliko jos moze zivjet prije nego umre od gladi
@@ -30,7 +30,7 @@ namespace Snake
         internal Food CurrentFoodUnit { get; set; }
 
 
-        public Snake(int _x = 400, int _y=100)
+        public Snake (int _x = 400, int _y = 100)
         {
             HeadPosition = new Vector2(_x, _y);
             length = 4;         //zmija pocinje sa duljinom 4
@@ -53,13 +53,13 @@ namespace Snake
         }
 
         //mutiraj zmiju
-        public void Mutate(double mutationRate)
+        public void Mutate (double mutationRate)
         {
             brain.Mutate(mutationRate);
         }
 
         //odredi gdje ce se iduce pomaknut 
-        public void CalculateNextMove()
+        public void CalculateNextMove ()
         {
             brainOutput = brain.ForwardPass(brainInput);
 
@@ -82,16 +82,16 @@ namespace Snake
                     baseVelocity.X = 0;
                     baseVelocity.Y = -10;
                     break;
-                //promijeni odgovarajuce vrijednosti da se opterecujemo GC
+                    //promijeni odgovarajuce vrijednosti da se opterecujemo GC
             }
         }
 
         //pomocna funkcija, racuna da li ce na poziciji x,y biti tijelo zmije
-        private bool WillEatBody(Vector2 position)
+        private bool WillEatBody (Vector2 position)
         {
-            foreach( var bodyPart in BodyParts )
+            foreach (var bodyPart in BodyParts)
             {
-                if (position.X == bodyPart.X && 
+                if (position.X == bodyPart.X &&
                     position.Y == bodyPart.Y)
                     return true;
             }
@@ -99,23 +99,23 @@ namespace Snake
 
         }
         //pomocna funkcija, racuna da li ce zmije umrijeti ako ode na poziciju x,y
-        private bool WillDie(Vector2 position)
-        { 
-            if (! IsInsideGameArea(position))
+        private bool WillDie (Vector2 position)
+        {
+            if (!IsInsideGameArea(position))
             {
                 return true;
             }
             return WillEatBody(position);
         }
         //pomocna funkcija za jest
-        private void Eat(Food food, Vector2 NewHeadPosition)
+        private void Eat (Food food, Vector2 NewHeadPosition)
         {
-            CurrentFoodUnit = Food.CreateNewFoodUnit(); 
-            
+            CurrentFoodUnit = Food.CreateNewFoodUnit();
+
             //if the food spawned on the snake, spawn it again
-            while( BodyParts.Contains(CurrentFoodUnit.Location()) ||
-                    HeadPosition == CurrentFoodUnit.Location()||
-                    NewHeadPosition == CurrentFoodUnit.Location() )
+            while (BodyParts.Contains(CurrentFoodUnit.Location()) ||
+                    HeadPosition == CurrentFoodUnit.Location() ||
+                    NewHeadPosition == CurrentFoodUnit.Location())
             {
                 CurrentFoodUnit = Food.CreateNewFoodUnit();
             }
@@ -124,12 +124,12 @@ namespace Snake
             timeLeft += 100;
 
             //ALL HAIL MAGIC NUMBERS!!!!
-            if( isTested || length > 10 ) TimesToGrow += 4;
+            if (isTested || length > 10) TimesToGrow += 4;
             else TimesToGrow += 1;
-        }     
-        
+        }
+
         //napravi izracunati potez
-        public void Move()
+        public void Move ()
         {
             age++; timeLeft--;
             if (timeLeft == 0) isDead = true;
@@ -137,15 +137,15 @@ namespace Snake
             Vector2 Velocity = baseVelocity * VelocityModifier;
             Vector2 NewHeadPosition = HeadPosition + Velocity;
 
-            if(WillDie(NewHeadPosition)) isDead = true;
+            if (WillDie(NewHeadPosition)) isDead = true;
 
-            if(NewHeadPosition == CurrentFoodUnit.Location())
+            if (NewHeadPosition == CurrentFoodUnit.Location())
             {
                 Eat(CurrentFoodUnit, NewHeadPosition);
             }
 
             //if snake needs to grow don't remove the last body part
-            if(TimesToGrow > 0)
+            if (TimesToGrow > 0)
             {
                 TimesToGrow--;
                 Vector2 newBodyPart = new Vector2(HeadPosition); //old head possition becomes new bodyPart
@@ -162,128 +162,128 @@ namespace Snake
             }
         }
 
-        public void Show()
+        public void Show ()
         {
             //___IMPLEMENT___
             throw new NotImplementedException();
         }
 
         //calculate fitness of a snake
-        public void CalculateFitness()
+        public void CalculateFitness ()
         {
             fitness = (Length < 10) ? Math.Pow(age, 2) * Math.Pow(2, length) :
                                       Math.Pow(age, 2) * fitnessKoef * (Length - 9);
         }
 
         //do crossover with partner Snake
-        public Snake Crossover(Snake partner)
+        public Snake Crossover (Snake partner)
         {
             Snake Child = new Snake();
-            Child.brain = brain.Crossover(partner.brain);        
+            Child.brain = brain.Crossover(partner.brain);
             return Child;
         }
 
         //clone brain of current snake
-        public Snake Clone()
+        public Snake Clone ()
         {
             Snake clonedSnake = new Snake();
             clonedSnake.brain = brain.Clone();
             return clonedSnake;
         }
 
-        public void SaveSnake()
+        public void SaveSnake ()
         {
             //___IMPLEMENT___
             throw new NotImplementedException();
         }
 
-        public void LoadSnake()
+        public void LoadSnake ()
         {
             //___IMPLEMENT___
             throw new NotImplementedException();
         }
 
-        public void GetBrainInput()
+        public void GetBrainInput ()
         {
             //overwrite old brainInput to spare GC on every move of every snake
             //right
-            double[] directionInfo = GetInputFromDirection(new Vector2(10, 0));
-            brainInput[0] = directionInfo[0];
-            brainInput[1] = directionInfo[1];
-            brainInput[2] = directionInfo[2];
+            double [] directionInfo = GetInputFromDirection(new Vector2(10, 0));
+            brainInput [0] = directionInfo [0];
+            brainInput [1] = directionInfo [1];
+            brainInput [2] = directionInfo [2];
             //right up
             directionInfo = GetInputFromDirection(new Vector2(10, 10));
-            brainInput[3] = directionInfo[0];
-            brainInput[4] = directionInfo[1];
-            brainInput[5] = directionInfo[2];
+            brainInput [3] = directionInfo [0];
+            brainInput [4] = directionInfo [1];
+            brainInput [5] = directionInfo [2];
             //up
             directionInfo = GetInputFromDirection(new Vector2(0, 10));
-            brainInput[6] = directionInfo[0];
-            brainInput[7] = directionInfo[1];
-            brainInput[8] = directionInfo[2];
+            brainInput [6] = directionInfo [0];
+            brainInput [7] = directionInfo [1];
+            brainInput [8] = directionInfo [2];
             //left up
             directionInfo = GetInputFromDirection(new Vector2(-10, 10));
-            brainInput[9] = directionInfo[0];
-            brainInput[10] = directionInfo[1];
-            brainInput[11] = directionInfo[2];
+            brainInput [9] = directionInfo [0];
+            brainInput [10] = directionInfo [1];
+            brainInput [11] = directionInfo [2];
             //left
             directionInfo = GetInputFromDirection(new Vector2(-10, 0));
-            brainInput[12] = directionInfo[0];
-            brainInput[13] = directionInfo[1];
-            brainInput[14] = directionInfo[2];
+            brainInput [12] = directionInfo [0];
+            brainInput [13] = directionInfo [1];
+            brainInput [14] = directionInfo [2];
             //left down
             directionInfo = GetInputFromDirection(new Vector2(-10, -10));
-            brainInput[15] = directionInfo[0];
-            brainInput[16] = directionInfo[1];
-            brainInput[17] = directionInfo[2];
+            brainInput [15] = directionInfo [0];
+            brainInput [16] = directionInfo [1];
+            brainInput [17] = directionInfo [2];
             //down
             directionInfo = GetInputFromDirection(new Vector2(0, -10));
-            brainInput[18] = directionInfo[0];
-            brainInput[19] = directionInfo[1];
-            brainInput[20] = directionInfo[2];
+            brainInput [18] = directionInfo [0];
+            brainInput [19] = directionInfo [1];
+            brainInput [20] = directionInfo [2];
             //down right
             directionInfo = GetInputFromDirection(new Vector2(10, -10));
-            brainInput[21] = directionInfo[0];
-            brainInput[22] = directionInfo[1];
-            brainInput[23] = directionInfo[2];
+            brainInput [21] = directionInfo [0];
+            brainInput [22] = directionInfo [1];
+            brainInput [23] = directionInfo [2];
 
             //add current velocity to the imput
-            brainInput[24] = VelocityModifier;
+            brainInput [24] = VelocityModifier;
         }
 
         //helper function for getting brain input
-        private double[] GetInputFromDirection(Vector2 Direction)
+        private double [] GetInputFromDirection (Vector2 Direction)
         {
-            double[] returnInfo = new double[3];
+            double [] returnInfo = new double [3];
             Vector2 SearchPosition = HeadPosition;
             int distance = 0;
             bool foundFood = false;
             bool foundBody = false;
-            
+
             //Search in the direction until you exit game area
-            while(IsInsideGameArea(SearchPosition+=Direction))
+            while (IsInsideGameArea(SearchPosition += Direction))
             {
                 distance++;
                 //if food is found return info about it
-                if(!foundFood && SearchPosition == CurrentFoodUnit.Location())
+                if (!foundFood && SearchPosition == CurrentFoodUnit.Location())
                 {
-                    returnInfo[0] = 1;
+                    returnInfo [0] = 1;
                     foundFood = true;
                 }
                 //if bodypart is found, return info about it
-                if(!foundBody && WillEatBody(SearchPosition))
+                if (!foundBody && WillEatBody(SearchPosition))
                 {
-                    returnInfo[1] = 1 / distance;
+                    returnInfo [1] = 1 / distance;
                 }
             }
             //after reaching the wall return info about it
-            returnInfo[2] = 1 / distance;
+            returnInfo [2] = 1 / distance;
 
             return returnInfo;
         }
 
         //helper function, check if snake is inside game area
-        private bool IsInsideGameArea(Vector2 position)
+        private bool IsInsideGameArea (Vector2 position)
         {
             //za sada je ploca dimenzija [0..800> x [0..400> kasnije dodaj za dinamicko mjenjanje
             if (position.X < 0 || position.Y < 0 || position.X >= 800 || position.Y >= 400) return false;
