@@ -47,9 +47,9 @@ namespace Snake
             //hidden2 sloj
             Matrica hiddenIn2 = whh * hiddenOut;
             Matrica hiddenOut2 = hiddenIn2.Activate();
-            hiddenOut2 = hiddenOut.AddBias();
+            hiddenOut2 = hiddenOut2.AddBias();
 
-            //output sloj
+            //output sloj  
             Matrica outIn = who * hiddenOut2;
             Matrica output = outIn.Activate();
 

@@ -9,15 +9,17 @@ namespace Snake
 {
     class SnakePopulation
     {
-        private Snake [] snakes; //snakes of the population
         private int currentGenerationNo = 1;
         private double globalBestFitness = 0;
         private double currentBestFitness = 0;
-        private int currentBestSnakeIdx = 0;
-        private Snake globalBestSnake;
         private int snakePopulationId;
         private static readonly Random rnd;
         public double PopulationMutationRate;
+
+        public double GlobalBestFitness { get => globalBestFitness; set => globalBestFitness = value; }
+		public Snake GlobalBestSnake { get; set; }
+		public Snake [] Snakes { get; set; }
+		public int CurrentBestSnakeIdx { get; set; } = 0;
 
         //static const for random number generator
         static SnakePopulation () { rnd = new Random(); }
@@ -33,42 +35,43 @@ namespace Snake
                 snakePopulationId = BitConverter.ToInt32(rno, 0);
             }
 
-            snakes = new Snake [size];
-            for (int i = 0; i < snakes.Length; ++i) snakes [i] = new Snake();
-            globalBestSnake = snakes [0].Clone();
+            Snakes = new Snake [size];
+            for (int i = 0; i < Snakes.Length; ++i) Snakes [i] = new Snake();
+            GlobalBestSnake = Snakes [0].Clone();
             PopulationMutationRate = mutationRate;
         }
 
         //do one move with every snake
         public void UpdateAliveSnakes ()
         {
-            for (int i = 0; i < snakes.Length; ++i)
-                if (!snakes [i].isDead)
+            for (int i = 0; i < Snakes.Length; ++i)
+                if (!Snakes [i].isDead)
                 {
-                    snakes [i].GetBrainInput();
-                    snakes [i].CalculateNextMove();
-                    snakes [i].Move();
+                    Snakes [i].GetBrainInput();
+                    Snakes [i].CalculateNextMove();
+                    Snakes [i].Move();
                 }
+            setCurrentBestSnake();
         }
 
         //test if there is any snake alive
         public bool Done ()
         {
-            for (int i = 0; i < snakes.Length; ++i) if (!snakes [i].isDead) return false;
+            for (int i = 0; i < Snakes.Length; ++i) if (!Snakes [i].isDead) return false;
             return true;
         }
 
         //calculate fitness of every snake
         public void PopulationCalculateFitness ()
         {
-            for (int i = 0; i < snakes.Length; ++i) snakes [i].CalculateFitness();
+            for (int i = 0; i < Snakes.Length; ++i) Snakes [i].CalculateFitness();
         }
 
         public void CreateNextGeneration ()
         {
-            Snake [] NextGen = new Snake [snakes.Length];
+            Snake [] NextGen = new Snake [Snakes.Length];
             setBestSnake(); //determine the best snake so far and save it in globalBestSnake
-            NextGen [0] = globalBestSnake.Clone();
+            NextGen [0] = GlobalBestSnake.Clone();
 
             for (int i = 1; i < NextGen.Length; ++i)
             {
@@ -80,11 +83,11 @@ namespace Snake
 
                 NextGen [i] = child;
             }
-            snakes = NextGen;
+            Snakes = NextGen;
             //update/reset population params
             currentGenerationNo++;
             currentBestFitness = 0;
-            currentBestSnakeIdx = 0;
+            CurrentBestSnakeIdx = 0;
         }
 
         //helper function, determine global best snake
@@ -94,11 +97,11 @@ namespace Snake
             int maxIdx = 0;
 
             //locate the best snake in this gen
-            for (int i = 0; i < snakes.Length; ++i)
+            for (int i = 0; i < Snakes.Length; ++i)
             {
-                if (snakes [i].Fitness > maxFitness)
+                if (Snakes [i].Fitness > maxFitness)
                 {
-                    maxFitness = snakes [i].Fitness;
+                    maxFitness = Snakes [i].Fitness;
                     maxIdx = i;
                 }
             }
@@ -106,7 +109,8 @@ namespace Snake
             if (maxFitness > globalBestFitness)
             {
                 globalBestFitness = maxFitness;
-                globalBestSnake = snakes [maxIdx].Clone();
+                GlobalBestSnake = Snakes [maxIdx].Clone();
+                CurrentBestSnakeIdx = maxIdx;
             }
         }
 
@@ -117,13 +121,13 @@ namespace Snake
         private Snake selectSnake ()
         {
             double fitnessSum = 0;
-            foreach (Snake s in snakes) fitnessSum += s.Fitness;
+            foreach (Snake s in Snakes) fitnessSum += s.Fitness;
 
             double randomValue = rnd.NextDouble() * fitnessSum; //random double in [0..fitnessSum>
 
             //shuffle the snakes so that only the fitness afects the likelihood of a snake being choosen 
-            List<Snake> tempList = snakes.ToList();
-            shuffle(tempList);
+            List<Snake> tempList = Snakes.ToList();
+            //shuffle(tempList);
 
             double tempSum = 0;
             foreach (Snake s in tempList)
@@ -156,12 +160,12 @@ namespace Snake
 
         public void MutatePopulation ()
         {
-            foreach (Snake s in snakes) s.Mutate(PopulationMutationRate);
+            foreach (Snake s in Snakes) s.Mutate(PopulationMutationRate);
         }
 
         private void setCurrentBestSnake ()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
     }

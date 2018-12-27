@@ -7,18 +7,15 @@ using System.Threading.Tasks;
 namespace Snake
 {
     //klasa reprezentira pojedinu zmiju koju pogoni ANN 
-    class Snake
+    public class Snake
     {
         private int length;
-        private Vector2 HeadPosition;
-        private Queue<Vector2> BodyParts;
         private ANN brain;
         private double [] brainInput = new double [25]; //za 8 smjerova gledanja, udaljenost do tijela, zida i hrane + trenutna brzina kretanja zmije
         private double [] brainOutput = new double [4]; //iduci korak, gore, dolje, lijevo, desno
         private int age;    //koliko je zivjela do sad
-        private double fitness;
         private double timeLeft;  //koliko jos moze zivjet prije nego umre od gladi
-        private Vector2 baseVelocity = new Vector2(10, 0);
+        private Vector2 baseVelocity = new Vector2(1, 0);
         private static double fitnessKoef = Math.Pow(2, 10);
         public bool isDead;
         public bool isTested;
@@ -26,26 +23,28 @@ namespace Snake
         private int TimesToGrow { get; set; }
         public double VelocityModifier { get; set; } //kako igra napreduje zmija se krece sve brze. 
         public int Length { get; } // iz vana se moze samo procitat vrijednost duljine
-        public double Fitness { get; }
         internal Food CurrentFoodUnit { get; set; }
+		public double Fitness { get; set; }
+		public Vector2 HeadPosition { get; set; }
+		public Queue<Vector2> BodyParts { get; set; }
 
-
-        public Snake (int _x = 400, int _y = 100)
+		public Snake ()
         {
-            HeadPosition = new Vector2(_x, _y);
+            Vector2 dims = WorldRenderer.instance.World.Dimensions;
+            HeadPosition = new Vector2(dims.X / 2, dims.Y / 2);
             length = 4;         //zmija pocinje sa duljinom 4
             BodyParts = new Queue<Vector2>();
             brain = new ANN(25, 18, 4);
             age = 0;
-            fitness = 0;
+            Fitness = 0;
             timeLeft = 200;
             isDead = false;
             isTested = false;
             //dodaj dijelove tijela
-            if (_x < 30) throw new Exception("zmija mora biti inicijalizirana barem na poziciji 30 da stane na ekran");
-            BodyParts.Enqueue(new Vector2(_x - 30, _y));
-            BodyParts.Enqueue(new Vector2(_x - 20, _y));
-            BodyParts.Enqueue(new Vector2(_x - 10, _y));
+            if (HeadPosition.X < 3) throw new Exception("zmija mora biti inicijalizirana barem na poziciji 30 da stane na ekran");
+            BodyParts.Enqueue(HeadPosition - new Vector2(3, 0));
+            BodyParts.Enqueue(HeadPosition - new Vector2(2, 0));
+            BodyParts.Enqueue(HeadPosition - new Vector2(1, 0));
 
             CurrentFoodUnit = new Food();
             VelocityModifier = 1;
@@ -67,20 +66,20 @@ namespace Snake
             switch (maxIdx)
             {
                 case 0://desno
-                    baseVelocity.X = 10;
+                    baseVelocity.X = 1;
                     baseVelocity.Y = 0;
                     break;
                 case 1://gore
                     baseVelocity.X = 0;
-                    baseVelocity.Y = 10;
+                    baseVelocity.Y = 1;
                     break;
                 case 2://lijevo
-                    baseVelocity.X = -10;
+                    baseVelocity.X = -1;
                     baseVelocity.Y = 0;
                     break;
                 default://dole
                     baseVelocity.X = 0;
-                    baseVelocity.Y = -10;
+                    baseVelocity.Y = -1;
                     break;
                     //promijeni odgovarajuce vrijednosti da se opterecujemo GC
             }
@@ -162,16 +161,10 @@ namespace Snake
             }
         }
 
-        public void Show ()
-        {
-            //___IMPLEMENT___
-            throw new NotImplementedException();
-        }
-
         //calculate fitness of a snake
         public void CalculateFitness ()
         {
-            fitness = (Length < 10) ? Math.Pow(age, 2) * Math.Pow(2, length) :
+            Fitness = (Length < 10) ? Math.Pow(age, 2) * Math.Pow(2, length) :
                                       Math.Pow(age, 2) * fitnessKoef * (Length - 9);
         }
 
@@ -207,42 +200,42 @@ namespace Snake
         {
             //overwrite old brainInput to spare GC on every move of every snake
             //right
-            double [] directionInfo = GetInputFromDirection(new Vector2(10, 0));
+            double [] directionInfo = GetInputFromDirection(new Vector2(1, 0));
             brainInput [0] = directionInfo [0];
             brainInput [1] = directionInfo [1];
             brainInput [2] = directionInfo [2];
             //right up
-            directionInfo = GetInputFromDirection(new Vector2(10, 10));
+            directionInfo = GetInputFromDirection(new Vector2(1, 1));
             brainInput [3] = directionInfo [0];
             brainInput [4] = directionInfo [1];
             brainInput [5] = directionInfo [2];
             //up
-            directionInfo = GetInputFromDirection(new Vector2(0, 10));
+            directionInfo = GetInputFromDirection(new Vector2(0, 1));
             brainInput [6] = directionInfo [0];
             brainInput [7] = directionInfo [1];
             brainInput [8] = directionInfo [2];
             //left up
-            directionInfo = GetInputFromDirection(new Vector2(-10, 10));
+            directionInfo = GetInputFromDirection(new Vector2(-1, 1));
             brainInput [9] = directionInfo [0];
             brainInput [10] = directionInfo [1];
             brainInput [11] = directionInfo [2];
             //left
-            directionInfo = GetInputFromDirection(new Vector2(-10, 0));
+            directionInfo = GetInputFromDirection(new Vector2(-1, 0));
             brainInput [12] = directionInfo [0];
             brainInput [13] = directionInfo [1];
             brainInput [14] = directionInfo [2];
             //left down
-            directionInfo = GetInputFromDirection(new Vector2(-10, -10));
+            directionInfo = GetInputFromDirection(new Vector2(-1, -1));
             brainInput [15] = directionInfo [0];
             brainInput [16] = directionInfo [1];
             brainInput [17] = directionInfo [2];
             //down
-            directionInfo = GetInputFromDirection(new Vector2(0, -10));
+            directionInfo = GetInputFromDirection(new Vector2(0, -1));
             brainInput [18] = directionInfo [0];
             brainInput [19] = directionInfo [1];
             brainInput [20] = directionInfo [2];
             //down right
-            directionInfo = GetInputFromDirection(new Vector2(10, -10));
+            directionInfo = GetInputFromDirection(new Vector2(1, -1));
             brainInput [21] = directionInfo [0];
             brainInput [22] = directionInfo [1];
             brainInput [23] = directionInfo [2];
@@ -256,7 +249,7 @@ namespace Snake
         {
             double [] returnInfo = new double [3];
             Vector2 SearchPosition = HeadPosition;
-            int distance = 0;
+            int distance = 1;
             bool foundFood = false;
             bool foundBody = false;
 
@@ -286,7 +279,10 @@ namespace Snake
         private bool IsInsideGameArea (Vector2 position)
         {
             //za sada je ploca dimenzija [0..800> x [0..400> kasnije dodaj za dinamicko mjenjanje
-            if (position.X < 0 || position.Y < 0 || position.X >= 800 || position.Y >= 400) return false;
+            if (position.X < 0 || 
+                position.Y < 0 || 
+                position.X >= WorldRenderer.instance.World.Dimensions.X || 
+                position.Y >= WorldRenderer.instance.World.Dimensions.Y) return false;
             return true;
         }
     }

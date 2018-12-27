@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Snake
 {
-    class Vector2
+    public class Vector2
     {
         public int X { get; set; }
         public int Y { get; set; }

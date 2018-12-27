@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace Snake
+{
+    public class WorldRenderer
+    {
+        public static WorldRenderer instance;
+
+        public World World { get; set; }
+        private readonly Color backgroundColor = Color.Black;
+        private readonly Bitmap worldField;
+        private readonly Graphics worldGraphics;
+        private Label generationLabel;
+
+        private WorldRenderer (World _world, WorldForm _worldForm)
+        {
+            World = _world;
+            worldField = new Bitmap(20 * _world.Dimensions.X, 20 * _world.Dimensions.Y);
+            worldGraphics = Graphics.FromImage(worldField);
+            worldGraphics.PageUnit = GraphicsUnit.Pixel;
+            _worldForm.ClientSize = new Size(0 + _world.Dimensions.X * 20, 20 + _world.Dimensions.Y * 20);
+            generationLabel = _worldForm.generationLabel;
+        }
+
+		public static void Init (World _world, WorldForm _worldForm)
+        {
+            instance = new WorldRenderer(_world, _worldForm);
+        }
+        
+        public static void Render (PaintEventArgs e)
+        {
+            instance.worldGraphics.Clear(instance.backgroundColor);
+            RenderSnake();
+            e.Graphics.DrawImage(instance.worldField, 0, 20);
+        }
+
+        public static void RenderSnake ()
+        {
+            Snake snake = instance.World.Species [0].Snakes [instance.World.Species [0].CurrentBestSnakeIdx];
+            RenderPiece(snake.HeadPosition, Brushes.Red);
+            foreach (Vector2 part in snake.BodyParts)
+            {
+                RenderPiece(part, Brushes.White);
+            }
+            RenderPiece(snake.CurrentFoodUnit.Location(), Brushes.Yellow);
+        }
+
+        private static void RenderPiece (Vector2 pos, Brush brush)
+        {
+            instance.worldGraphics.FillRectangle(brush, new Rectangle(20 * pos.X, 20 + 20 * pos.Y, 20, 20));   
+        }
+
+        public static void UpdateGenerationLabel (int gen)
+        {
+            instance.generationLabel.Text = "Generation: " + gen.ToString();
+        }
+    }
+}

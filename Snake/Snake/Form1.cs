@@ -16,5 +16,11 @@ namespace Snake
         {
             InitializeComponent();
         }
+
+        private void button1_Click (object sender, EventArgs e)
+        {
+            WorldForm form = new WorldForm();
+            form.Show();
+        }
     }
 }

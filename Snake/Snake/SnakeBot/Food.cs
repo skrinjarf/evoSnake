@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Snake
 {
     //klasa koja opisuje hranu
-    class Food
+    public class Food
     {
         private static readonly Random rnd; //pseudorandom number generator for food location
         public int Xpos { get; set; }   //X koordinate of Food object
@@ -19,8 +19,8 @@ namespace Snake
         public Food ()
         {
             //get random positions inside game area, so far [0..800> x [0..400>
-            Xpos = rnd.Next(5, 795); //food is drawn as 10x10 square, so leave space for drawing
-            Ypos = rnd.Next(5, 395);
+            Xpos = rnd.Next(0, WorldRenderer.instance.World.Dimensions.X); //food is drawn as 10x10 square, so leave space for drawing
+            Ypos = rnd.Next(0, WorldRenderer.instance.World.Dimensions.Y);
         }
         //returns food location as vector
         public Vector2 Location ()
