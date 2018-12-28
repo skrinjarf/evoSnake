@@ -181,6 +181,7 @@ namespace Snake
         {
             Snake clonedSnake = new Snake();
             clonedSnake.brain = brain.Clone();
+            clonedSnake.isDead = false;
             return clonedSnake;
         }
 
@@ -278,7 +279,6 @@ namespace Snake
         //helper function, check if snake is inside game area
         private bool IsInsideGameArea (Vector2 position)
         {
-            //za sada je ploca dimenzija [0..800> x [0..400> kasnije dodaj za dinamicko mjenjanje
             if (position.X < 0 || 
                 position.Y < 0 || 
                 position.X >= WorldRenderer.instance.World.Dimensions.X || 

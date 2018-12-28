@@ -17,6 +17,7 @@ namespace Snake
         private readonly Bitmap worldField;
         private readonly Graphics worldGraphics;
         private Label generationLabel;
+        private Label snakeLabel;
 
         private WorldRenderer (World _world, WorldForm _worldForm)
         {
@@ -26,6 +27,7 @@ namespace Snake
             worldGraphics.PageUnit = GraphicsUnit.Pixel;
             _worldForm.ClientSize = new Size(0 + _world.Dimensions.X * 20, 20 + _world.Dimensions.Y * 20);
             generationLabel = _worldForm.generationLabel;
+            snakeLabel = _worldForm.snakeLabel;
         }
 
 		public static void Init (World _world, WorldForm _worldForm)
@@ -42,13 +44,20 @@ namespace Snake
 
         public static void RenderSnake ()
         {
-            Snake snake = instance.World.Species [0].Snakes [instance.World.Species [0].CurrentBestSnakeIdx];
-            RenderPiece(snake.HeadPosition, Brushes.Red);
-            foreach (Vector2 part in snake.BodyParts)
+            instance.snakeLabel.Text = "Best Snake Idx: " + instance.World.Species [0].CurrentBestSnakeIdx.ToString();
+            foreach (Snake snake in instance.World.Species [0].Snakes)
             {
-                RenderPiece(part, Brushes.White);
+                if (snake.isDead)
+                {
+                    continue;
+                }
+                RenderPiece(snake.HeadPosition, Brushes.Red);
+                foreach (Vector2 part in snake.BodyParts)
+                {
+                    RenderPiece(part, Brushes.White);
+                }
+                RenderPiece(snake.CurrentFoodUnit.Location(), Brushes.Yellow);
             }
-            RenderPiece(snake.CurrentFoodUnit.Location(), Brushes.Yellow);
         }
 
         private static void RenderPiece (Vector2 pos, Brush brush)

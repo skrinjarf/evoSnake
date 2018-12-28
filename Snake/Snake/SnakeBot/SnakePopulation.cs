@@ -12,6 +12,7 @@ namespace Snake
         private int currentGenerationNo = 1;
         private double globalBestFitness = 0;
         private double currentBestFitness = 0;
+        private int currentBest = 4;
         private int snakePopulationId;
         private static readonly Random rnd;
         public double PopulationMutationRate;
@@ -20,6 +21,7 @@ namespace Snake
 		public Snake GlobalBestSnake { get; set; }
 		public Snake [] Snakes { get; set; }
 		public int CurrentBestSnakeIdx { get; set; } = 0;
+		public int GlobalBest { get; set; } = 4;
 
         //static const for random number generator
         static SnakePopulation () { rnd = new Random(); }
@@ -83,9 +85,10 @@ namespace Snake
 
                 NextGen [i] = child;
             }
-            Snakes = NextGen;
+            Snakes = (Snake [])NextGen.Clone();
             //update/reset population params
             currentGenerationNo++;
+            currentBest = 4;
             currentBestFitness = 0;
             CurrentBestSnakeIdx = 0;
         }
@@ -110,7 +113,6 @@ namespace Snake
             {
                 globalBestFitness = maxFitness;
                 GlobalBestSnake = Snakes [maxIdx].Clone();
-                CurrentBestSnakeIdx = maxIdx;
             }
         }
 
@@ -165,7 +167,31 @@ namespace Snake
 
         private void setCurrentBestSnake ()
         {
-            //throw new NotImplementedException();
+            if (!Done())
+            {
+                double max = 0;
+                int maxIdx = 0;
+                for (int i = 0; i < Snakes.Length; ++i)
+                {
+                    if (!Snakes[i].isDead && Snakes[i].Length > max)
+                    {
+                        max = Snakes [i].Length;
+                        maxIdx = i;
+                    }
+                }
+                if (max > currentBest)
+                {
+                    currentBest = (int)Math.Floor(max);
+                }
+                if (Snakes[CurrentBestSnakeIdx].isDead || max > Snakes[CurrentBestSnakeIdx].Length + 5)
+                {
+                    CurrentBestSnakeIdx = maxIdx;
+                }
+                if (currentBest > GlobalBest)
+                {
+                    GlobalBest = currentBest;
+                }
+            }
         }
 
     }

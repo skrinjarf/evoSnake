@@ -17,7 +17,7 @@ namespace Snake
         public WorldForm ()
         {
             InitializeComponent();
-            world = new World(new Vector2(20, 20));
+            world = new World(new Vector2(30, 30));
             WorldRenderer.Init(world, this);
             world.InitSpecies(500, 1, 100);
             timer1.Interval = 1000 / 60;

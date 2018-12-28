@@ -96,7 +96,7 @@ namespace Snake
                     maxIdx = i;
                 }
             }
-            //worldBestScore = species [maxIdx].GlobalBestFitness;
+            worldBestScore = Species [maxIdx].GlobalBest;
         }
     }
 }
