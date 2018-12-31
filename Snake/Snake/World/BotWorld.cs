@@ -9,20 +9,15 @@ using Snake.Evolution;
 
 namespace Snake.World
 {
-    public class BotWorld
+    public class BotWorld: World
     {
-        public Vector2 Dimensions;
         private int gen = 0; // current generation
         private int maxGen;
         private int worldBestScore = 0; // the best score of the best snake out of all populations
-        private BotSnake snake;
 
-		internal SnakePopulation [] Species { get; set; }
+        internal SnakePopulation [] Species { get; set; }
 
-		public BotWorld (Vector2 dimensions)
-        {
-            Dimensions = dimensions;
-        }
+        public BotWorld (Vector2 dimensions) : base(dimensions) { }
 
         public void InitSpecies (int _maxGen, int _speciesNum, int _popSize)
         {
@@ -34,7 +29,7 @@ namespace Snake.World
             }
         }
 
-        public void DoStep ()
+        public override void DoStep ()
         {
             // run genethic algorithm
             if (gen < maxGen)
@@ -68,7 +63,7 @@ namespace Snake.World
             // save top snake
         }
 
-        public void UpdateSnake ()
+        public override void UpdateSnake ()
         {
             snake.GetBrainInput();
             snake.CalculateNextMove();
@@ -79,7 +74,7 @@ namespace Snake.World
         {
             for (int i = 0; i < Species.Length; ++i)
             {
-                if (!Species[i].Done())
+                if (!Species [i].Done())
                 {
                     return false;
                 }
@@ -93,7 +88,7 @@ namespace Snake.World
             int maxIdx = 0;
             for (int i = 0; i < Species.Length; ++i)
             {
-                if (Species[i].GlobalBestFitness > max)
+                if (Species [i].GlobalBestFitness > max)
                 {
                     max = Species [i].GlobalBestFitness;
                     maxIdx = i;

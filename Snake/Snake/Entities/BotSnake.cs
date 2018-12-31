@@ -8,48 +8,21 @@ using Snake.Utils;
 namespace Snake.Entities
 {
     //klasa reprezentira pojedinu zmiju koju pogoni ANN 
-    public class BotSnake
+    public class BotSnake: Snake
     {
-        private int length;
         private ANN brain;
         private double [] brainInput = new double [24]; //za 8 smjerova gledanja, udaljenost do tijela, zida i hrane + trenutna brzina kretanja zmije
         private double [] brainOutput = new double [4]; //iduci korak, gore, dolje, lijevo, desno
-        private int age;    //koliko je zivjela do sad
-        private double timeLeft;  //koliko jos moze zivjet prije nego umre od gladi
-        private Vector2 baseVelocity = new Vector2(1, 0);
         private static double fitnessKoef = Math.Pow(2, 10);
-        public bool isDead;
         public bool isTested;
 
-        private int TimesToGrow { get; set; }
-        public double VelocityModifier { get; set; } //kako igra napreduje zmija se krece sve brze. 
-        public int Length { get; } // iz vana se moze samo procitat vrijednost duljine
-        internal Food CurrentFoodUnit { get; set; }
-		public double Fitness { get; set; }
-		public Vector2 HeadPosition { get; set; }
-		public Queue<Vector2> BodyParts { get; set; }
+        public double Fitness { get; set; }
 
-		public BotSnake ()
+        public BotSnake () : base()
         {
-            Vector2 dims = WorldRenderer.instance.World.Dimensions;
-            HeadPosition = new Vector2(dims.X / 2, dims.Y / 2);
-            length = 4;         //zmija pocinje sa duljinom 4
-            BodyParts = new Queue<Vector2>();
             brain = new ANN(24, 18, 4);
-            age = 0;
             Fitness = 0;
-            timeLeft = 200;
-            isDead = false;
             isTested = false;
-            //dodaj dijelove tijela
-            if (HeadPosition.X < 3) throw new Exception("zmija mora biti inicijalizirana barem na poziciji 30 da stane na ekran");
-            BodyParts.Enqueue(HeadPosition - new Vector2(3, 0));
-            BodyParts.Enqueue(HeadPosition - new Vector2(2, 0));
-            BodyParts.Enqueue(HeadPosition - new Vector2(1, 0));
-
-            CurrentFoodUnit = new Food();
-            VelocityModifier = 1;
-            TimesToGrow = 0;
         }
 
         //mutiraj zmiju
@@ -85,91 +58,7 @@ namespace Snake.Entities
                     //promijeni odgovarajuce vrijednosti da se opterecujemo GC
             }
         }
-
-        //pomocna funkcija, racuna da li ce na poziciji x,y biti tijelo zmije
-        private bool WillEatBody (Vector2 position)
-        {
-            foreach (var bodyPart in BodyParts)
-            {
-                if (position.X == bodyPart.X &&
-                    position.Y == bodyPart.Y)
-                {
-                    return true;
-                }
-            }
-            return false;
-
-        }
-        //pomocna funkcija, racuna da li ce zmije umrijeti ako ode na poziciju x,y
-        private bool WillDie (Vector2 position)
-        {
-            if (!IsInsideGameArea(position))
-            {
-                return true;
-            }
-            return WillEatBody(position);
-        }
-        //pomocna funkcija za jest
-        private void Eat (Food food, Vector2 NewHeadPosition)
-        {
-            CurrentFoodUnit = Food.CreateNewFoodUnit();
-
-            //if the food spawned on the snake, spawn it again
-            while (BodyParts.Contains(CurrentFoodUnit.Location()) ||
-                    HeadPosition == CurrentFoodUnit.Location() ||
-                    NewHeadPosition == CurrentFoodUnit.Location())
-            {
-                CurrentFoodUnit = Food.CreateNewFoodUnit();
-            }
-
-            //increase time left before starvation
-            timeLeft += 100;
-
-            //ALL HAIL MAGIC NUMBERS!!!!
-            if (isTested || length > 10) TimesToGrow += 4;
-            else TimesToGrow += 1;
-        }
-
-        //napravi izracunati potez
-        public void Move ()
-        {
-            age++; timeLeft--;
-            if (timeLeft == 0)
-            {
-                isDead = true;
-            }
-
-            Vector2 Velocity = baseVelocity * VelocityModifier;
-            Vector2 NewHeadPosition = HeadPosition + Velocity;
-
-            if (WillDie(NewHeadPosition))
-            {
-                isDead = true;
-            }
-
-            if (NewHeadPosition == CurrentFoodUnit.Location())
-            {
-                Eat(CurrentFoodUnit, NewHeadPosition);
-            }
-
-            //if snake needs to grow don't remove the last body part
-            if (TimesToGrow > 0)
-            {
-                TimesToGrow--;
-                Vector2 newBodyPart = new Vector2(HeadPosition); //old head possition becomes new bodyPart
-                BodyParts.Enqueue(newBodyPart); //add to bodyParts old head possition
-                HeadPosition = NewHeadPosition; //update head possition
-                length++;
-            }
-            else
-            {
-                Vector2 newBodyPart = new Vector2(HeadPosition); //old head possition becomes new bodyPart
-                BodyParts.Dequeue();    //remove the last bodyPart
-                BodyParts.Enqueue(newBodyPart); //add to bodyParts old head possition
-                HeadPosition = NewHeadPosition; //update head possition
-            }
-        }
-
+        
         //calculate fitness of a snake
         public void CalculateFitness ()
         {
@@ -284,16 +173,6 @@ namespace Snake.Entities
             returnInfo [2] = 1 / distance;
 
             return returnInfo;
-        }
-
-        //helper function, check if snake is inside game area
-        private bool IsInsideGameArea (Vector2 position)
-        {
-            if (position.X < 0 || 
-                position.Y < 0 || 
-                position.X >= WorldRenderer.instance.World.Dimensions.X || 
-                position.Y >= WorldRenderer.instance.World.Dimensions.Y) return false;
-            return true;
         }
     }
 }
