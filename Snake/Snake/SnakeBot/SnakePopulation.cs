@@ -27,7 +27,7 @@ namespace Snake
         static SnakePopulation () { rnd = new Random(); }
 
         //construct
-        public SnakePopulation (int size, double mutationRate = 0.05) //default mutation rate 5% ->guess
+        public SnakePopulation (int size, double mutationRate = 0.5) //default mutation rate 5% ->guess
         {
             //odredi snakePopulationId na random
             using (RNGCryptoServiceProvider rg = new RNGCryptoServiceProvider())
@@ -89,8 +89,9 @@ namespace Snake
             //update/reset population params
             currentGenerationNo++;
             currentBest = 4;
-            currentBestFitness = 0;
-            CurrentBestSnakeIdx = 0;
+            //globalBestFitness = 0;
+            //currentBestFitness = 0;
+            //CurrentBestSnakeIdx = 0;
         }
 
         //helper function, determine global best snake

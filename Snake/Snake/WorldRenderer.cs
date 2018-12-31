@@ -45,9 +45,10 @@ namespace Snake
         public static void RenderSnake ()
         {
             instance.snakeLabel.Text = "Best Snake Idx: " + instance.World.Species [0].CurrentBestSnakeIdx.ToString();
+            int idx = 0;
             foreach (Snake snake in instance.World.Species [0].Snakes)
             {
-                if (snake.isDead)
+                if (snake.isDead/* || idx++ > 0*/)
                 {
                     continue;
                 }
@@ -62,7 +63,7 @@ namespace Snake
 
         private static void RenderPiece (Vector2 pos, Brush brush)
         {
-            instance.worldGraphics.FillRectangle(brush, new Rectangle(20 * pos.X, 20 + 20 * pos.Y, 20, 20));   
+            instance.worldGraphics.FillRectangle(brush, new Rectangle(20 * pos.X, 20 * pos.Y, 20, 20));   
         }
 
         public static void UpdateGenerationLabel (int gen)

@@ -11,7 +11,7 @@ namespace Snake
     {
         private int length;
         private ANN brain;
-        private double [] brainInput = new double [25]; //za 8 smjerova gledanja, udaljenost do tijela, zida i hrane + trenutna brzina kretanja zmije
+        private double [] brainInput = new double [24]; //za 8 smjerova gledanja, udaljenost do tijela, zida i hrane + trenutna brzina kretanja zmije
         private double [] brainOutput = new double [4]; //iduci korak, gore, dolje, lijevo, desno
         private int age;    //koliko je zivjela do sad
         private double timeLeft;  //koliko jos moze zivjet prije nego umre od gladi
@@ -34,7 +34,7 @@ namespace Snake
             HeadPosition = new Vector2(dims.X / 2, dims.Y / 2);
             length = 4;         //zmija pocinje sa duljinom 4
             BodyParts = new Queue<Vector2>();
-            brain = new ANN(25, 18, 4);
+            brain = new ANN(24, 18, 4);
             age = 0;
             Fitness = 0;
             timeLeft = 200;
@@ -92,7 +92,9 @@ namespace Snake
             {
                 if (position.X == bodyPart.X &&
                     position.Y == bodyPart.Y)
+                {
                     return true;
+                }
             }
             return false;
 
@@ -131,12 +133,18 @@ namespace Snake
         public void Move ()
         {
             age++; timeLeft--;
-            if (timeLeft == 0) isDead = true;
+            if (timeLeft == 0)
+            {
+                isDead = true;
+            }
 
             Vector2 Velocity = baseVelocity * VelocityModifier;
             Vector2 NewHeadPosition = HeadPosition + Velocity;
 
-            if (WillDie(NewHeadPosition)) isDead = true;
+            if (WillDie(NewHeadPosition))
+            {
+                isDead = true;
+            }
 
             if (NewHeadPosition == CurrentFoodUnit.Location())
             {
@@ -241,8 +249,8 @@ namespace Snake
             brainInput [22] = directionInfo [1];
             brainInput [23] = directionInfo [2];
 
-            //add current velocity to the imput
-            brainInput [24] = VelocityModifier;
+            ////add current velocity to the imput
+            //brainInput [24] = VelocityModifier;
         }
 
         //helper function for getting brain input
@@ -268,6 +276,7 @@ namespace Snake
                 if (!foundBody && WillEatBody(SearchPosition))
                 {
                     returnInfo [1] = 1 / distance;
+                    foundBody = true;
                 }
             }
             //after reaching the wall return info about it

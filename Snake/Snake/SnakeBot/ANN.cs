@@ -69,23 +69,20 @@ namespace Snake
         public ANN Crossover (ANN partner)
         {
             //napravi dijete cije su tezine dobivene crossoverom tezina this i partnera
-            ANN child = new ANN(brInput, brHidden, brOutput) {
-                //postavi tezine dijeteta
-                whi = this.whi.Crossover(partner.whi),
-                whh = this.whh.Crossover(partner.whh),
-                who = this.who.Crossover(partner.who)
-            };
+            ANN child = new ANN(brInput, brHidden, brOutput);
+            child.whi = whi.Crossover(partner.whi);
+            child.whh = whh.Crossover(partner.whh);
+            child.who = who.Crossover(partner.who);
             return child;
         }
 
         //kloniraj neuralnu
         public ANN Clone ()
         {
-            ANN ret = new ANN(brInput, brHidden, brOutput) {
-                whi = this.whi.Clone(),
-                whh = this.whh.Clone(),
-                who = this.who.Clone()
-            };
+            ANN ret = new ANN(brInput, brHidden, brOutput);
+            ret.whi = whi.Clone();
+            ret.whh = whh.Clone();
+            ret.who = who.Clone();
             return ret;
         }
 
