@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography; //za RNG
 
-namespace Snake
+namespace Snake.Utils
 {
     class Matrica: IEnumerable
     {
