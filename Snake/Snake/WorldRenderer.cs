@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Snake.Utils;
+using Snake.World;
+using Snake.Entities;
 
 namespace Snake
 {
@@ -13,14 +15,14 @@ namespace Snake
     {
         public static WorldRenderer instance;
 
-        public World World { get; set; }
+        public BotWorld World { get; set; }
         private readonly Color backgroundColor = Color.Black;
         private readonly Bitmap worldField;
         private readonly Graphics worldGraphics;
         private Label generationLabel;
         private Label snakeLabel;
 
-        private WorldRenderer (World _world, WorldForm _worldForm)
+        private WorldRenderer (BotWorld _world, WorldForm _worldForm)
         {
             World = _world;
             worldField = new Bitmap(20 * _world.Dimensions.X, 20 * _world.Dimensions.Y);
@@ -31,7 +33,7 @@ namespace Snake
             snakeLabel = _worldForm.snakeLabel;
         }
 
-		public static void Init (World _world, WorldForm _worldForm)
+		public static void Init (BotWorld _world, WorldForm _worldForm)
         {
             instance = new WorldRenderer(_world, _worldForm);
         }
@@ -47,7 +49,7 @@ namespace Snake
         {
             instance.snakeLabel.Text = "Best Snake Idx: " + instance.World.Species [0].CurrentBestSnakeIdx.ToString();
             int idx = 0;
-            foreach (Snake snake in instance.World.Species [0].Snakes)
+            foreach (BotSnake snake in instance.World.Species [0].Snakes)
             {
                 if (snake.isDead/* || idx++ > 0*/)
                 {

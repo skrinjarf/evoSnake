@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Snake.Utils;
 
-namespace Snake
+namespace Snake.Entities
 {
     //klasa koja opisuje hranu
     public class Food

@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Snake.Utils;
 
-namespace Snake
+namespace Snake.Entities
 {
     //klasa reprezentira pojedinu zmiju koju pogoni ANN 
-    public class Snake
+    public class BotSnake
     {
         private int length;
         private ANN brain;
@@ -29,7 +29,7 @@ namespace Snake
 		public Vector2 HeadPosition { get; set; }
 		public Queue<Vector2> BodyParts { get; set; }
 
-		public Snake ()
+		public BotSnake ()
         {
             Vector2 dims = WorldRenderer.instance.World.Dimensions;
             HeadPosition = new Vector2(dims.X / 2, dims.Y / 2);
@@ -178,17 +178,17 @@ namespace Snake
         }
 
         //do crossover with partner Snake
-        public Snake Crossover (Snake partner)
+        public BotSnake Crossover (BotSnake partner)
         {
-            Snake Child = new Snake();
+            BotSnake Child = new BotSnake();
             Child.brain = brain.Crossover(partner.brain);
             return Child;
         }
 
         //clone brain of current snake
-        public Snake Clone ()
+        public BotSnake Clone ()
         {
-            Snake clonedSnake = new Snake();
+            BotSnake clonedSnake = new BotSnake();
             clonedSnake.brain = brain.Clone();
             clonedSnake.isDead = false;
             return clonedSnake;

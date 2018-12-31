@@ -4,20 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Snake.Utils;
+using Snake.Entities;
+using Snake.Evolution;
 
-namespace Snake
+namespace Snake.World
 {
-    public class World
+    public class BotWorld
     {
         public Vector2 Dimensions;
         private int gen = 0; // current generation
         private int maxGen;
         private int worldBestScore = 0; // the best score of the best snake out of all populations
-        private Snake snake;
+        private BotSnake snake;
 
 		internal SnakePopulation [] Species { get; set; }
 
-		public World (Vector2 dimensions)
+		public BotWorld (Vector2 dimensions)
         {
             Dimensions = dimensions;
         }
