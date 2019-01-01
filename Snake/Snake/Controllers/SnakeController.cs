@@ -22,20 +22,40 @@ namespace SnakeGame.Controllers
 
         public static void MoveSnake (object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Left && instance.snake.BaseVelocity != new Vector2(1, 0))
+            if (e.KeyCode == Keys.Left)
             {
+                Vector2 predictedPos = instance.snake.HeadPosition + new Vector2(-1, 0);
+                if (instance.snake.BodyParts.ToList().Find(x => x == predictedPos) != null)
+                {
+                    return;
+                }
                 instance.snake.BaseVelocity = new Vector2(-1, 0);
             }
-            else if (e.KeyCode == Keys.Right && instance.snake.BaseVelocity != new Vector2(-1, 0))
+            else if (e.KeyCode == Keys.Right)
             {
+                Vector2 predictedPos = instance.snake.HeadPosition + new Vector2(1, 0);
+                if (instance.snake.BodyParts.ToList().Find(x => x == predictedPos) != null)
+                {
+                    return;
+                }
                 instance.snake.BaseVelocity = new Vector2(1, 0);
             }
-            else if (e.KeyCode == Keys.Up && instance.snake.BaseVelocity != new Vector2(0, 1))
+            else if (e.KeyCode == Keys.Up)
             {
+                Vector2 predictedPos = instance.snake.HeadPosition + new Vector2(0, -1);
+                if (instance.snake.BodyParts.ToList().Find(x => x == predictedPos) != null)
+                {
+                    return;
+                }
                 instance.snake.BaseVelocity = new Vector2(0, -1);
             }
-            else if (e.KeyCode == Keys.Down && instance.snake.BaseVelocity != new Vector2(0, -1))
+            else if (e.KeyCode == Keys.Down)
             {
+                Vector2 predictedPos = instance.snake.HeadPosition + new Vector2(0, 1);
+                if (instance.snake.BodyParts.ToList().Find(x => x == predictedPos) != null)
+                {
+                    return;
+                }
                 instance.snake.BaseVelocity = new Vector2(0, 1);
             }
         }
