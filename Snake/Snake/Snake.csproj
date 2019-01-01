@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configerator.cs" />
+    <Compile Include="Controllers\SnakeController.cs" />
     <Compile Include="Entities\Snake.cs" />
     <Compile Include="Utils\ANN.cs" />
     <Compile Include="Entities\Food.cs" />
@@ -61,7 +63,7 @@
     <Compile Include="Entities\BotSnake.cs" />
     <Compile Include="Evolution\SnakePopulation.cs" />
     <Compile Include="Utils\Vector2.cs" />
-    <Compile Include="World\BotWorld.cs" />
+    <Compile Include="WorldSystem\BotWorld.cs" />
     <Compile Include="WorldForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -69,7 +71,7 @@
       <DependentUpon>WorldForm.cs</DependentUpon>
     </Compile>
     <Compile Include="WorldRenderer.cs" />
-    <Compile Include="World\World.cs" />
+    <Compile Include="WorldSystem\World.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

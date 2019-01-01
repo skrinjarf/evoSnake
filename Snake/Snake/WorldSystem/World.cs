@@ -1,16 +1,21 @@
-﻿using Snake.Utils;
-using Snake.Entities;
+﻿using SnakeGame.Utils;
+using SnakeGame.Entities;
 
-namespace Snake.World
+namespace SnakeGame.WorldSystem
 {
     public class World
     {
         public Vector2 Dimensions;
-        protected BotSnake snake;
+        public Snake snake;
 
         public World (Vector2 dimensions)
         {
             Dimensions = dimensions;
+        }
+
+        public void InitSnake ()
+        {
+            snake = new Snake();
         }
 
         public virtual void DoStep ()

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snake.Utils;
+using SnakeGame.Utils;
 
-namespace Snake.Entities
+namespace SnakeGame.Entities
 {
     //klasa reprezentira pojedinu zmiju koju pogoni ANN 
     public class BotSnake: Snake
@@ -40,20 +40,20 @@ namespace Snake.Entities
             switch (maxIdx)
             {
                 case 0://desno
-                    baseVelocity.X = 1;
-                    baseVelocity.Y = 0;
+                    BaseVelocity.X = 1;
+                    BaseVelocity.Y = 0;
                     break;
                 case 1://gore
-                    baseVelocity.X = 0;
-                    baseVelocity.Y = 1;
+                    BaseVelocity.X = 0;
+                    BaseVelocity.Y = 1;
                     break;
                 case 2://lijevo
-                    baseVelocity.X = -1;
-                    baseVelocity.Y = 0;
+                    BaseVelocity.X = -1;
+                    BaseVelocity.Y = 0;
                     break;
                 default://dole
-                    baseVelocity.X = 0;
-                    baseVelocity.Y = -1;
+                    BaseVelocity.X = 0;
+                    BaseVelocity.Y = -1;
                     break;
                     //promijeni odgovarajuce vrijednosti da se opterecujemo GC
             }

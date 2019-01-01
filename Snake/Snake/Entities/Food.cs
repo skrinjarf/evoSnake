@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snake.Utils;
+using SnakeGame.Utils;
 
-namespace Snake.Entities
+namespace SnakeGame.Entities
 {
     //klasa koja opisuje hranu
     public class Food

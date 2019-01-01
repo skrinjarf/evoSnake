@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using Snake.Utils;
+using SnakeGame.Utils;
 
-namespace Snake.Entities
+namespace SnakeGame.Entities
 {
     public class Snake
     {
         protected int length;
         protected int age;
         private double timeLeft;
-        protected Vector2 baseVelocity = new Vector2(1, 0);
 
         public Vector2 HeadPosition { get; set; }
         public Queue<Vector2> BodyParts { get; set; }
@@ -18,6 +17,7 @@ namespace Snake.Entities
         public double VelocityModifier { get; set; } //kako igra napreduje zmija se krece sve brze. 
         private int TimesToGrow { get; set; }
         public int Length { get; } // iz vana se moze samo procitat vrijednost duljine
+		public Vector2 BaseVelocity { get; set; } = new Vector2 (1, 0);
 
         public Snake ()
         {
@@ -48,7 +48,7 @@ namespace Snake.Entities
                 isDead = true;
             }
 
-            Vector2 Velocity = baseVelocity * VelocityModifier;
+            Vector2 Velocity = BaseVelocity * VelocityModifier;
             Vector2 NewHeadPosition = HeadPosition + Velocity;
 
             if (WillDie(NewHeadPosition))

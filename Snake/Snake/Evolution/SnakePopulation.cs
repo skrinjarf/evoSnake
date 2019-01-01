@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
-using Snake.Entities;
+using SnakeGame.Entities;
 
-namespace Snake.Evolution
+namespace SnakeGame.Evolution
 {
     class SnakePopulation
     {

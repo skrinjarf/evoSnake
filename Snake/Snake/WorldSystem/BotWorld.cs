@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Snake.Utils;
-using Snake.Entities;
-using Snake.Evolution;
+using SnakeGame.Utils;
+using SnakeGame.Entities;
+using SnakeGame.Evolution;
 
-namespace Snake.World
+namespace SnakeGame.WorldSystem
 {
     public class BotWorld: World
     {
@@ -65,8 +65,8 @@ namespace Snake.World
 
         public override void UpdateSnake ()
         {
-            snake.GetBrainInput();
-            snake.CalculateNextMove();
+            ((BotSnake)snake).GetBrainInput();
+            ((BotSnake)snake).CalculateNextMove();
             snake.Move();
         }
 

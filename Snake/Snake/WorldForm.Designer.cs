@@ -1,4 +1,4 @@
-﻿namespace Snake
+﻿namespace SnakeGame
 {
     partial class WorldForm
     {
@@ -67,6 +67,7 @@
 			this.Name = "WorldForm";
 			this.Text = "WorldForm";
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint);
+			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

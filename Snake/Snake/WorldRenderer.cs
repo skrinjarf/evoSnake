@@ -5,24 +5,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Snake.Utils;
-using Snake.World;
-using Snake.Entities;
+using SnakeGame.Utils;
+using SnakeGame.WorldSystem;
+using SnakeGame.Entities;
 
-namespace Snake
+namespace SnakeGame
 {
     public class WorldRenderer
     {
         public static WorldRenderer instance;
 
-        public BotWorld World { get; set; }
+        public World World { get; set; }
         private readonly Color backgroundColor = Color.Black;
         private readonly Bitmap worldField;
         private readonly Graphics worldGraphics;
         private Label generationLabel;
         private Label snakeLabel;
 
-        private WorldRenderer (BotWorld _world, WorldForm _worldForm)
+        private WorldRenderer (World _world, WorldForm _worldForm)
         {
             World = _world;
             worldField = new Bitmap(20 * _world.Dimensions.X, 20 * _world.Dimensions.Y);
@@ -33,7 +33,7 @@ namespace Snake
             snakeLabel = _worldForm.snakeLabel;
         }
 
-		public static void Init (BotWorld _world, WorldForm _worldForm)
+		public static void Init (World _world, WorldForm _worldForm)
         {
             instance = new WorldRenderer(_world, _worldForm);
         }
@@ -47,14 +47,28 @@ namespace Snake
 
         public static void RenderSnake ()
         {
-            instance.snakeLabel.Text = "Best Snake Idx: " + instance.World.Species [0].CurrentBestSnakeIdx.ToString();
-            int idx = 0;
-            foreach (BotSnake snake in instance.World.Species [0].Snakes)
+            if (Configerator.instance.GameType == Configerator.Game.bot)
             {
-                if (snake.isDead/* || idx++ > 0*/)
+                BotWorld botWorld = (BotWorld)instance.World;
+                instance.snakeLabel.Text = "Best Snake Idx: " + botWorld.Species [0].CurrentBestSnakeIdx.ToString();
+                int idx = 0;
+                foreach (BotSnake snake in botWorld.Species [0].Snakes)
                 {
-                    continue;
+                    if (snake.isDead/* || idx++ > 0*/)
+                    {
+                        continue;
+                    }
+                    RenderPiece(snake.HeadPosition, Brushes.Red);
+                    foreach (Vector2 part in snake.BodyParts)
+                    {
+                        RenderPiece(part, Brushes.White);
+                    }
+                    RenderPiece(snake.CurrentFoodUnit.Location(), Brushes.Yellow);
                 }
+            }
+            else
+            {
+                Snake snake = instance.World.snake;
                 RenderPiece(snake.HeadPosition, Brushes.Red);
                 foreach (Vector2 part in snake.BodyParts)
                 {
