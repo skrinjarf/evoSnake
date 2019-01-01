@@ -20,6 +20,7 @@ namespace SnakeGame
         public WorldForm ()
         {
             InitializeComponent();
+            UpdateVisibility();
             if (Configerator.instance.GameType == Configerator.Game.bot)
             {
                 world = new BotWorld(new Vector2(30, 30));
@@ -36,6 +37,19 @@ namespace SnakeGame
                 timer1.Interval = 1000 / 30;
             }
             timer1.Start();
+        }
+
+        private void UpdateVisibility ()
+        {
+            if (Configerator.instance.GameType == Configerator.Game.bot)
+            {
+                generationLabel.Visible = true;
+                snakeLabel.Visible = true;
+            }
+            else if (Configerator.instance.GameType == Configerator.Game.player)
+            {
+                scoreLabel.Visible = true;
+            }
         }
 
         private void OnKeyDown (object sender, KeyEventArgs e)

@@ -21,6 +21,7 @@ namespace SnakeGame
         private readonly Graphics worldGraphics;
         private Label generationLabel;
         private Label snakeLabel;
+        private Label scoreLabel;
 
         private WorldRenderer (World _world, WorldForm _worldForm)
         {
@@ -31,6 +32,7 @@ namespace SnakeGame
             _worldForm.ClientSize = new Size(0 + _world.Dimensions.X * 20, 20 + _world.Dimensions.Y * 20);
             generationLabel = _worldForm.generationLabel;
             snakeLabel = _worldForm.snakeLabel;
+            scoreLabel = _worldForm.scoreLabel;
         }
 
 		public static void Init (World _world, WorldForm _worldForm)
@@ -86,6 +88,11 @@ namespace SnakeGame
         public static void UpdateGenerationLabel (int gen)
         {
             instance.generationLabel.Text = "Generation: " + gen.ToString();
+        }
+
+        public static void UpdateScoreLabel (int score)
+        {
+            instance.scoreLabel.Text = "Score: " + score.ToString();
         }
     }
 }

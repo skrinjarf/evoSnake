@@ -24,6 +24,7 @@ namespace SnakeGame.Entities
             Vector2 dims = WorldRenderer.instance.World.Dimensions;
             HeadPosition = new Vector2(dims.X / 2, dims.Y / 2);
             length = 4;
+            WorldRenderer.UpdateScoreLabel(length);
             BodyParts = new Queue<Vector2>();
             age = 0;
             timeLeft = 200;
@@ -69,6 +70,7 @@ namespace SnakeGame.Entities
                 BodyParts.Enqueue(newBodyPart); //add to bodyParts old head possition
                 HeadPosition = NewHeadPosition; //update head possition
                 length++;
+                WorldRenderer.UpdateScoreLabel(length);
             }
             else
             {

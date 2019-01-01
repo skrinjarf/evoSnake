@@ -32,6 +32,7 @@
 			this.timer1 = new System.Windows.Forms.Timer(this.components);
 			this.generationLabel = new System.Windows.Forms.Label();
 			this.snakeLabel = new System.Windows.Forms.Label();
+			this.scoreLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -46,6 +47,7 @@
 			this.generationLabel.Size = new System.Drawing.Size(95, 17);
 			this.generationLabel.TabIndex = 0;
 			this.generationLabel.Text = "Generation: 0";
+			this.generationLabel.Visible = false;
 			// 
 			// snakeLabel
 			// 
@@ -55,12 +57,24 @@
 			this.snakeLabel.Size = new System.Drawing.Size(125, 17);
 			this.snakeLabel.TabIndex = 1;
 			this.snakeLabel.Text = "Best Snake Idx: 10";
+			this.snakeLabel.Visible = false;
+			// 
+			// scoreLabel
+			// 
+			this.scoreLabel.AutoSize = true;
+			this.scoreLabel.Location = new System.Drawing.Point(0, 0);
+			this.scoreLabel.Name = "scoreLabel";
+			this.scoreLabel.Size = new System.Drawing.Size(69, 17);
+			this.scoreLabel.TabIndex = 2;
+			this.scoreLabel.Text = "Score: 10";
+			this.scoreLabel.Visible = false;
 			// 
 			// WorldForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(782, 753);
+			this.Controls.Add(this.scoreLabel);
 			this.Controls.Add(this.snakeLabel);
 			this.Controls.Add(this.generationLabel);
 			this.DoubleBuffered = true;
@@ -78,5 +92,6 @@
         private System.Windows.Forms.Timer timer1;
         public System.Windows.Forms.Label generationLabel;
         public System.Windows.Forms.Label snakeLabel;
+        public System.Windows.Forms.Label scoreLabel;
     }
 }
