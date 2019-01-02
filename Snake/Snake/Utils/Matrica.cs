@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 
-namespace Snake
+namespace SnakeGame.Utils
 {
     class Matrica: IEnumerable
     {

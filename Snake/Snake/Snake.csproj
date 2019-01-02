@@ -46,21 +46,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SnakeBot\ANN.cs" />
-    <Compile Include="SnakeBot\Food.cs" />
+    <Compile Include="Configerator.cs" />
+    <Compile Include="Controllers\SnakeController.cs" />
+    <Compile Include="Entities\Snake.cs" />
+    <Compile Include="Utils\ANN.cs" />
+    <Compile Include="Entities\Food.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="SnakeBot\Matrica.cs" />
+    <Compile Include="Utils\Matrica.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SnakeBot\Snake.cs" />
-    <Compile Include="SnakeBot\SnakePopulation.cs" />
-    <Compile Include="SnakeBot\Vector2.cs" />
-    <Compile Include="World.cs" />
+    <Compile Include="Entities\BotSnake.cs" />
+    <Compile Include="Evolution\SnakePopulation.cs" />
+    <Compile Include="Utils\Vector2.cs" />
+    <Compile Include="WorldSystem\BotWorld.cs" />
     <Compile Include="WorldForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +71,7 @@
       <DependentUpon>WorldForm.cs</DependentUpon>
     </Compile>
     <Compile Include="WorldRenderer.cs" />
+    <Compile Include="WorldSystem\World.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

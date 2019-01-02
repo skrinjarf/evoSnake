@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Snake
+namespace SnakeGame
 {
     static class Program
     {

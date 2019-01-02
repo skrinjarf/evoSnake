@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using SnakeGame.Entities;
 
-namespace Snake
+namespace SnakeGame.Evolution
 {
     class SnakePopulation
     {
@@ -16,8 +17,8 @@ namespace Snake
         public double PopulationMutationRate;
 
         public double GlobalBestFitness { get => globalBestFitness; set => globalBestFitness = value; }
-		public Snake GlobalBestSnake { get; set; }
-		public Snake [] Snakes { get; set; }
+		public BotSnake GlobalBestSnake { get; set; }
+		public BotSnake [] Snakes { get; set; }
 		public int CurrentBestSnakeIdx { get; set; } = 0;
 		public int GlobalBest { get; set; } = 4;
 
@@ -35,8 +36,8 @@ namespace Snake
                 snakePopulationId = BitConverter.ToInt32(rno, 0);
             }
 
-            Snakes = new Snake [size];
-            for (int i = 0; i < Snakes.Length; ++i) Snakes [i] = new Snake();
+            Snakes = new BotSnake [size];
+            for (int i = 0; i < Snakes.Length; ++i) Snakes [i] = new BotSnake();
             GlobalBestSnake = Snakes [0].Clone();
             PopulationMutationRate = mutationRate;
         }
@@ -69,21 +70,21 @@ namespace Snake
 
         public void CreateNextGeneration ()
         {
-            Snake [] NextGen = new Snake [Snakes.Length];
+            BotSnake [] NextGen = new BotSnake [Snakes.Length];
             setBestSnake(); //determine the best snake so far and save it in globalBestSnake
             NextGen [0] = GlobalBestSnake.Clone();
 
             for (int i = 1; i < NextGen.Length; ++i)
             {
-                Snake firstPartner = selectSnake();
-                Snake secondPartner = selectSnake();
+                BotSnake firstPartner = selectSnake();
+                BotSnake secondPartner = selectSnake();
 
-                Snake child = firstPartner.Crossover(secondPartner);
+                BotSnake child = firstPartner.Crossover(secondPartner);
                 child.Mutate(PopulationMutationRate);
 
                 NextGen [i] = child;
             }
-            Snakes = (Snake [])NextGen.Clone();
+            Snakes = (BotSnake [])NextGen.Clone();
             //update/reset population params
             currentGenerationNo++;
             currentBest = 4;
@@ -119,19 +120,19 @@ namespace Snake
         //selection inspired by simmulated annealing, pick random number less than the sum of all fitnesses
         //pick snakes randomly and add their fitnesses until the sum becomes greater than random value, than choose the last snake
         //probability of a snake being picked is herFitness/totalFitness 
-        private Snake selectSnake ()
+        private BotSnake selectSnake ()
         {
             double fitnessSum = 0;
-            foreach (Snake s in Snakes) fitnessSum += s.Fitness;
+            foreach (BotSnake s in Snakes) fitnessSum += s.Fitness;
 
             double randomValue = rnd.NextDouble() * fitnessSum; //random double in [0..fitnessSum>
 
             //shuffle the snakes so that only the fitness afects the likelihood of a snake being choosen 
-            List<Snake> tempList = Snakes.ToList();
+            List<BotSnake> tempList = Snakes.ToList();
             //shuffle(tempList);
 
             double tempSum = 0;
-            foreach (Snake s in tempList)
+            foreach (BotSnake s in tempList)
             {
                 tempSum += s.Fitness;
                 if (tempSum > randomValue)
@@ -142,7 +143,7 @@ namespace Snake
         }
 
         //helper function which shuffles lists of items using Fisher–Yates shuffle and secure random number generator
-        private void shuffle (List<Snake> list)
+        private void shuffle (List<BotSnake> list)
         {
             RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
             int n = list.Count;
@@ -153,7 +154,7 @@ namespace Snake
                 while (!(box [0] < n * (Byte.MaxValue / n)));
                 int k = (box [0] % n);
                 n--;
-                Snake value = list [k];
+                BotSnake value = list [k];
                 list [k] = list [n];
                 list [n] = value;
             }
@@ -161,7 +162,7 @@ namespace Snake
 
         public void MutatePopulation ()
         {
-            foreach (Snake s in Snakes) s.Mutate(PopulationMutationRate);
+            foreach (BotSnake s in Snakes) s.Mutate(PopulationMutationRate);
         }
 
         private void setCurrentBestSnake ()

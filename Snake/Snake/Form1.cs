@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Snake
+namespace SnakeGame
 {
     public partial class Form1 : Form
     {
@@ -10,7 +10,19 @@ namespace Snake
             InitializeComponent();
         }
 
-        private void button1_Click (object sender, EventArgs e)
+        private void TrainSnakes (object sender, EventArgs e)
+        {
+            Configerator.instance.GameType = Configerator.Game.bot;
+            OpenWorldForm();
+        }
+
+        private void StartGame (object sender, EventArgs e)
+        {
+            Configerator.instance.GameType = Configerator.Game.player;
+            OpenWorldForm();
+        }
+
+        private void OpenWorldForm ()
         {
             WorldForm form = new WorldForm();
             form.Show();
