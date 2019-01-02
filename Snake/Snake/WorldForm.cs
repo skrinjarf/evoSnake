@@ -33,7 +33,7 @@ namespace SnakeGame
                 WorldRenderer.Init(world, this);
                 world.InitSnake();
                 SnakeController.SetSnake(world.snake);
-                timer1.Interval = 1000 / 30;
+                timer1.Interval = 1000 / 2;
             }
             timer1.Start();
         }

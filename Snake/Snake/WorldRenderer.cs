@@ -4,6 +4,7 @@ using SnakeGame.Utils;
 using SnakeGame.WorldSystem;
 using SnakeGame.Entities;
 using SnakeGame.Items;
+using SnakeGame.Controllers;
 
 namespace SnakeGame
 {
@@ -19,6 +20,7 @@ namespace SnakeGame
         private Label snakeLabel;
         private Label scoreLabel;
         private Label deathTitle;
+        private Label reverseLabel;
         private Button restartButton;
         private Button menuButton;
 
@@ -33,6 +35,7 @@ namespace SnakeGame
             snakeLabel = _worldForm.snakeLabel;
             scoreLabel = _worldForm.scoreLabel;
             deathTitle = _worldForm.deathTitle;
+            reverseLabel = _worldForm.reverseLabel;
             restartButton = _worldForm.restartButton;
             menuButton = _worldForm.menuButton;
         }
@@ -117,6 +120,15 @@ namespace SnakeGame
             instance.deathTitle.Visible = false;
             instance.restartButton.Visible = false;
             instance.menuButton.Visible = false;
+        }
+
+        public static void UpdateReverseLabel (int time)
+        {
+            instance.reverseLabel.Visible = time > 0;
+            if (time > 0)
+            {
+                instance.reverseLabel.Text = "Reversed Controls: " + time.ToString();
+            }
         }
     }
 }

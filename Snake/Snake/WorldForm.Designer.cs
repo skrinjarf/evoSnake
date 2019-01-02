@@ -36,6 +36,7 @@
 			this.deathTitle = new System.Windows.Forms.Label();
 			this.restartButton = new System.Windows.Forms.Button();
 			this.menuButton = new System.Windows.Forms.Button();
+			this.reverseLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -110,11 +111,22 @@
 			this.menuButton.Visible = false;
 			this.menuButton.Click += new System.EventHandler(this.CloseForm);
 			// 
+			// reverseLabel
+			// 
+			this.reverseLabel.AutoSize = true;
+			this.reverseLabel.Location = new System.Drawing.Point(75, 0);
+			this.reverseLabel.Name = "reverseLabel";
+			this.reverseLabel.Size = new System.Drawing.Size(149, 17);
+			this.reverseLabel.TabIndex = 6;
+			this.reverseLabel.Text = "Reversed Controls: 10";
+			this.reverseLabel.Visible = false;
+			// 
 			// WorldForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(782, 753);
+			this.Controls.Add(this.reverseLabel);
 			this.Controls.Add(this.menuButton);
 			this.Controls.Add(this.restartButton);
 			this.Controls.Add(this.deathTitle);
@@ -140,5 +152,6 @@
         public System.Windows.Forms.Label deathTitle;
         public System.Windows.Forms.Button restartButton;
         public System.Windows.Forms.Button menuButton;
+        public System.Windows.Forms.Label reverseLabel;
     }
 }
