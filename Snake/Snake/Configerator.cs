@@ -9,6 +9,7 @@
         public bool MovementToBodyEnabled { get; set; }
         public bool ItemsEnabled { get; set; }
         public bool WallsEnabled { get; set; }
+        public bool TransparentAreasEnabled { get; set; }
 
         public static Configerator instance = new Configerator();
 	}

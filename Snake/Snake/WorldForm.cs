@@ -36,7 +36,10 @@ namespace SnakeGame
                 {
                     world.InitWalls();
                 }
-                world.InitTransparentAreas();
+                if (Configerator.instance.TransparentAreasEnabled)
+                {
+                    world.InitTransparentAreas();
+                }
                 SnakeController.SetSnake(world.snake);
                 timer1.Interval = 1000 / 30;
             }
