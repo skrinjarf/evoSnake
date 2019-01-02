@@ -40,10 +40,13 @@ namespace SnakeGame.Entities
             BodyParts.Enqueue(HeadPosition - new Vector2(2, 0));
             BodyParts.Enqueue(HeadPosition - new Vector2(1, 0));
             CurrentFoodUnit = new Food();
-            LengthModifier l = new LengthModifier(3);
-            DirectionModifier d = new DirectionModifier();
-            ControlsModifier c = new ControlsModifier(10);
-            ScoreModifier s = new ScoreModifier(-2);
+            if (Configerator.instance.ItemsEnabled)
+            {
+                LengthModifier l = new LengthModifier(3);
+                DirectionModifier d = new DirectionModifier();
+                ControlsModifier c = new ControlsModifier(10);
+                ScoreModifier s = new ScoreModifier(-2);
+            }
             VelocityModifier = 1;
             TimesToGrow = 0;
         }
