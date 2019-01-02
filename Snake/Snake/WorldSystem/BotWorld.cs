@@ -1,6 +1,7 @@
 ﻿using SnakeGame.Utils;
 using SnakeGame.Entities;
 using SnakeGame.Evolution;
+
 namespace SnakeGame.WorldSystem
 {
     public class BotWorld: World

@@ -4,7 +4,6 @@ using SnakeGame.Utils;
 using SnakeGame.WorldSystem;
 using SnakeGame.Entities;
 using SnakeGame.Items;
-using SnakeGame.Controllers;
 
 namespace SnakeGame
 {
