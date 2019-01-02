@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Configerator.cs" />
     <Compile Include="Controllers\SnakeController.cs" />
+    <Compile Include="Effects\TransparentArea.cs" />
     <Compile Include="Entities\Snake.cs" />
     <Compile Include="Items\ControlsModifier.cs" />
     <Compile Include="Items\DirectionModifier.cs" />

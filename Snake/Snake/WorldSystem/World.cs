@@ -3,6 +3,7 @@ using SnakeGame.Entities;
 using SnakeGame.Items;
 using SnakeGame.Controllers;
 using SnakeGame.Obstacles;
+using SnakeGame.Effects;
 
 namespace SnakeGame.WorldSystem
 {
@@ -16,6 +17,7 @@ namespace SnakeGame.WorldSystem
             Dimensions = dimensions;
             Item.allItems.Clear();
             Wall.allWalls.Clear();
+            TransparentArea.allAreas.Clear();
         }
 
         public void InitSnake ()
@@ -30,6 +32,11 @@ namespace SnakeGame.WorldSystem
             Wall.allWalls.Add(new Wall(new Vector2(10, 12)));
             Wall.allWalls.Add(new Wall(new Vector2(10, 13)));
             Wall.allWalls.Add(new Wall(new Vector2(10, 14)));
+        }
+
+        public void InitTransparentAreas ()
+        {
+            TransparentArea.allAreas.Add(new TransparentArea(new Vector2(4, 4), new Vector2(10, 7)));
         }
 
         public virtual void DoStep ()

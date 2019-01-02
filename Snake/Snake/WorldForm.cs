@@ -36,6 +36,7 @@ namespace SnakeGame
                 {
                     world.InitWalls();
                 }
+                world.InitTransparentAreas();
                 SnakeController.SetSnake(world.snake);
                 timer1.Interval = 1000 / 30;
             }

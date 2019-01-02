@@ -5,6 +5,7 @@ using SnakeGame.WorldSystem;
 using SnakeGame.Entities;
 using SnakeGame.Items;
 using SnakeGame.Obstacles;
+using SnakeGame.Effects;
 
 namespace SnakeGame
 {
@@ -40,21 +41,22 @@ namespace SnakeGame
             menuButton = _worldForm.menuButton;
         }
 
-		public static void Init (World _world, WorldForm _worldForm)
+        public static void Init (World _world, WorldForm _worldForm)
         {
             instance = new WorldRenderer(_world, _worldForm);
         }
-        
+
         public static void Render (PaintEventArgs e)
         {
             instance.worldGraphics.Clear(instance.backgroundColor);
+            RenderTransparentAreas();
             RenderSnake();
             RenderItems();
             RenderWalls();
             e.Graphics.DrawImage(instance.worldField, 0, 20);
         }
 
-        public static void RenderSnake ()
+        private static void RenderSnake ()
         {
             if (Configerator.instance.GameType == Configerator.Game.bot)
             {
@@ -86,15 +88,15 @@ namespace SnakeGame
             }
         }
 
-        public static void RenderItems ()
+        private static void RenderItems ()
         {
-            foreach(Item item in Item.allItems)
+            foreach (Item item in Item.allItems)
             {
                 RenderPiece(item.Location(), item.Brush);
             }
         }
 
-        public static void RenderWalls ()
+        private static void RenderWalls ()
         {
             foreach (Wall wall in Wall.allWalls)
             {
@@ -102,11 +104,25 @@ namespace SnakeGame
             }
         }
 
+        private static void RenderTransparentAreas ()
+        {
+            foreach (TransparentArea area in TransparentArea.allAreas)
+            {
+                for (int i = area.TopLeft.X; i <= area.BottomRight.X; ++i)
+                {
+                    for (int j = area.TopLeft.Y; j <= area.BottomRight.Y; ++j)
+                    {
+                        RenderPiece(new Vector2(i, j), Brushes.LightBlue);
+                    }
+                }
+            }
+        }
+
         private static void RenderPiece (Vector2 pos, Brush brush)
         {
-            instance.worldGraphics.FillRectangle(brush, new Rectangle(20 * pos.X, 20 * pos.Y, 20, 20));   
+            instance.worldGraphics.FillRectangle(brush, new Rectangle(20 * pos.X, 20 * pos.Y, 20, 20));
         }
-        
+
         public static void UpdateGenerationLabel (int gen)
         {
             instance.generationLabel.Text = "Generation: " + gen.ToString();
