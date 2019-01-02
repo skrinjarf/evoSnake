@@ -8,8 +8,6 @@ Tasks for grabs:
 - Implement wall obstacle logic
 - Points pick up items (give you both positive/negative points)
 - Level completion item
-- Snake length modifier item
-- Snake direction modifier item
 - Reverse controls item
 - Info window for all items
 - Places where snake can go through its body
@@ -24,3 +22,5 @@ Done so far:
 - Moving snake by multiple fields (arrow + num key)
 - Moving snake to edge of board (arrow + shift key)
 - Moving snake to edge of its body (arrow + ctrl)
+- Snake length modifier item
+- Snake direction modifier item
