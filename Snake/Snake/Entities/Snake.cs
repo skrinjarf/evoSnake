@@ -9,18 +9,18 @@ namespace SnakeGame.Entities
     {
         protected int length;
         protected int age;
-        private double timeLeft;
 
         public Vector2 HeadPosition { get; set; }
         public Queue<Vector2> BodyParts { get; set; }
         public bool isDead;
         internal Food CurrentFoodUnit { get; set; }
         public double VelocityModifier { get; set; } //kako igra napreduje zmija se krece sve brze. 
-        private int TimesToGrow { get; set; }
+        public int TimesToGrow { get; set; }
         public int Length { get; } // iz vana se moze samo procitat vrijednost duljine
 		public Vector2 BaseVelocity { get; set; } = new Vector2 (1, 0);
+		public double TimeLeft { get; set; }
 
-        public Snake ()
+		public Snake ()
         {
             Vector2 dims = WorldRenderer.instance.World.Dimensions;
             HeadPosition = new Vector2(dims.X / 2, dims.Y / 2);
@@ -28,7 +28,7 @@ namespace SnakeGame.Entities
             WorldRenderer.UpdateScoreLabel(length);
             BodyParts = new Queue<Vector2>();
             age = 0;
-            timeLeft = 200;
+            TimeLeft = 200;
             isDead = false;
 
             //dodaj dijelove tijela
@@ -49,8 +49,8 @@ namespace SnakeGame.Entities
                 return;
             }
 
-            age++; timeLeft--;
-            if (!isDead && timeLeft == 0)
+            age++; TimeLeft--;
+            if (!isDead && TimeLeft == 0)
             {
                 Die();
             }
@@ -149,6 +149,7 @@ namespace SnakeGame.Entities
 
         private void Eat (Food food, Vector2 NewHeadPosition)
         {
+            CurrentFoodUnit.UseItem(this);
             CurrentFoodUnit = Food.CreateNewFoodUnit();
 
             //if the food spawned on the snake, spawn it again
@@ -158,10 +159,6 @@ namespace SnakeGame.Entities
             {
                 CurrentFoodUnit = Food.CreateNewFoodUnit();
             }
-
-            //increase time left before starvation
-            timeLeft += 100; 
-            TimesToGrow += 1;
         }
         //helper function, check if snake is inside game area
         protected bool IsInsideGameArea (Vector2 position)

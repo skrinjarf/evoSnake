@@ -1,36 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SnakeGame.Utils;
+using SnakeGame.Entities;
 
 namespace SnakeGame.Items
 {
     //klasa koja opisuje hranu
-    public class Food
+    public class Food: Item
     {
-        private static readonly Random rnd; //pseudorandom number generator for food location
-        public int Xpos { get; set; }   //X koordinate of Food object
-        public int Ypos { get; set; }   //Y koordinate of Food object
-
-        //initialize random class at start
-        static Food () { rnd = new Random(); }
-        //construct
-        public Food ()
-        {
-            //get random positions inside game area, so far [0..800> x [0..400>
-            Xpos = rnd.Next(0, WorldRenderer.instance.World.Dimensions.X); //food is drawn as 10x10 square, so leave space for drawing
-            Ypos = rnd.Next(0, WorldRenderer.instance.World.Dimensions.Y);
-        }
-        //returns food location as vector
-        public Vector2 Location ()
-        {
-            return new Vector2(Xpos, Ypos);
-        }
+        public Food () : base() { }
 
         // returns new food object
         public static Food CreateNewFoodUnit ()
         {
             return new Food();
+        }
+
+        public override void UseItem (Snake snake)
+        {
+            snake.TimeLeft += 100;
+            snake.TimesToGrow += 1;
         }
 
         //clone food unit
