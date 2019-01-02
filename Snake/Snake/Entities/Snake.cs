@@ -54,6 +54,19 @@ namespace SnakeGame.Entities
                 Die();
             }
 
+            MoveByAmmount(1);
+        }
+
+        public void MoveByAmmount (int amm)
+        {
+            for (int i = 0; i < amm; ++i)
+            {
+                MoveByOne();
+            }
+        }
+
+        void MoveByOne ()
+        {
             Vector2 Velocity = BaseVelocity * VelocityModifier;
             Vector2 NewHeadPosition = HeadPosition + Velocity;
 

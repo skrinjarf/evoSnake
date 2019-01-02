@@ -14,6 +14,12 @@ namespace SnakeGame.Controllers
         private Snake snake;
 
         public static SnakeController instance = new SnakeController();
+        private static readonly Dictionary<Keys, Vector2> keyMapping = new Dictionary<Keys, Vector2> {
+            { Keys.Left, new Vector2(-1, 0) },
+            { Keys.Right, new Vector2(1, 0) },
+            { Keys.Up, new Vector2(0, -1) },
+            { Keys.Down, new Vector2(0, 1) }
+        };
 
         public static void SetSnake (Snake _snake)
         {
@@ -22,41 +28,14 @@ namespace SnakeGame.Controllers
 
         public static void MoveSnake (object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Left)
+            if (e.KeyCode == Keys.Left || e.KeyCode == Keys.Right || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
             {
-                Vector2 predictedPos = instance.snake.HeadPosition + new Vector2(-1, 0);
+                Vector2 predictedPos = instance.snake.HeadPosition + keyMapping [e.KeyCode];
                 if (instance.snake.BodyParts.ToList().Find(x => x == predictedPos) != null)
                 {
                     return;
                 }
-                instance.snake.BaseVelocity = new Vector2(-1, 0);
-            }
-            else if (e.KeyCode == Keys.Right)
-            {
-                Vector2 predictedPos = instance.snake.HeadPosition + new Vector2(1, 0);
-                if (instance.snake.BodyParts.ToList().Find(x => x == predictedPos) != null)
-                {
-                    return;
-                }
-                instance.snake.BaseVelocity = new Vector2(1, 0);
-            }
-            else if (e.KeyCode == Keys.Up)
-            {
-                Vector2 predictedPos = instance.snake.HeadPosition + new Vector2(0, -1);
-                if (instance.snake.BodyParts.ToList().Find(x => x == predictedPos) != null)
-                {
-                    return;
-                }
-                instance.snake.BaseVelocity = new Vector2(0, -1);
-            }
-            else if (e.KeyCode == Keys.Down)
-            {
-                Vector2 predictedPos = instance.snake.HeadPosition + new Vector2(0, 1);
-                if (instance.snake.BodyParts.ToList().Find(x => x == predictedPos) != null)
-                {
-                    return;
-                }
-                instance.snake.BaseVelocity = new Vector2(0, 1);
+                instance.snake.BaseVelocity = keyMapping [e.KeyCode];
             }
         }
     }
