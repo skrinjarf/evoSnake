@@ -80,6 +80,14 @@ namespace SnakeGame.Controllers
             {
                 instance.snake.MoveByAmmount(9);
             }
+            else if (Keyboard.IsKeyDown(Key.LeftShift))
+            {
+                instance.snake.MoveToEdge();
+            }
+            else if (Keyboard.IsKeyDown(Key.LeftCtrl))
+            {
+
+            }
         }
     }
 }
