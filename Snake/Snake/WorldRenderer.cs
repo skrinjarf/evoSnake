@@ -4,6 +4,7 @@ using SnakeGame.Utils;
 using SnakeGame.WorldSystem;
 using SnakeGame.Entities;
 using SnakeGame.Items;
+using SnakeGame.Obstacles;
 
 namespace SnakeGame
 {
@@ -49,6 +50,7 @@ namespace SnakeGame
             instance.worldGraphics.Clear(instance.backgroundColor);
             RenderSnake();
             RenderItems();
+            RenderWalls();
             e.Graphics.DrawImage(instance.worldField, 0, 20);
         }
 
@@ -89,6 +91,14 @@ namespace SnakeGame
             foreach(Item item in Item.allItems)
             {
                 RenderPiece(item.Location(), item.Brush);
+            }
+        }
+
+        public static void RenderWalls ()
+        {
+            foreach (Wall wall in Wall.allWalls)
+            {
+                RenderPiece(wall.Position, Brushes.Gray);
             }
         }
 
