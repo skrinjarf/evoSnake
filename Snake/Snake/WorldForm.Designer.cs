@@ -74,6 +74,7 @@
 			// 
 			// deathTitle
 			// 
+			this.deathTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.deathTitle.AutoSize = true;
 			this.deathTitle.BackColor = System.Drawing.Color.Black;
 			this.deathTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold);
@@ -87,6 +88,7 @@
 			// 
 			// restartButton
 			// 
+			this.restartButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.restartButton.Location = new System.Drawing.Point(263, 260);
 			this.restartButton.Name = "restartButton";
 			this.restartButton.Size = new System.Drawing.Size(116, 23);
@@ -98,6 +100,7 @@
 			// 
 			// menuButton
 			// 
+			this.menuButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
 			this.menuButton.Location = new System.Drawing.Point(411, 260);
 			this.menuButton.Name = "menuButton";
 			this.menuButton.Size = new System.Drawing.Size(116, 23);
