@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SnakeGame.Utils;
 using SnakeGame.Items;
+using SnakeGame.Obstacles;
 
 namespace SnakeGame.Entities
 {
@@ -155,11 +156,7 @@ namespace SnakeGame.Entities
         //pomocna funkcija, racuna da li ce zmije umrijeti ako ode na poziciju x,y
         private bool WillDie (Vector2 position)
         {
-            if (!IsInsideGameArea(position))
-            {
-                return true;
-            }
-            return WillEatBody(position);
+            return !IsInsideGameArea(position) || WillEatBody(position) || WillHitWall(position);
         }
 
         //helper function, check if snake is inside game area
@@ -170,6 +167,11 @@ namespace SnakeGame.Entities
                 position.X >= WorldRenderer.instance.World.Dimensions.X ||
                 position.Y >= WorldRenderer.instance.World.Dimensions.Y) return false;
             return true;
+        }
+
+        private bool WillHitWall (Vector2 position)
+        {
+            return Wall.allWalls.Find(x => x.Position == position) != null;
         }
 
         private void Die ()
