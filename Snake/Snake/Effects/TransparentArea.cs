@@ -21,9 +21,22 @@ namespace SnakeGame.Effects
             allAreas.Add(this);
         }
 
-        public bool InArea (Vector2 pos)
+        private bool InArea (Vector2 pos)
         {
             return TopLeft.X <= pos.X && pos.X <= BottomRight.X && TopLeft.Y <= pos.Y && pos.Y <= BottomRight.Y;
+        }
+
+        public static bool InAnyArea (Vector2 pos)
+        {
+            foreach (TransparentArea area in allAreas)
+            {
+                bool isIn = area.InArea(pos);
+                if (isIn)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

@@ -7,7 +7,6 @@ Tasks for grabs:
 - Build level progressions system (maybe even level editor if there is time)
 - Level completion item
 - Info window for all items
-- Places where snake can go through its body
 - Settings where user can set above mentioned controls
 - Battling agains AI snake
 - Set predefined number of pauses for game
@@ -24,3 +23,4 @@ Done so far:
 - Reverse controls item
 - Points pick up items (give you both positive/negative points)
 - Implement wall obstacle logic
+- Places where snake can go through its body

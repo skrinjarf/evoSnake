@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SnakeGame.Utils;
 using SnakeGame.Items;
 using SnakeGame.Obstacles;
+using SnakeGame.Effects;
 
 namespace SnakeGame.Entities
 {
@@ -143,6 +144,10 @@ namespace SnakeGame.Entities
         //pomocna funkcija, racuna da li ce na poziciji x,y biti tijelo zmije
         protected bool WillEatBody (Vector2 position)
         {
+            if (TransparentArea.InAnyArea(position))
+            {
+                return false;
+            }
             foreach (var bodyPart in BodyParts)
             {
                 if (position.X == bodyPart.X &&
