@@ -14,6 +14,7 @@ namespace SnakeGame.Controllers
     public class SnakeController
     {
         private Snake snake;
+        private int reverseControlsTime;
 
         public static SnakeController instance = new SnakeController();
         private static readonly Dictionary<Keys, Vector2> keyMapping = new Dictionary<Keys, Vector2> {
@@ -32,12 +33,13 @@ namespace SnakeGame.Controllers
         {
             if (e.KeyCode == Keys.Left || e.KeyCode == Keys.Right || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
             {
-                Vector2 predictedPos = instance.snake.HeadPosition + keyMapping [e.KeyCode];
+                Vector2 vel = (instance.reverseControlsTime > 0 ? -1 : 1) * keyMapping [e.KeyCode];
+                Vector2 predictedPos = instance.snake.HeadPosition + vel;
                 if (instance.snake.BodyParts.ToList().Find(x => x == predictedPos) != null)
                 {
                     return;
                 }
-                instance.snake.BaseVelocity = keyMapping [e.KeyCode];
+                instance.snake.BaseVelocity = vel;
                 HandleMultipleMovement();
             }
         }
@@ -87,6 +89,18 @@ namespace SnakeGame.Controllers
             else if (Configerator.instance.MovementToBodyEnabled && Keyboard.IsKeyDown(Key.LeftCtrl))
             {
                 instance.snake.MoveToBody();
+            }
+        }
+
+        public static void ReverseControls (int time)
+        {
+            instance.reverseControlsTime = time;
+        }
+        public static void ReverseControlsTick ()
+        {
+            if (instance.reverseControlsTime > 0)
+            {
+                --instance.reverseControlsTime;
             }
         }
     }

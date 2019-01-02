@@ -40,6 +40,7 @@ namespace SnakeGame.Entities
             CurrentFoodUnit = new Food();
             LengthModifier l = new LengthModifier(3);
             DirectionModifier d = new DirectionModifier();
+            ControlsModifier c = new ControlsModifier(10);
             VelocityModifier = 1;
             TimesToGrow = 0;
         }

@@ -1,6 +1,7 @@
 ﻿using SnakeGame.Utils;
 using SnakeGame.Entities;
 using SnakeGame.Items;
+using SnakeGame.Controllers;
 
 namespace SnakeGame.WorldSystem
 {
@@ -23,6 +24,7 @@ namespace SnakeGame.WorldSystem
         public virtual void DoStep ()
         {
             UpdateSnake();
+            SnakeController.ReverseControlsTick();
         }
 
         public virtual void UpdateSnake ()
