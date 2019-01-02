@@ -11,6 +11,7 @@ namespace SnakeGame.Entities
         protected int age;
 
         public Vector2 HeadPosition { get; set; }
+        public Vector2 NewHeadPosition { get; set; }
         public Queue<Vector2> BodyParts { get; set; }
         public bool isDead;
         internal Food CurrentFoodUnit { get; set; }
@@ -37,6 +38,7 @@ namespace SnakeGame.Entities
             BodyParts.Enqueue(HeadPosition - new Vector2(2, 0));
             BodyParts.Enqueue(HeadPosition - new Vector2(1, 0));
             CurrentFoodUnit = new Food();
+            LengthModifier l = new LengthModifier(3);
             VelocityModifier = 1;
             TimesToGrow = 0;
         }
@@ -93,18 +95,24 @@ namespace SnakeGame.Entities
         void MoveByOne ()
         {
             Vector2 Velocity = BaseVelocity * VelocityModifier;
-            Vector2 NewHeadPosition = HeadPosition + Velocity;
+            NewHeadPosition = HeadPosition + Velocity;
 
             if (!isDead && WillDie(NewHeadPosition))
             {
                 Die();
             }
 
-            if (NewHeadPosition == CurrentFoodUnit.Location())
+            Item potentialItem = Item.FindItem(NewHeadPosition);
+            if (potentialItem != null)
             {
-                Eat(CurrentFoodUnit, NewHeadPosition);
+                potentialItem.UseItem(this);
             }
+            
+            ModifyLength(NewHeadPosition);
+        }
 
+        public void ModifyLength (Vector2 NewHeadPosition)
+        {
             //if snake needs to grow don't remove the last body part
             if (TimesToGrow > 0)
             {
@@ -147,19 +155,6 @@ namespace SnakeGame.Entities
             return WillEatBody(position);
         }
 
-        private void Eat (Food food, Vector2 NewHeadPosition)
-        {
-            CurrentFoodUnit.UseItem(this);
-            CurrentFoodUnit = Food.CreateNewFoodUnit();
-
-            //if the food spawned on the snake, spawn it again
-            while (BodyParts.Contains(CurrentFoodUnit.Location()) ||
-                    HeadPosition == CurrentFoodUnit.Location() ||
-                    NewHeadPosition == CurrentFoodUnit.Location())
-            {
-                CurrentFoodUnit = Food.CreateNewFoodUnit();
-            }
-        }
         //helper function, check if snake is inside game area
         protected bool IsInsideGameArea (Vector2 position)
         {

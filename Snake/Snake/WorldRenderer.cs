@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using SnakeGame.Utils;
 using SnakeGame.WorldSystem;
 using SnakeGame.Entities;
+using SnakeGame.Items;
 
 namespace SnakeGame
 {
@@ -45,6 +46,7 @@ namespace SnakeGame
         {
             instance.worldGraphics.Clear(instance.backgroundColor);
             RenderSnake();
+            RenderItems();
             e.Graphics.DrawImage(instance.worldField, 0, 20);
         }
 
@@ -77,7 +79,14 @@ namespace SnakeGame
                 {
                     RenderPiece(part, Brushes.White);
                 }
-                RenderPiece(snake.CurrentFoodUnit.Location(), Brushes.Yellow);
+            }
+        }
+
+        public static void RenderItems ()
+        {
+            foreach(Item item in Item.allItems)
+            {
+                RenderPiece(item.Location(), item.Brush);
             }
         }
 
@@ -85,7 +94,7 @@ namespace SnakeGame
         {
             instance.worldGraphics.FillRectangle(brush, new Rectangle(20 * pos.X, 20 * pos.Y, 20, 20));   
         }
-
+        
         public static void UpdateGenerationLabel (int gen)
         {
             instance.generationLabel.Text = "Generation: " + gen.ToString();

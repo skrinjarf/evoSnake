@@ -1,5 +1,6 @@
 ﻿using SnakeGame.Utils;
 using SnakeGame.Entities;
+using SnakeGame.Items;
 
 namespace SnakeGame.WorldSystem
 {
@@ -11,6 +12,7 @@ namespace SnakeGame.WorldSystem
         public World (Vector2 dimensions)
         {
             Dimensions = dimensions;
+            Item.allItems.Clear();
         }
 
         public void InitSnake ()
