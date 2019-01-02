@@ -22,6 +22,9 @@ namespace SnakeGame
         private Label generationLabel;
         private Label snakeLabel;
         private Label scoreLabel;
+        private Label deathTitle;
+        private Button restartButton;
+        private Button menuButton;
 
         private WorldRenderer (World _world, WorldForm _worldForm)
         {
@@ -33,6 +36,9 @@ namespace SnakeGame
             generationLabel = _worldForm.generationLabel;
             snakeLabel = _worldForm.snakeLabel;
             scoreLabel = _worldForm.scoreLabel;
+            deathTitle = _worldForm.deathTitle;
+            restartButton = _worldForm.restartButton;
+            menuButton = _worldForm.menuButton;
         }
 
 		public static void Init (World _world, WorldForm _worldForm)
@@ -93,6 +99,20 @@ namespace SnakeGame
         public static void UpdateScoreLabel (int score)
         {
             instance.scoreLabel.Text = "Score: " + score.ToString();
+        }
+
+        public static void ShowDeathDialog ()
+        {
+            instance.deathTitle.Visible = true;
+            instance.restartButton.Visible = true;
+            instance.menuButton.Visible = true;
+        }
+
+        public static void CloseDeathDialog ()
+        {
+            instance.deathTitle.Visible = false;
+            instance.restartButton.Visible = false;
+            instance.menuButton.Visible = false;
         }
     }
 }

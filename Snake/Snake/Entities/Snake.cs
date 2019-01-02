@@ -43,18 +43,23 @@ namespace SnakeGame.Entities
         //napravi izracunati potez
         public void Move ()
         {
-            age++; timeLeft--;
-            if (timeLeft == 0)
+            if (isDead)
             {
-                isDead = true;
+                return;
+            }
+
+            age++; timeLeft--;
+            if (!isDead && timeLeft == 0)
+            {
+                Die();
             }
 
             Vector2 Velocity = BaseVelocity * VelocityModifier;
             Vector2 NewHeadPosition = HeadPosition + Velocity;
 
-            if (WillDie(NewHeadPosition))
+            if (!isDead && WillDie(NewHeadPosition))
             {
-                isDead = true;
+                Die();
             }
 
             if (NewHeadPosition == CurrentFoodUnit.Location())
@@ -80,7 +85,7 @@ namespace SnakeGame.Entities
                 HeadPosition = NewHeadPosition; //update head possition
             }
         }
-
+        
         //pomocna funkcija, racuna da li ce na poziciji x,y biti tijelo zmije
         protected bool WillEatBody (Vector2 position)
         {
@@ -128,6 +133,12 @@ namespace SnakeGame.Entities
                 position.X >= WorldRenderer.instance.World.Dimensions.X ||
                 position.Y >= WorldRenderer.instance.World.Dimensions.Y) return false;
             return true;
+        }
+
+        private void Die ()
+        {
+            isDead = true;
+            WorldRenderer.ShowDeathDialog();
         }
     }
 }

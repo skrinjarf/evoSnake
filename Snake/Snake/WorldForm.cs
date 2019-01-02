@@ -20,6 +20,12 @@ namespace SnakeGame
         public WorldForm ()
         {
             InitializeComponent();
+            KeyPreview = true;
+            StartGame();
+        }
+
+        private void StartGame ()
+        {
             UpdateVisibility();
             if (Configerator.instance.GameType == Configerator.Game.bot)
             {
@@ -69,6 +75,17 @@ namespace SnakeGame
         private void OnPaint (object sender, PaintEventArgs e)
         {
             WorldRenderer.Render(e);
+        }
+
+        private void RestartGame (object sender, EventArgs e)
+        {
+            WorldRenderer.CloseDeathDialog();
+            StartGame();
+        }
+
+        private void CloseForm (object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
