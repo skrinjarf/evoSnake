@@ -138,7 +138,10 @@ namespace SnakeGame.Entities
         private void Die ()
         {
             isDead = true;
-            WorldRenderer.ShowDeathDialog();
+            if (Configerator.instance.GameType == Configerator.Game.player)
+            {
+                WorldRenderer.ShowDeathDialog();
+            }
         }
     }
 }
