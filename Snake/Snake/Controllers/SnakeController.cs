@@ -32,7 +32,8 @@ namespace SnakeGame.Controllers
             {
                 Vector2 vel = (instance.ReverseControlsTime > 0 ? -1 : 1) * keyMapping [e.KeyCode];
                 Vector2 predictedPos = instance.snake.HeadPosition + vel;
-                if (instance.snake.BodyParts.ToList().Find(x => x == predictedPos) != null)
+                int len = instance.snake.BodyParts.Count;
+                if (instance.snake.BodyParts.ToList() [len - 1] == predictedPos)
                 {
                     return;
                 }
