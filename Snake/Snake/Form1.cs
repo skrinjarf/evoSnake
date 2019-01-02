@@ -29,6 +29,7 @@ namespace SnakeGame
             Configerator.instance.MovementToEdgeEnabled = true;
             Configerator.instance.MovementToBodyEnabled = true;
             Configerator.instance.ItemsEnabled = true;
+            Configerator.instance.WallsEnabled = true;
             OpenWorldForm();
         }
 

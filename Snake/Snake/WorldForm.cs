@@ -32,7 +32,10 @@ namespace SnakeGame
                 world = new World(new Vector2(30, 30));
                 WorldRenderer.Init(world, this);
                 world.InitSnake();
-                world.InitWalls();
+                if (Configerator.instance.WallsEnabled)
+                {
+                    world.InitWalls();
+                }
                 SnakeController.SetSnake(world.snake);
                 timer1.Interval = 1000 / 30;
             }
