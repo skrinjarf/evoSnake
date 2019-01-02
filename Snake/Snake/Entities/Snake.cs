@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SnakeGame.Utils;
+using SnakeGame.Items;
 
 namespace SnakeGame.Entities
 {

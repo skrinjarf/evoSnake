@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using SnakeGame.Utils;
-namespace SnakeGame.Entities
+
+namespace SnakeGame.Items
 {
     //klasa koja opisuje hranu
     public class Food

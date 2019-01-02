@@ -52,7 +52,7 @@
     <Compile Include="Controllers\SnakeController.cs" />
     <Compile Include="Entities\Snake.cs" />
     <Compile Include="Utils\ANN.cs" />
-    <Compile Include="Entities\Food.cs" />
+    <Compile Include="Items\Food.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
