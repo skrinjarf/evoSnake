@@ -13,9 +13,6 @@ Tasks for grabs:
 - Reverse controls item
 - Info window for all items
 - Places where snake can go through its body
-- Moving snake by multiple fields (arrow + num key)
-- Moving snake to edge of board (arrow + shift key)
-- Moving snake to edge of its body (arrow + ctrl)
 - Settings where user can set above mentioned controls
 - Battling agains AI snake
 - Set predefined number of pauses for game
@@ -24,3 +21,6 @@ Tasks for grabs:
 Done so far: 
 - basic evolution algorithm for training snakes (needs to be perfected)
 - simple gameplay for snake game (this could be granulated but you get the feeling for what that means; just checkout this commit - 1a46ab1640afa7e03abcadfd7ead92ba8922a215)
+- Moving snake by multiple fields (arrow + num key)
+- Moving snake to edge of board (arrow + shift key)
+- Moving snake to edge of its body (arrow + ctrl)
