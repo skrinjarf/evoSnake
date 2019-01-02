@@ -43,47 +43,58 @@ namespace SnakeGame.Controllers
 
         private static void HandleMultipleMovement ()
         {
-            if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D1))
+            if (Configerator.instance.MultipleMovementEnabled && 
+                Keyboard.IsKeyDown(ControlSettings.controlMap[ControlSettings.Control.jump1]))
             {
                 instance.snake.MoveByAmmount(1);
             }
-            else if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D2))
+            else if (Configerator.instance.MultipleMovementEnabled &&
+                Keyboard.IsKeyDown(ControlSettings.controlMap [ControlSettings.Control.jump2]))
             {
                 instance.snake.MoveByAmmount(2);
             }
-            else if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D3))
+            else if (Configerator.instance.MultipleMovementEnabled &&
+                Keyboard.IsKeyDown(ControlSettings.controlMap [ControlSettings.Control.jump3]))
             {
                 instance.snake.MoveByAmmount(3);
             }
-            else if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D4))
+            else if (Configerator.instance.MultipleMovementEnabled &&
+                Keyboard.IsKeyDown(ControlSettings.controlMap [ControlSettings.Control.jump4]))
             {
                 instance.snake.MoveByAmmount(4);
             }
-            else if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D5))
+            else if (Configerator.instance.MultipleMovementEnabled &&
+                Keyboard.IsKeyDown(ControlSettings.controlMap [ControlSettings.Control.jump5]))
             {
                 instance.snake.MoveByAmmount(5);
             }
-            else if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D6))
+            else if (Configerator.instance.MultipleMovementEnabled &&
+                Keyboard.IsKeyDown(ControlSettings.controlMap [ControlSettings.Control.jump6]))
             {
                 instance.snake.MoveByAmmount(6);
             }
-            else if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D7))
+            else if (Configerator.instance.MultipleMovementEnabled &&
+                Keyboard.IsKeyDown(ControlSettings.controlMap [ControlSettings.Control.jump7]))
             {
                 instance.snake.MoveByAmmount(7);
             }
-            else if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D8))
+            else if (Configerator.instance.MultipleMovementEnabled &&
+                Keyboard.IsKeyDown(ControlSettings.controlMap [ControlSettings.Control.jump8]))
             {
                 instance.snake.MoveByAmmount(8);
             }
-            else if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D9))
+            else if (Configerator.instance.MultipleMovementEnabled &&
+                Keyboard.IsKeyDown(ControlSettings.controlMap [ControlSettings.Control.jump9]))
             {
                 instance.snake.MoveByAmmount(9);
             }
-            else if (Configerator.instance.MovementToEdgeEnabled && Keyboard.IsKeyDown(Key.LeftShift))
+            else if (Configerator.instance.MovementToEdgeEnabled &&
+                Keyboard.IsKeyDown(ControlSettings.controlMap [ControlSettings.Control.borderJump]))
             {
                 instance.snake.MoveToEdge();
             }
-            else if (Configerator.instance.MovementToBodyEnabled && Keyboard.IsKeyDown(Key.LeftCtrl))
+            else if (Configerator.instance.MovementToBodyEnabled &&
+                Keyboard.IsKeyDown(ControlSettings.controlMap [ControlSettings.Control.bodyJump]))
             {
                 instance.snake.MoveToBody();
             }
