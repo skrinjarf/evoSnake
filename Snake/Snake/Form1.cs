@@ -22,6 +22,15 @@ namespace SnakeGame
             OpenWorldForm();
         }
 
+        private void StartTestPlaygrounds (object sender, EventArgs e)
+        {
+            Configerator.instance.GameType = Configerator.Game.player;
+            Configerator.instance.MultipleMovementEnabled = true;
+            Configerator.instance.MovementToEdgeEnabled = true;
+            Configerator.instance.MovementToBodyEnabled = true;
+            OpenWorldForm();
+        }
+
         private void OpenWorldForm ()
         {
             WorldForm form = new WorldForm();

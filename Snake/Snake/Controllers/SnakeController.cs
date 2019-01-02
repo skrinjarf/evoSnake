@@ -44,47 +44,47 @@ namespace SnakeGame.Controllers
 
         private static void HandleMultipleMovement ()
         {
-            if (Keyboard.IsKeyDown(Key.D1))
+            if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D1))
             {
                 instance.snake.MoveByAmmount(1);
             }
-            else if (Keyboard.IsKeyDown(Key.D2))
+            else if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D2))
             {
                 instance.snake.MoveByAmmount(2);
             }
-            else if (Keyboard.IsKeyDown(Key.D3))
+            else if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D3))
             {
                 instance.snake.MoveByAmmount(3);
             }
-            else if (Keyboard.IsKeyDown(Key.D4))
+            else if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D4))
             {
                 instance.snake.MoveByAmmount(4);
             }
-            else if (Keyboard.IsKeyDown(Key.D5))
+            else if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D5))
             {
                 instance.snake.MoveByAmmount(5);
             }
-            else if (Keyboard.IsKeyDown(Key.D6))
+            else if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D6))
             {
                 instance.snake.MoveByAmmount(6);
             }
-            else if (Keyboard.IsKeyDown(Key.D7))
+            else if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D7))
             {
                 instance.snake.MoveByAmmount(7);
             }
-            else if (Keyboard.IsKeyDown(Key.D8))
+            else if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D8))
             {
                 instance.snake.MoveByAmmount(8);
             }
-            else if (Keyboard.IsKeyDown(Key.D9))
+            else if (Configerator.instance.MultipleMovementEnabled && Keyboard.IsKeyDown(Key.D9))
             {
                 instance.snake.MoveByAmmount(9);
             }
-            else if (Keyboard.IsKeyDown(Key.LeftShift))
+            else if (Configerator.instance.MovementToEdgeEnabled && Keyboard.IsKeyDown(Key.LeftShift))
             {
                 instance.snake.MoveToEdge();
             }
-            else if (Keyboard.IsKeyDown(Key.LeftCtrl))
+            else if (Configerator.instance.MovementToBodyEnabled && Keyboard.IsKeyDown(Key.LeftCtrl))
             {
                 instance.snake.MoveToBody();
             }

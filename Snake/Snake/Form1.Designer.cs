@@ -82,6 +82,7 @@
 			this.button4.TabIndex = 4;
 			this.button4.Text = "Test Playgrounds";
 			this.button4.UseVisualStyleBackColor = true;
+			this.button4.Click += new System.EventHandler(this.StartTestPlaygrounds);
 			// 
 			// Form1
 			// 
