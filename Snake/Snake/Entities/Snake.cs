@@ -9,6 +9,7 @@ namespace SnakeGame.Entities
     {
         protected int length;
         protected int age;
+        private int score;
 
         public Vector2 HeadPosition { get; set; }
         public Vector2 NewHeadPosition { get; set; }
@@ -20,13 +21,14 @@ namespace SnakeGame.Entities
         public int Length { get; } // iz vana se moze samo procitat vrijednost duljine
 		public Vector2 BaseVelocity { get; set; } = new Vector2 (1, 0);
 		public double TimeLeft { get; set; }
-
+		
 		public Snake ()
         {
             Vector2 dims = WorldRenderer.instance.World.Dimensions;
             HeadPosition = new Vector2(dims.X / 2, dims.Y / 2);
             length = 4;
-            WorldRenderer.UpdateScoreLabel(length);
+            score = 0;
+            WorldRenderer.UpdateScoreLabel(score);
             BodyParts = new Queue<Vector2>();
             age = 0;
             TimeLeft = 200;
@@ -41,6 +43,7 @@ namespace SnakeGame.Entities
             LengthModifier l = new LengthModifier(3);
             DirectionModifier d = new DirectionModifier();
             ControlsModifier c = new ControlsModifier(10);
+            ScoreModifier s = new ScoreModifier(-2);
             VelocityModifier = 1;
             TimesToGrow = 0;
         }
@@ -123,7 +126,6 @@ namespace SnakeGame.Entities
                 BodyParts.Enqueue(newBodyPart); //add to bodyParts old head possition
                 HeadPosition = NewHeadPosition; //update head possition
                 length++;
-                WorldRenderer.UpdateScoreLabel(length);
             }
             else
             {
@@ -174,6 +176,12 @@ namespace SnakeGame.Entities
             {
                 WorldRenderer.ShowDeathDialog();
             }
+        }
+
+        public void AddPoints (int pointsToAdd)
+        {
+            score += pointsToAdd;
+            WorldRenderer.UpdateScoreLabel(score);
         }
     }
 }

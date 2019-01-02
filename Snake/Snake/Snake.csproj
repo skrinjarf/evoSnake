@@ -55,6 +55,7 @@
     <Compile Include="Items\DirectionModifier.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\LengthModifier.cs" />
+    <Compile Include="Items\ScoreModifier.cs" />
     <Compile Include="Utils\ANN.cs" />
     <Compile Include="Items\Food.cs" />
     <Compile Include="Form1.cs">

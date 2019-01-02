@@ -24,6 +24,7 @@ namespace SnakeGame.Items
             base.UseItem(snake);
             snake.TimeLeft += 100;
             snake.TimesToGrow += 1;
+            snake.AddPoints(1);
             snake.CurrentFoodUnit = CreateNewFoodUnit();
             //if the food spawned on the snake, spawn it again
             while (snake.BodyParts.Contains(snake.CurrentFoodUnit.Location()) ||

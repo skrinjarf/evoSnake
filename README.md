@@ -6,7 +6,6 @@ Tasks for grabs:
 - Perfect evolution algortihm for training snakes
 - Build level progressions system (maybe even level editor if there is time)
 - Implement wall obstacle logic
-- Points pick up items (give you both positive/negative points)
 - Level completion item
 - Info window for all items
 - Places where snake can go through its body
@@ -24,3 +23,4 @@ Done so far:
 - Snake length modifier item
 - Snake direction modifier item
 - Reverse controls item
+- Points pick up items (give you both positive/negative points)
