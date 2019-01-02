@@ -12,7 +12,7 @@ namespace SnakeGame.Items
         public int Ypos { get; set; }
         public Brush Brush { get; set; }
 
-        private static readonly Random rnd;
+        protected static readonly Random rnd;
         public static List<Item> allItems;
 
         //initialize random class at start

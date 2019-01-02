@@ -51,6 +51,7 @@
     <Compile Include="Configerator.cs" />
     <Compile Include="Controllers\SnakeController.cs" />
     <Compile Include="Entities\Snake.cs" />
+    <Compile Include="Items\DirectionModifier.cs" />
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\LengthModifier.cs" />
     <Compile Include="Utils\ANN.cs" />

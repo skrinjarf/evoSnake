@@ -39,6 +39,7 @@ namespace SnakeGame.Entities
             BodyParts.Enqueue(HeadPosition - new Vector2(1, 0));
             CurrentFoodUnit = new Food();
             LengthModifier l = new LengthModifier(3);
+            DirectionModifier d = new DirectionModifier();
             VelocityModifier = 1;
             TimesToGrow = 0;
         }
