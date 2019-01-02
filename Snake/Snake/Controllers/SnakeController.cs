@@ -86,7 +86,7 @@ namespace SnakeGame.Controllers
             }
             else if (Keyboard.IsKeyDown(Key.LeftCtrl))
             {
-
+                instance.snake.MoveToBody();
             }
         }
     }

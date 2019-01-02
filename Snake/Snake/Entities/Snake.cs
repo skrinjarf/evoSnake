@@ -69,6 +69,18 @@ namespace SnakeGame.Entities
             MoveByAmmount(amm - 2);
         }
 
+        public void MoveToBody ()
+        {
+            int amm = 0;
+            Vector2 pos = new Vector2(HeadPosition);
+            while (!WillEatBody(pos) && IsInsideGameArea(pos))
+            {
+                pos += BaseVelocity;
+                ++amm;
+            }
+            MoveByAmmount(amm - 2);
+        }
+
         public void MoveByAmmount (int amm)
         {
             for (int i = 0; i < amm; ++i)
