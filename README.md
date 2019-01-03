@@ -3,12 +3,15 @@ All the code is written in C#
 Contributors: Ante Buterin, Filip Skrinjar
 
 Tasks for grabs:
-- Perfect evolution algortihm for training snakes
-- Info window for all items
-- Battling agains AI snake
-- Set predefined number of pauses for game
-- Set predefined number of lives for game
-- Design at least 20 levels
+- Perfect evolution algortihm for training snakes (Filip since he built 
+core for this)
+- Design at least 20 levels (Filip since this will make him familiar to 
+new codebase)
+- Battling agains AI snake (together since this highly depends on all 
+our tasks)
+- Info window for all items (Ante)
+- Set predefined number of pauses for game (Ante)
+- Set predefined number of lives for game (Ante)
 
 Done so far: 
 - basic evolution algorithm for training snakes (needs to be perfected)
