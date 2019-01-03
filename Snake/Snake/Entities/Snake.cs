@@ -31,7 +31,7 @@ namespace SnakeGame.Entities
             HeadPosition = new Vector2(dims.X / 2, dims.Y / 2);
             length = 4;
             score = 0;
-            WorldRenderer.UpdateScoreLabel(score);
+            TryUpdateScore();
             BodyParts = new Queue<Vector2>();
             age = 0;
             TimeLeft = 200;
@@ -132,6 +132,7 @@ namespace SnakeGame.Entities
                 BodyParts.Enqueue(newBodyPart); //add to bodyParts old head possition
                 HeadPosition = NewHeadPosition; //update head possition
                 length++;
+                TryUpdateScore();
                 CheckForWin();
             }
             else
@@ -193,10 +194,27 @@ namespace SnakeGame.Entities
         public void AddPoints (int pointsToAdd)
         {
             score += pointsToAdd;
-            WorldRenderer.UpdateScoreLabel(score);
+            TryUpdateScore();
             CheckForWin();
         }
 
+        private void TryUpdateScore ()
+        {
+            if (Configerator.instance.ActiveLevel.VictoryCondition == LevelConfig.VictoryType.points)
+            {
+                WorldRenderer.UpdateScoreLabel(
+                    "Score: " + score.ToString() + "/" + Configerator.instance.ActiveLevel.VictoryThreshold.ToString());
+            }
+            else if (Configerator.instance.ActiveLevel.VictoryCondition == LevelConfig.VictoryType.length)
+            {
+                WorldRenderer.UpdateScoreLabel(
+                    "Length: " + length.ToString() + "/" + Configerator.instance.ActiveLevel.VictoryThreshold.ToString());
+            }
+            else
+            {
+                WorldRenderer.UpdateScoreLabel("Score: " + score.ToString());
+            }
+        }
         private void CheckForWin ()
         {
             if (Configerator.instance.ActiveLevel.VictoryCondition == LevelConfig.VictoryType.points

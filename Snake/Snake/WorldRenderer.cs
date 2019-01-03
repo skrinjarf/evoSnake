@@ -132,9 +132,9 @@ namespace SnakeGame
             instance.generationLabel.Text = "Generation: " + gen.ToString();
         }
 
-        public static void UpdateScoreLabel (int score)
+        public static void UpdateScoreLabel (string str)
         {
-            instance.scoreLabel.Text = "Score: " + score.ToString();
+            instance.scoreLabel.Text = str;
         }
 
         public static void ShowDeathDialog ()
