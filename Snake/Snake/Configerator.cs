@@ -64,7 +64,7 @@ namespace SnakeGame
         }
         public bool StartLevel ()
         {
-            if (activeLevelNum + 1 == PassedLevels)
+            if (activeLevelNum + 1 == levels.Count)
             {
                 return false;
             }
