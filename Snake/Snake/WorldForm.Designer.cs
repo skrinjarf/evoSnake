@@ -37,6 +37,7 @@
 			this.restartButton = new System.Windows.Forms.Button();
 			this.menuButton = new System.Windows.Forms.Button();
 			this.reverseLabel = new System.Windows.Forms.Label();
+			this.nextLevelButton = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -121,11 +122,23 @@
 			this.reverseLabel.Text = "Reversed Controls: 10";
 			this.reverseLabel.Visible = false;
 			// 
+			// nextLevelButton
+			// 
+			this.nextLevelButton.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.nextLevelButton.Location = new System.Drawing.Point(263, 260);
+			this.nextLevelButton.Name = "nextLevelButton";
+			this.nextLevelButton.Size = new System.Drawing.Size(116, 23);
+			this.nextLevelButton.TabIndex = 7;
+			this.nextLevelButton.Text = "NEXT LEVEL";
+			this.nextLevelButton.UseVisualStyleBackColor = true;
+			this.nextLevelButton.Visible = false;
+			// 
 			// WorldForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(782, 753);
+			this.Controls.Add(this.nextLevelButton);
 			this.Controls.Add(this.reverseLabel);
 			this.Controls.Add(this.menuButton);
 			this.Controls.Add(this.restartButton);
@@ -153,5 +166,6 @@
         public System.Windows.Forms.Button restartButton;
         public System.Windows.Forms.Button menuButton;
         public System.Windows.Forms.Label reverseLabel;
+        public System.Windows.Forms.Button nextLevelButton;
     }
 }

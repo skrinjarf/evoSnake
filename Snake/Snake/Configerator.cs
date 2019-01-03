@@ -23,7 +23,7 @@ namespace SnakeGame
         {
             levels = new List<LevelConfig>() {
                 new LevelConfig() {
-                    VictoryCondition = LevelConfig.VictoryType.length,
+                    VictoryCondition = LevelConfig.VictoryType.points,
                     VictoryThreshold = 10
                 }
             };

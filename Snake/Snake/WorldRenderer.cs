@@ -24,6 +24,7 @@ namespace SnakeGame
         private Label reverseLabel;
         private Button restartButton;
         private Button menuButton;
+        private Button nextLevelButton;
 
         private WorldRenderer (World _world, WorldForm _worldForm)
         {
@@ -39,6 +40,7 @@ namespace SnakeGame
             reverseLabel = _worldForm.reverseLabel;
             restartButton = _worldForm.restartButton;
             menuButton = _worldForm.menuButton;
+            nextLevelButton = _worldForm.nextLevelButton;
         }
 
         public static void Init (World _world, WorldForm _worldForm)
@@ -136,15 +138,29 @@ namespace SnakeGame
         public static void ShowDeathDialog ()
         {
             instance.deathTitle.Visible = true;
+            instance.deathTitle.Text = "GAME LOST";
             instance.restartButton.Visible = true;
             instance.menuButton.Visible = true;
         }
-
         public static void CloseDeathDialog ()
         {
             instance.deathTitle.Visible = false;
             instance.restartButton.Visible = false;
             instance.menuButton.Visible = false;
+        }
+
+        public static void ShowVicoryDialog ()
+        {
+            instance.deathTitle.Visible = true;
+            instance.deathTitle.Text = "GAME WON";
+            instance.nextLevelButton.Visible = true;
+            instance.menuButton.Visible = true;
+        }
+        public static void CloseVictoryDialog ()
+        {
+            instance.deathTitle.Visible = false;
+            instance.restartButton.Visible = false;
+            instance.nextLevelButton.Visible = false;
         }
 
         public static void UpdateReverseLabel (int time)

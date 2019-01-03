@@ -4,6 +4,7 @@ using SnakeGame.Utils;
 using SnakeGame.Items;
 using SnakeGame.Obstacles;
 using SnakeGame.Effects;
+using SnakeGame.LevelSystem;
 
 namespace SnakeGame.Entities
 {
@@ -131,6 +132,7 @@ namespace SnakeGame.Entities
                 BodyParts.Enqueue(newBodyPart); //add to bodyParts old head possition
                 HeadPosition = NewHeadPosition; //update head possition
                 length++;
+                CheckForWin();
             }
             else
             {
@@ -187,11 +189,34 @@ namespace SnakeGame.Entities
                 WorldRenderer.ShowDeathDialog();
             }
         }
-
+        
         public void AddPoints (int pointsToAdd)
         {
             score += pointsToAdd;
             WorldRenderer.UpdateScoreLabel(score);
+            CheckForWin();
+        }
+
+        private void CheckForWin ()
+        {
+            if (Configerator.instance.ActiveLevel.VictoryCondition == LevelConfig.VictoryType.points
+                && score >= Configerator.instance.ActiveLevel.VictoryThreshold)
+            {
+                Win();
+            }
+            else if (Configerator.instance.ActiveLevel.VictoryCondition == LevelConfig.VictoryType.length &&
+                length >= Configerator.instance.ActiveLevel.VictoryThreshold)
+            {
+                Win();
+            }
+        }
+        private void Win ()
+        {
+            isDead = true;
+            if (Configerator.instance.GameType == Configerator.Game.player)
+            {
+                WorldRenderer.ShowVicoryDialog();
+            }
         }
     }
 }
