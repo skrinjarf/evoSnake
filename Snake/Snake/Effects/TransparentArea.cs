@@ -3,7 +3,7 @@ using SnakeGame.Utils;
 
 namespace SnakeGame.Effects
 {
-    class TransparentArea
+    public class TransparentArea
     {
         public Vector2 TopLeft { get; set; }
         public Vector2 BottomRight { get; set; }

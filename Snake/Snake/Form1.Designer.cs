@@ -88,7 +88,7 @@
 			this.button2.TabIndex = 2;
 			this.button2.Text = "Endless Mode";
 			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.StartGame);
+			this.button2.Click += new System.EventHandler(this.StartHighScoreGame);
 			// 
 			// button3
 			// 

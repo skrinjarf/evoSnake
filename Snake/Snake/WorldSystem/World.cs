@@ -1,4 +1,5 @@
-﻿using SnakeGame.Utils;
+﻿using System.Collections.Generic;
+using SnakeGame.Utils;
 using SnakeGame.Entities;
 using SnakeGame.Items;
 using SnakeGame.Controllers;
@@ -27,16 +28,18 @@ namespace SnakeGame.WorldSystem
 
         public void InitWalls ()
         {
-            Wall.allWalls.Add(new Wall(new Vector2(10, 10)));
-            Wall.allWalls.Add(new Wall(new Vector2(10, 11)));
-            Wall.allWalls.Add(new Wall(new Vector2(10, 12)));
-            Wall.allWalls.Add(new Wall(new Vector2(10, 13)));
-            Wall.allWalls.Add(new Wall(new Vector2(10, 14)));
+            if (Configerator.instance.ActiveLevel.Walls != null)
+            {
+                Wall.allWalls = new List<Wall>(Configerator.instance.ActiveLevel.Walls);
+            }
         }
 
         public void InitTransparentAreas ()
         {
-            TransparentArea.allAreas.Add(new TransparentArea(new Vector2(4, 4), new Vector2(10, 7)));
+            if (Configerator.instance.ActiveLevel.TransparentAreas != null)
+            {
+                TransparentArea.allAreas = new List<TransparentArea>(Configerator.instance.ActiveLevel.TransparentAreas);
+            }
         }
 
         public virtual void DoStep ()

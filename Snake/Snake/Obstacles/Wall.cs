@@ -3,7 +3,7 @@ using SnakeGame.Utils;
 
 namespace SnakeGame.Obstacles
 {
-    class Wall
+    public class Wall
     {
         public static List<Wall> allWalls;
 

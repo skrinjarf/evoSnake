@@ -34,21 +34,18 @@ namespace SnakeGame
             OpenWorldForm();
         }
 
-        private void StartGame (object sender, EventArgs e)
+        private void StartHighScoreGame (object sender, EventArgs e)
         {
             Configerator.instance.GameType = Configerator.Game.player;
+            Configerator.instance.StartHighScoreLevel();
             OpenWorldForm();
         }
 
         private void StartTestPlaygrounds (object sender, EventArgs e)
         {
             Configerator.instance.GameType = Configerator.Game.player;
-            Configerator.instance.MultipleMovementEnabled = true;
-            Configerator.instance.MovementToEdgeEnabled = true;
-            Configerator.instance.MovementToBodyEnabled = true;
+            Configerator.instance.StartTestLevel();
             Configerator.instance.ItemsEnabled = true;
-            Configerator.instance.WallsEnabled = true;
-            Configerator.instance.TransparentAreasEnabled = true;
             OpenWorldForm();
         }
 
