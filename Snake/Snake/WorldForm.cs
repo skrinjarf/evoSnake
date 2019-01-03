@@ -62,11 +62,16 @@ namespace SnakeGame
             if (Configerator.instance.GameType == Configerator.Game.player)
             {
                 SnakeController.MoveSnake(sender, e);
+                SnakeController.PauseSnake(sender, e);
             }
         }
 
         private void OnTimerTick (object sender, EventArgs e)
         {
+            if (Configerator.instance.GamePaused)
+            {
+                return;
+            }
             world.DoStep();
             Invalidate();
         }

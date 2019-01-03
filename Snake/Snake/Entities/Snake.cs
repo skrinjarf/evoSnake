@@ -36,7 +36,7 @@ namespace SnakeGame.Entities
             age = 0;
             TimeLeft = 200;
             isDead = false;
-
+            
             //dodaj dijelove tijela
             if (HeadPosition.X < 3) throw new Exception("zmija mora biti inicijalizirana barem na poziciji 30 da stane na ekran");
             BodyParts.Enqueue(HeadPosition - new Vector2(3, 0));

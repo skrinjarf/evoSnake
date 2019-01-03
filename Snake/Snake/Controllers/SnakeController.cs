@@ -28,6 +28,10 @@ namespace SnakeGame.Controllers
 
         public static void MoveSnake (object sender, KeyEventArgs e)
         {
+            if (Configerator.instance.GamePaused)
+            {
+                return;
+            }
             if (e.KeyCode == Keys.Left || e.KeyCode == Keys.Right || e.KeyCode == Keys.Up || e.KeyCode == Keys.Down)
             {
                 Vector2 vel = (instance.ReverseControlsTime > 0 ? -1 : 1) * keyMapping [e.KeyCode];
@@ -98,6 +102,14 @@ namespace SnakeGame.Controllers
                 Keyboard.IsKeyDown(ControlSettings.controlMap [ControlSettings.Control.bodyJump]))
             {
                 instance.snake.MoveToBody();
+            }
+        }
+
+        public static void PauseSnake (object sender, KeyEventArgs e)
+        {
+            if (!instance.snake.isDead && e.KeyCode == Keys.Escape)
+            {
+                Configerator.instance.GamePaused = !Configerator.instance.GamePaused;
             }
         }
 
