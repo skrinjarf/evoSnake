@@ -1,5 +1,6 @@
 ﻿using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Windows.Forms;
 
 namespace SnakeGame.SaveSystem
 {
@@ -8,7 +9,7 @@ namespace SnakeGame.SaveSystem
         public static void Save ()
         {
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream stream = new FileStream("config.snake", FileMode.Create);
+            FileStream stream = new FileStream(Application.LocalUserAppDataPath + "\\config.snake", FileMode.Create);
             GameData data = new GameData(Configerator.instance);
             bf.Serialize(stream, data);
             stream.Close();
@@ -16,10 +17,10 @@ namespace SnakeGame.SaveSystem
 
         public static GameData Load ()
         {
-            if (File.Exists("config.snake"))
+            if (File.Exists(Application.LocalUserAppDataPath + "\\config.snake"))
             {
                 BinaryFormatter bf = new BinaryFormatter();
-                FileStream stream = new FileStream("config.snake", FileMode.Open);
+                FileStream stream = new FileStream(Application.LocalUserAppDataPath + "\\config.snake", FileMode.Open);
                 GameData data = bf.Deserialize(stream) as GameData;
                 stream.Close();
                 return data;
