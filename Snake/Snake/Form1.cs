@@ -38,6 +38,7 @@ namespace SnakeGame
         {
             Configerator.instance.GameType = Configerator.Game.player;
             Configerator.instance.StartLevel();
+            Configerator.instance.ItemsEnabled = false;
             OpenWorldForm();
         }
 
@@ -45,6 +46,7 @@ namespace SnakeGame
         {
             Configerator.instance.GameType = Configerator.Game.player;
             Configerator.instance.StartHighScoreLevel();
+            Configerator.instance.ItemsEnabled = false;
             OpenWorldForm();
         }
 
