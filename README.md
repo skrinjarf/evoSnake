@@ -11,6 +11,18 @@ Tasks for grabs:
 - Set predefined number of pauses for game
 - Set predefined number of lives for game
 
+Level Progression System:
+- Build config files which hold info about level which loads on level 
+start (DONE)
+- Build simple progression from one level to another when one is won 
+(DONE)
+- What happens when you click 'Next Level' after last level ???
+- Make somehow option to choose from all unlocked levels because now you 
+can only play last unlocked level
+- Design reasonable number of levels (1 - 20)
+- Make UI element which indicates name of level you are currently 
+playing
+
 Done so far: 
 - basic evolution algorithm for training snakes (needs to be perfected)
 - simple gameplay for snake game (this could be granulated but you get the feeling for what that means; just checkout this commit - 1a46ab1640afa7e03abcadfd7ead92ba8922a215)
