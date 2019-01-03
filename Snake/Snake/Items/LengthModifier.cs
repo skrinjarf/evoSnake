@@ -1,4 +1,5 @@
 ﻿using SnakeGame.Entities;
+using SnakeGame.Utils;
 
 namespace SnakeGame.Items
 {
@@ -6,9 +7,10 @@ namespace SnakeGame.Items
     {
         private int lengthModification;
 
-        public LengthModifier (int _lengthModification) : base()
+        public LengthModifier () : base()
         {
-            lengthModification = _lengthModification;
+            Vector2 range = Configerator.instance.ActiveLevel.LengthModificationRange;
+            lengthModification = rnd.Next(range.X, range.Y);
             Brush = System.Drawing.Brushes.Blue;
         }
 

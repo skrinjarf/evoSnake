@@ -33,7 +33,7 @@ namespace SnakeGame
         {
             levelChoice.Items.Clear();
             bool passedAllLevels = Configerator.instance.PassedLevels == Configerator.instance.TotalLevels();
-            object [] items = new object [Configerator.instance.PassedLevels + (passedAllLevels ? 0 : 1)];
+            object [] items = new object [5];//Configerator.instance.PassedLevels + (passedAllLevels ? 0 : 1)];
             for (int i = 0; i < items.Length; ++i)
             {
                 items [i] = i + 1;
@@ -52,7 +52,6 @@ namespace SnakeGame
         {
             Configerator.instance.GameType = Configerator.Game.player;
             Configerator.instance.StartLevel((int)levelChoice.SelectedItem - 1);
-            Configerator.instance.ItemsEnabled = false;
             OpenWorldForm();
         }
 
@@ -60,7 +59,6 @@ namespace SnakeGame
         {
             Configerator.instance.GameType = Configerator.Game.player;
             Configerator.instance.StartHighScoreLevel();
-            Configerator.instance.ItemsEnabled = false;
             OpenWorldForm();
         }
 
@@ -68,7 +66,6 @@ namespace SnakeGame
         {
             Configerator.instance.GameType = Configerator.Game.player;
             Configerator.instance.StartTestLevel();
-            Configerator.instance.ItemsEnabled = true;
             OpenWorldForm();
         }
 

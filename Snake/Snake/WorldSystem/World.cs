@@ -45,6 +45,7 @@ namespace SnakeGame.WorldSystem
         public virtual void DoStep ()
         {
             UpdateSnake();
+            ItemSpawner.TrySpawnItems();
             SnakeController.ReverseControlsTick();
         }
 

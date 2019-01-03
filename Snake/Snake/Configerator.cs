@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using SnakeGame.LevelSystem;
+using SnakeGame.Items;
 using SnakeGame.Obstacles;
 using SnakeGame.Effects;
 using SnakeGame.Utils;
@@ -10,7 +11,6 @@ namespace SnakeGame
     {
         public enum Game { player, bot };
         public Game GameType { get; set; }
-        public bool ItemsEnabled { get; set; }
 
         private List<LevelConfig> levels;
         private LevelConfig highScoreLevel;
@@ -64,12 +64,23 @@ namespace SnakeGame
                 new LevelConfig() {
                     Name = "Level 4",
                     VictoryCondition = LevelConfig.VictoryType.length,
-                    VictoryThreshold = 20
+                    VictoryThreshold = 20,
+                    ItemProbabilityDistribution = new Dictionary<System.Type, double>() {
+                        { typeof(LengthModifier), 0.05 }
+                    },
+                    LengthModificationRange = new Vector2(-2, 3)
                 },
                 new LevelConfig() {
                     Name = "Level 5",
                     VictoryCondition = LevelConfig.VictoryType.points,
-                    VictoryThreshold = 30
+                    VictoryThreshold = 30,
+                    ItemProbabilityDistribution = new Dictionary<System.Type, double>() {
+                        { typeof(ScoreModifier), 0.1 },
+                        { typeof(ControlsModifier), 0.02 },
+                        { typeof(DirectionModifier), 0.05 }
+                    },
+                    PointsModificationRange = new Vector2(-2, 5),
+                    ControlModifierTimeRange = new Vector2(10, 20)
                 }
             };
             highScoreLevel = new LevelConfig() {

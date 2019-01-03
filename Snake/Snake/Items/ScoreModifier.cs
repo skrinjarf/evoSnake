@@ -1,4 +1,5 @@
 ﻿using SnakeGame.Entities;
+using SnakeGame.Utils;
 
 namespace SnakeGame.Items
 {
@@ -6,9 +7,10 @@ namespace SnakeGame.Items
     {
         private int pointsToAdd;
 
-        public ScoreModifier (int _pointsToAdd) : base()
+        public ScoreModifier () : base()
         {
-            pointsToAdd = _pointsToAdd;
+            Vector2 range = Configerator.instance.ActiveLevel.PointsModificationRange;
+            pointsToAdd = rnd.Next(range.X, range.Y);
             Brush = System.Drawing.Brushes.Green;
         }
 

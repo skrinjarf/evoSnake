@@ -1,5 +1,6 @@
 ﻿using SnakeGame.Entities;
 using SnakeGame.Controllers;
+using SnakeGame.Utils;
 
 namespace SnakeGame.Items
 {
@@ -7,9 +8,10 @@ namespace SnakeGame.Items
     {
         private int modifierTime;
 
-        public ControlsModifier (int _modifierTime) : base()
+        public ControlsModifier () : base()
         {
-            modifierTime = _modifierTime;
+            Vector2 range = Configerator.instance.ActiveLevel.ControlModifierTimeRange;
+            modifierTime = rnd.Next(range.X, range.Y);
             Brush = System.Drawing.Brushes.Pink;
         }
 
