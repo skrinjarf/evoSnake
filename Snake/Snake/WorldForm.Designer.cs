@@ -40,6 +40,7 @@
 			this.nextLevelButton = new System.Windows.Forms.Button();
 			this.levelLabel = new System.Windows.Forms.Label();
 			this.lifeLabel = new System.Windows.Forms.Label();
+			this.pauseLeftLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -160,11 +161,23 @@
 			this.lifeLabel.Text = "Lives: 5";
 			this.lifeLabel.Visible = false;
 			// 
+			// pauseLeftLabel
+			// 
+			this.pauseLeftLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.pauseLeftLabel.AutoSize = true;
+			this.pauseLeftLabel.Location = new System.Drawing.Point(608, 0);
+			this.pauseLeftLabel.Name = "pauseLeftLabel";
+			this.pauseLeftLabel.Size = new System.Drawing.Size(99, 17);
+			this.pauseLeftLabel.TabIndex = 10;
+			this.pauseLeftLabel.Text = "Pauses Left: 5";
+			this.pauseLeftLabel.Visible = false;
+			// 
 			// WorldForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(782, 753);
+			this.Controls.Add(this.pauseLeftLabel);
 			this.Controls.Add(this.lifeLabel);
 			this.Controls.Add(this.levelLabel);
 			this.Controls.Add(this.nextLevelButton);
@@ -198,5 +211,6 @@
         public System.Windows.Forms.Button nextLevelButton;
         public System.Windows.Forms.Label levelLabel;
         public System.Windows.Forms.Label lifeLabel;
+        public System.Windows.Forms.Label pauseLeftLabel;
     }
 }

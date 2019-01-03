@@ -20,12 +20,14 @@ namespace SnakeGame
         private int activeLevelNum;
         public int PassedLevels { get; set; }
         public bool GamePaused { get; set; }
+        public int PausesLeft { get; set; }
 
         public static Configerator instance = new Configerator();
 
         public Configerator ()
         {
             LivesLeft = 5;
+            PausesLeft = 5;
             levels = new List<LevelConfig>() {
                 new LevelConfig() {
                     Name = "Level 1",

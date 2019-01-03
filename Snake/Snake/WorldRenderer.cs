@@ -24,6 +24,7 @@ namespace SnakeGame
         private Label reverseLabel;
         private Label levelLabel;
         private Label lifeLabel;
+        private Label pauseLeftLabel;
         private Button restartButton;
         private Button menuButton;
         private int menuButtonX;
@@ -43,6 +44,7 @@ namespace SnakeGame
             reverseLabel = _worldForm.reverseLabel;
             levelLabel = _worldForm.levelLabel;
             lifeLabel = _worldForm.lifeLabel;
+            pauseLeftLabel = _worldForm.pauseLeftLabel;
             restartButton = _worldForm.restartButton;
             menuButton = _worldForm.menuButton;
             menuButtonX = menuButton.Location.X;
@@ -148,11 +150,12 @@ namespace SnakeGame
             instance.deathTitle.Text = isGameLost ? "GAME OVER" : "YOU DIED";
             instance.restartButton.Visible = !isGameLost;
             instance.menuButton.Visible = true;
-            instance.menuButton.Location = 
+            instance.menuButton.Location =
                 new Point(isGameLost ? instance.deathTitle.Location.X + instance.deathTitle.Size.Width / 4 : instance.menuButtonX, instance.menuButton.Location.Y);
             if (isGameLost)
             {
                 Configerator.instance.LivesLeft = 5;
+                Configerator.instance.PausesLeft = 5;
             }
         }
         public static void CloseDeathDialog ()
@@ -200,6 +203,15 @@ namespace SnakeGame
             if (isLevelGame)
             {
                 instance.lifeLabel.Text = "Lives: " + Configerator.instance.LivesLeft.ToString();
+            }
+        }
+        public static void UpdatePausesLeftLabel ()
+        {
+            bool isLevelGame = Configerator.instance.IsLevelGame();
+            instance.pauseLeftLabel.Visible = isLevelGame;
+            if (isLevelGame)
+            {
+                instance.pauseLeftLabel.Text = "Pauses Left: " + Configerator.instance.PausesLeft.ToString();
             }
         }
     }

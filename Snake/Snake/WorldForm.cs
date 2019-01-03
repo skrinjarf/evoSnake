@@ -41,6 +41,7 @@ namespace SnakeGame
             }
             WorldRenderer.UpdateLevelLabel();
             WorldRenderer.UpdateLifeLabel();
+            WorldRenderer.UpdatePausesLeftLabel();
             timer1.Start();
         }
 

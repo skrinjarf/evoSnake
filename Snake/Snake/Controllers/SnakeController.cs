@@ -109,7 +109,16 @@ namespace SnakeGame.Controllers
         {
             if (!instance.snake.isDead && e.KeyCode == Keys.Escape)
             {
+                if (!Configerator.instance.GamePaused && Configerator.instance.PausesLeft == 0)
+                {
+                    return;
+                }
                 Configerator.instance.GamePaused = !Configerator.instance.GamePaused;
+                if (Configerator.instance.GamePaused)
+                {
+                    --Configerator.instance.PausesLeft;
+                    WorldRenderer.UpdatePausesLeftLabel();
+                }
             }
         }
 
