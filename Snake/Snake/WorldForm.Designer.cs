@@ -132,6 +132,7 @@
 			this.nextLevelButton.Text = "NEXT LEVEL";
 			this.nextLevelButton.UseVisualStyleBackColor = true;
 			this.nextLevelButton.Visible = false;
+			this.nextLevelButton.Click += new System.EventHandler(this.NextLevel);
 			// 
 			// WorldForm
 			// 

@@ -213,6 +213,7 @@ namespace SnakeGame.Entities
         private void Win ()
         {
             isDead = true;
+            Configerator.instance.LevelWon();
             if (Configerator.instance.GameType == Configerator.Game.player)
             {
                 WorldRenderer.ShowVicoryDialog();

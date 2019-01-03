@@ -78,6 +78,13 @@ namespace SnakeGame
             StartGame();
         }
 
+        private void NextLevel (object sender, EventArgs e)
+        {
+            WorldRenderer.CloseVictoryDialog();
+            Configerator.instance.StartLevel();
+            StartGame();
+        }
+
         private void CloseForm (object sender, EventArgs e)
         {
             Close();

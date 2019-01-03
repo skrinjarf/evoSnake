@@ -159,8 +159,8 @@ namespace SnakeGame
         public static void CloseVictoryDialog ()
         {
             instance.deathTitle.Visible = false;
-            instance.restartButton.Visible = false;
             instance.nextLevelButton.Visible = false;
+            instance.menuButton.Visible = false;
         }
 
         public static void UpdateReverseLabel (int time)

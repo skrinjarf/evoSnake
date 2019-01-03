@@ -16,12 +16,18 @@ namespace SnakeGame
         private LevelConfig highScoreLevel;
         private LevelConfig testLevel;
         public LevelConfig ActiveLevel { get; set; }
+        private int activeLevelNum;
+        private int passedLevels;
 
         public static Configerator instance = new Configerator();
 
         public Configerator ()
         {
             levels = new List<LevelConfig>() {
+                new LevelConfig() {
+                    VictoryCondition = LevelConfig.VictoryType.length,
+                    VictoryThreshold = 10
+                },
                 new LevelConfig() {
                     VictoryCondition = LevelConfig.VictoryType.points,
                     VictoryThreshold = 10
@@ -48,9 +54,10 @@ namespace SnakeGame
             };
         }
 
-        public void StartLevel (int levelNum)
+        public void StartLevel ()
         {
-            instance.ActiveLevel = instance.levels [levelNum];
+            instance.ActiveLevel = instance.levels [instance.passedLevels];
+            instance.activeLevelNum = instance.passedLevels;
         }
         public void StartHighScoreLevel ()
         {
@@ -59,6 +66,13 @@ namespace SnakeGame
         public void StartTestLevel ()
         {
             instance.ActiveLevel = instance.testLevel;
+        }
+        public void LevelWon ()
+        {
+            if (instance.activeLevelNum >= instance.passedLevels)
+            {
+                instance.passedLevels = instance.activeLevelNum + 1;
+            }
         }
     }
 }
