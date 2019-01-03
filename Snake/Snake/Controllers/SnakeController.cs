@@ -109,6 +109,10 @@ namespace SnakeGame.Controllers
         {
             if (!instance.snake.isDead && e.KeyCode == Keys.Escape)
             {
+                if (!Configerator.instance.IsLevelGame())
+                {
+                    return;
+                }
                 if (!Configerator.instance.GamePaused && Configerator.instance.PausesLeft == 0)
                 {
                     return;
