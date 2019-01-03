@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using SnakeGame.Utils;
 using SnakeGame.Entities;
+using SnakeGame.Obstacles;
 
 namespace SnakeGame.Items
 {
@@ -24,9 +25,13 @@ namespace SnakeGame.Items
         //construct
         public Item ()
         {
-            //get random positions inside game area, so far [0..800> x [0..400>
-            Xpos = rnd.Next(0, WorldRenderer.instance.World.Dimensions.X); //food is drawn as 10x10 square, so leave space for drawing
+            Xpos = rnd.Next(0, WorldRenderer.instance.World.Dimensions.X);
             Ypos = rnd.Next(0, WorldRenderer.instance.World.Dimensions.Y);
+            while (Wall.AnyWall(new Vector2(Xpos, Ypos)))
+            {
+                Xpos = rnd.Next(0, WorldRenderer.instance.World.Dimensions.X);
+                Ypos = rnd.Next(0, WorldRenderer.instance.World.Dimensions.Y);
+            }
             allItems.Add(this);
         }
         ~Item ()

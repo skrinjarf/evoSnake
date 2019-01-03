@@ -33,6 +33,43 @@ namespace SnakeGame
                     Name = "Level 2",
                     VictoryCondition = LevelConfig.VictoryType.points,
                     VictoryThreshold = 10
+                },
+                new LevelConfig() {
+                    Name = "Level 3",
+                    VictoryCondition = LevelConfig.VictoryType.points,
+                    VictoryThreshold = 30,
+                    Walls = new List<Wall>() {
+                        new Wall(new Vector2(15, 0)),
+                        new Wall(new Vector2(15, 1)),
+                        new Wall(new Vector2(15, 2)),
+                        new Wall(new Vector2(15, 3)),
+                        new Wall(new Vector2(15, 4)),
+                        new Wall(new Vector2(15, 5)),
+                        new Wall(new Vector2(15, 6)),
+                        new Wall(new Vector2(15, 7)),
+                        new Wall(new Vector2(15, 8)),
+                        new Wall(new Vector2(15, 9)),
+                        new Wall(new Vector2(15, 20)),
+                        new Wall(new Vector2(15, 21)),
+                        new Wall(new Vector2(15, 22)),
+                        new Wall(new Vector2(15, 23)),
+                        new Wall(new Vector2(15, 24)),
+                        new Wall(new Vector2(15, 25)),
+                        new Wall(new Vector2(15, 26)),
+                        new Wall(new Vector2(15, 27)),
+                        new Wall(new Vector2(15, 28)),
+                        new Wall(new Vector2(15, 29)),
+                    }
+                },
+                new LevelConfig() {
+                    Name = "Level 4",
+                    VictoryCondition = LevelConfig.VictoryType.length,
+                    VictoryThreshold = 20
+                },
+                new LevelConfig() {
+                    Name = "Level 5",
+                    VictoryCondition = LevelConfig.VictoryType.points,
+                    VictoryThreshold = 30
                 }
             };
             highScoreLevel = new LevelConfig() {
