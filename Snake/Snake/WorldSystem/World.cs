@@ -47,6 +47,7 @@ namespace SnakeGame.WorldSystem
             UpdateSnake();
             ItemSpawner.TrySpawnItems();
             SnakeController.ReverseControlsTick();
+            LevelModifier.Tick();
         }
 
         public virtual void UpdateSnake ()

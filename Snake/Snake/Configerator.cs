@@ -27,12 +27,18 @@ namespace SnakeGame
                 new LevelConfig() {
                     Name = "Level 1",
                     VictoryCondition = LevelConfig.VictoryType.length,
-                    VictoryThreshold = 10
+                    VictoryThreshold = 10,
+                    ItemProbabilityDistribution = new Dictionary<System.Type, double>() {
+                        { typeof(LevelModifier), 0.01 }
+                    }
                 },
                 new LevelConfig() {
                     Name = "Level 2",
                     VictoryCondition = LevelConfig.VictoryType.points,
-                    VictoryThreshold = 10
+                    VictoryThreshold = 10,
+                    ItemProbabilityDistribution = new Dictionary<System.Type, double>() {
+                        { typeof(LevelModifier), 0.005 }
+                    }
                 },
                 new LevelConfig() {
                     Name = "Level 3",

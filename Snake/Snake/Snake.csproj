@@ -58,6 +58,7 @@
     <Compile Include="Items\Item.cs" />
     <Compile Include="Items\ItemSpawner.cs" />
     <Compile Include="Items\LengthModifier.cs" />
+    <Compile Include="Items\LevelModifier.cs" />
     <Compile Include="Items\ScoreModifier.cs" />
     <Compile Include="LevelSystem\LevelConfig.cs" />
     <Compile Include="Obstacles\Wall.cs" />

@@ -234,7 +234,7 @@ namespace SnakeGame.Entities
                 Win();
             }
         }
-        private void Win ()
+        public void Win ()
         {
             isDead = true;
             Configerator.instance.LevelWon();
