@@ -102,7 +102,11 @@ namespace SnakeGame
                     new Wall(new Vector2(10, 12)),
                     new Wall(new Vector2(10, 13)),
                     new Wall(new Vector2(10, 14))
-                }
+                },
+                ItemProbabilityDistribution = new Dictionary<System.Type, double>() {
+                    { typeof(LengthModifier), 0.2 }
+                },
+                LengthModificationRange = new Vector2(-5, -4)
             };
         }
 

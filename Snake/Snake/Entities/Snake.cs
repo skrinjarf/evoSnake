@@ -132,6 +132,19 @@ namespace SnakeGame.Entities
             {
                 Vector2 newBodyPart = new Vector2(HeadPosition); //old head possition becomes new bodyPart
                 BodyParts.Dequeue();    //remove the last bodyPart
+                if (TimesToGrow < 0)
+                {
+                    if (length > 4)
+                    {
+                        TimesToGrow++;
+                        BodyParts.Dequeue();
+                        length--;
+                    }
+                    else
+                    {
+                        TimesToGrow = 0;
+                    }
+                }
                 BodyParts.Enqueue(newBodyPart); //add to bodyParts old head possition
                 HeadPosition = NewHeadPosition; //update head possition
             }
