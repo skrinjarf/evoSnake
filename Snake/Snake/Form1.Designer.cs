@@ -57,6 +57,8 @@
 			this.label4 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
+			this.label13 = new System.Windows.Forms.Label();
+			this.levelChoice = new System.Windows.Forms.ComboBox();
 			this.settingsPanel.SuspendLayout();
 			this.SuspendLayout();
 			// 
@@ -348,11 +350,31 @@
 			this.label2.TabIndex = 0;
 			this.label2.Text = "jump by 1";
 			// 
+			// label13
+			// 
+			this.label13.AutoSize = true;
+			this.label13.Location = new System.Drawing.Point(211, 217);
+			this.label13.Name = "label13";
+			this.label13.Size = new System.Drawing.Size(50, 17);
+			this.label13.TabIndex = 7;
+			this.label13.Text = "Level: ";
+			// 
+			// levelChoice
+			// 
+			this.levelChoice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.levelChoice.FormattingEnabled = true;
+			this.levelChoice.Location = new System.Drawing.Point(267, 213);
+			this.levelChoice.Name = "levelChoice";
+			this.levelChoice.Size = new System.Drawing.Size(61, 24);
+			this.levelChoice.TabIndex = 8;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(120F, 120F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.ClientSize = new System.Drawing.Size(800, 450);
+			this.Controls.Add(this.levelChoice);
+			this.Controls.Add(this.label13);
 			this.Controls.Add(this.settingsPanel);
 			this.Controls.Add(this.button5);
 			this.Controls.Add(this.button4);
@@ -400,6 +422,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox levelChoice;
     }
 }
 

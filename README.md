@@ -18,7 +18,7 @@ start (DONE)
 (DONE)
 - What happens when you click 'Next Level' after last level ???
 - Make somehow option to choose from all unlocked levels because now you 
-can only play last unlocked level
+can only play last unlocked level (DONE)
 - Design reasonable number of levels (1 - 20)
 - Make UI element which indicates name of level you are currently 
 playing (DONE)

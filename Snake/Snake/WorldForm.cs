@@ -8,10 +8,12 @@ namespace SnakeGame
 {
     public partial class WorldForm: Form
     {
+        private Form1 form1;
         private World world;
-
-        public WorldForm ()
+        
+        public WorldForm (Form1 _form1)
         {
+            form1 = _form1;
             InitializeComponent();
             KeyPreview = true;
             StartGame();
@@ -88,6 +90,7 @@ namespace SnakeGame
 
         private void CloseForm (object sender, EventArgs e)
         {
+            form1.UpdateLevels();
             Close();
         }
     }

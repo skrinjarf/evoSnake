@@ -11,6 +11,7 @@ namespace SnakeGame
         {
             InitializeComponent();
             InitControls();
+            UpdateLevels();
         }
 
         private void InitControls ()
@@ -28,6 +29,18 @@ namespace SnakeGame
             controlJumpBody.Items.AddRange(ControlSettings.allKeys);
         }
 
+        public void UpdateLevels ()
+        {
+            levelChoice.Items.Clear();
+            object [] items = new object [Configerator.instance.PassedLevels + 1];
+            for (int i = 0; i < items.Length; ++i)
+            {
+                items [i] = i + 1;
+            }
+            levelChoice.Items.AddRange(items);
+            levelChoice.SelectedItem = items.Length;
+        }
+
         private void TrainSnakes (object sender, EventArgs e)
         {
             Configerator.instance.GameType = Configerator.Game.bot;
@@ -37,7 +50,7 @@ namespace SnakeGame
         private void StartLevelGame (object sender, EventArgs e)
         {
             Configerator.instance.GameType = Configerator.Game.player;
-            Configerator.instance.StartLevel();
+            Configerator.instance.StartLevel((int)levelChoice.SelectedItem - 1);
             Configerator.instance.ItemsEnabled = false;
             OpenWorldForm();
         }
@@ -60,7 +73,7 @@ namespace SnakeGame
 
         private void OpenWorldForm ()
         {
-            WorldForm form = new WorldForm();
+            WorldForm form = new WorldForm(this);
             form.Show();
         }
 
