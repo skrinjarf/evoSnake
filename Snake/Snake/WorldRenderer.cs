@@ -23,8 +23,10 @@ namespace SnakeGame
         private Label deathTitle;
         private Label reverseLabel;
         private Label levelLabel;
+        private Label lifeLabel;
         private Button restartButton;
         private Button menuButton;
+        private int menuButtonX;
         private Button nextLevelButton;
 
         private WorldRenderer (World _world, WorldForm _worldForm)
@@ -40,8 +42,10 @@ namespace SnakeGame
             deathTitle = _worldForm.deathTitle;
             reverseLabel = _worldForm.reverseLabel;
             levelLabel = _worldForm.levelLabel;
+            lifeLabel = _worldForm.lifeLabel;
             restartButton = _worldForm.restartButton;
             menuButton = _worldForm.menuButton;
+            menuButtonX = menuButton.Location.X;
             nextLevelButton = _worldForm.nextLevelButton;
         }
 
@@ -139,10 +143,17 @@ namespace SnakeGame
 
         public static void ShowDeathDialog ()
         {
+            bool isGameLost = Configerator.instance.LivesLeft == 0;
             instance.deathTitle.Visible = true;
-            instance.deathTitle.Text = "GAME LOST";
-            instance.restartButton.Visible = true;
+            instance.deathTitle.Text = isGameLost ? "GAME OVER" : "YOU DIED";
+            instance.restartButton.Visible = !isGameLost;
             instance.menuButton.Visible = true;
+            instance.menuButton.Location = 
+                new Point(isGameLost ? instance.deathTitle.Location.X + instance.deathTitle.Size.Width / 4 : instance.menuButtonX, instance.menuButton.Location.Y);
+            if (isGameLost)
+            {
+                Configerator.instance.LivesLeft = 5;
+            }
         }
         public static void CloseDeathDialog ()
         {
@@ -180,6 +191,15 @@ namespace SnakeGame
             if (isPlayerGame)
             {
                 instance.levelLabel.Text = Configerator.instance.ActiveLevel.Name;
+            }
+        }
+        public static void UpdateLifeLabel ()
+        {
+            bool isLevelGame = Configerator.instance.IsLevelGame();
+            instance.lifeLabel.Visible = isLevelGame;
+            if (isLevelGame)
+            {
+                instance.lifeLabel.Text = "Lives: " + Configerator.instance.LivesLeft.ToString();
             }
         }
     }

@@ -12,6 +12,7 @@ namespace SnakeGame
         public enum Game { player, bot };
         public Game GameType { get; set; }
 
+        public int LivesLeft { get; set; }
         private List<LevelConfig> levels;
         private LevelConfig highScoreLevel;
         private LevelConfig testLevel;
@@ -23,6 +24,7 @@ namespace SnakeGame
 
         public Configerator ()
         {
+            LivesLeft = 5;
             levels = new List<LevelConfig>() {
                 new LevelConfig() {
                     Name = "Level 1",
@@ -142,6 +144,13 @@ namespace SnakeGame
         public void StartTestLevel ()
         {
             instance.ActiveLevel = instance.testLevel;
+        }
+        public void LevelLost ()
+        {
+            if (--LivesLeft == 0)
+            {
+                PassedLevels = 0;
+            }
         }
         public void LevelWon ()
         {

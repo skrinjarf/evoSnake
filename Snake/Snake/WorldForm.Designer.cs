@@ -39,6 +39,7 @@
 			this.reverseLabel = new System.Windows.Forms.Label();
 			this.nextLevelButton = new System.Windows.Forms.Button();
 			this.levelLabel = new System.Windows.Forms.Label();
+			this.lifeLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -78,7 +79,6 @@
 			// deathTitle
 			// 
 			this.deathTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
-			this.deathTitle.AutoSize = true;
 			this.deathTitle.BackColor = System.Drawing.Color.Black;
 			this.deathTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Bold);
 			this.deathTitle.ForeColor = System.Drawing.Color.White;
@@ -87,6 +87,7 @@
 			this.deathTitle.Size = new System.Drawing.Size(272, 46);
 			this.deathTitle.TabIndex = 3;
 			this.deathTitle.Text = "GAME OVER";
+			this.deathTitle.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			this.deathTitle.Visible = false;
 			// 
 			// restartButton
@@ -148,11 +149,23 @@
 			this.levelLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
 			this.levelLabel.Visible = false;
 			// 
+			// lifeLabel
+			// 
+			this.lifeLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.lifeLabel.AutoSize = true;
+			this.lifeLabel.Location = new System.Drawing.Point(713, 0);
+			this.lifeLabel.Name = "lifeLabel";
+			this.lifeLabel.Size = new System.Drawing.Size(57, 17);
+			this.lifeLabel.TabIndex = 9;
+			this.lifeLabel.Text = "Lives: 5";
+			this.lifeLabel.Visible = false;
+			// 
 			// WorldForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(782, 753);
+			this.Controls.Add(this.lifeLabel);
 			this.Controls.Add(this.levelLabel);
 			this.Controls.Add(this.nextLevelButton);
 			this.Controls.Add(this.reverseLabel);
@@ -184,5 +197,6 @@
         public System.Windows.Forms.Label reverseLabel;
         public System.Windows.Forms.Button nextLevelButton;
         public System.Windows.Forms.Label levelLabel;
+        public System.Windows.Forms.Label lifeLabel;
     }
 }

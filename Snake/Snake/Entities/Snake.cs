@@ -193,6 +193,11 @@ namespace SnakeGame.Entities
             isDead = true;
             if (Configerator.instance.GameType == Configerator.Game.player)
             {
+                if (Configerator.instance.IsLevelGame())
+                {
+                    Configerator.instance.LevelLost();
+                    WorldRenderer.UpdateLifeLabel();
+                }
                 WorldRenderer.ShowDeathDialog();
             }
         }

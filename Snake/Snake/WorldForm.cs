@@ -40,6 +40,7 @@ namespace SnakeGame
                 timer1.Interval = 1000 / 30;
             }
             WorldRenderer.UpdateLevelLabel();
+            WorldRenderer.UpdateLifeLabel();
             timer1.Start();
         }
 
