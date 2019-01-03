@@ -156,6 +156,7 @@ namespace SnakeGame
             {
                 Configerator.instance.LivesLeft = 5;
                 Configerator.instance.PausesLeft = 5;
+                Configerator.SaveConfig();
             }
         }
         public static void CloseDeathDialog ()

@@ -122,6 +122,7 @@ namespace SnakeGame.Controllers
                 if (Configerator.instance.GamePaused)
                 {
                     --Configerator.instance.PausesLeft;
+                    Configerator.SaveConfig();
                     WorldRenderer.UpdatePausesLeftLabel();
                 }
             }

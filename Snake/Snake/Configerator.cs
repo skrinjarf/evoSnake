@@ -4,6 +4,7 @@ using SnakeGame.Items;
 using SnakeGame.Obstacles;
 using SnakeGame.Effects;
 using SnakeGame.Utils;
+using SnakeGame.SaveSystem;
 
 namespace SnakeGame
 {
@@ -26,8 +27,7 @@ namespace SnakeGame
 
         public Configerator ()
         {
-            LivesLeft = 5;
-            PausesLeft = 5;
+            LoadConfig();
             levels = new List<LevelConfig>() {
                 new LevelConfig() {
                     Name = "Level 1",
@@ -120,6 +120,17 @@ namespace SnakeGame
                 LengthModificationRange = new Vector2(-5, -4)
             };
         }
+        private void LoadConfig ()
+        {
+            GameData data = SaveLoad.Load();
+            LivesLeft = data.livesLeft;
+            PassedLevels = data.passedLevels;
+            PausesLeft = data.pausesLeft;
+        }
+        public static void SaveConfig ()
+        {
+            SaveLoad.Save();
+        }
 
         public int TotalLevels ()
         {
@@ -154,12 +165,14 @@ namespace SnakeGame
             {
                 PassedLevels = 0;
             }
+            SaveConfig();
         }
         public void LevelWon ()
         {
             if (instance.activeLevelNum >= instance.PassedLevels)
             {
                 instance.PassedLevels = instance.activeLevelNum + 1;
+                SaveConfig();
             }
         }
         public bool IsLevelGame ()

@@ -62,6 +62,8 @@
     <Compile Include="Items\ScoreModifier.cs" />
     <Compile Include="LevelSystem\LevelConfig.cs" />
     <Compile Include="Obstacles\Wall.cs" />
+    <Compile Include="SaveSystem\GameData.cs" />
+    <Compile Include="SaveSystem\SaveLoad.cs" />
     <Compile Include="Utils\ANN.cs" />
     <Compile Include="Items\Food.cs" />
     <Compile Include="Form1.cs">
@@ -115,5 +117,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
