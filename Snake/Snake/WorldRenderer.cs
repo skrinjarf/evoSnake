@@ -214,5 +214,14 @@ namespace SnakeGame
                 instance.pauseLeftLabel.Text = "Pauses Left: " + Configerator.instance.PausesLeft.ToString();
             }
         }
+        public static void UpdatePauseLabel ()
+        {
+            bool isPaused = Configerator.instance.GamePaused;
+            instance.deathTitle.Visible = isPaused;
+            if (isPaused)
+            {
+                instance.deathTitle.Text = "PAUSED";
+            }
+        }
     }
 }

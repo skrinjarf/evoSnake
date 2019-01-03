@@ -118,6 +118,7 @@ namespace SnakeGame.Controllers
                     return;
                 }
                 Configerator.instance.GamePaused = !Configerator.instance.GamePaused;
+                WorldRenderer.UpdatePauseLabel();
                 if (Configerator.instance.GamePaused)
                 {
                     --Configerator.instance.PausesLeft;
