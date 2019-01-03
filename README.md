@@ -16,7 +16,7 @@ Level Progression System:
 start (DONE)
 - Build simple progression from one level to another when one is won 
 (DONE)
-- What happens when you click 'Next Level' after last level ???
+- What happens when you click 'Next Level' after last level (DONE)
 - Make somehow option to choose from all unlocked levels because now you 
 can only play last unlocked level (DONE)
 - Design reasonable number of levels (1 - 20)

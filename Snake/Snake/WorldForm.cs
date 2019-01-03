@@ -84,8 +84,14 @@ namespace SnakeGame
         private void NextLevel (object sender, EventArgs e)
         {
             WorldRenderer.CloseVictoryDialog();
-            Configerator.instance.StartLevel();
-            StartGame();
+            if (Configerator.instance.StartLevel())
+            {
+                StartGame();
+            }
+            else
+            {
+                CloseForm(sender, e);
+            }
         }
 
         private void CloseForm (object sender, EventArgs e)

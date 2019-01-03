@@ -58,10 +58,19 @@ namespace SnakeGame
             };
         }
 
-        public void StartLevel ()
+        public int TotalLevels ()
         {
+            return levels.Count;
+        }
+        public bool StartLevel ()
+        {
+            if (activeLevelNum + 1 == PassedLevels)
+            {
+                return false;
+            }
             instance.ActiveLevel = instance.levels [activeLevelNum + 1];
             instance.activeLevelNum = activeLevelNum + 1;
+            return true;
         }
         public void StartLevel (int levelNum)
         {

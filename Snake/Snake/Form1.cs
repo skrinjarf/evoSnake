@@ -32,7 +32,8 @@ namespace SnakeGame
         public void UpdateLevels ()
         {
             levelChoice.Items.Clear();
-            object [] items = new object [Configerator.instance.PassedLevels + 1];
+            bool passedAllLevels = Configerator.instance.PassedLevels == Configerator.instance.TotalLevels();
+            object [] items = new object [Configerator.instance.PassedLevels + (passedAllLevels ? 0 : 1)];
             for (int i = 0; i < items.Length; ++i)
             {
                 items [i] = i + 1;
