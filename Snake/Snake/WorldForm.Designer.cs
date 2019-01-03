@@ -38,6 +38,7 @@
 			this.menuButton = new System.Windows.Forms.Button();
 			this.reverseLabel = new System.Windows.Forms.Label();
 			this.nextLevelButton = new System.Windows.Forms.Button();
+			this.levelLabel = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -134,11 +135,25 @@
 			this.nextLevelButton.Visible = false;
 			this.nextLevelButton.Click += new System.EventHandler(this.NextLevel);
 			// 
+			// levelLabel
+			// 
+			this.levelLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+			this.levelLabel.AutoSize = true;
+			this.levelLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.levelLabel.Location = new System.Drawing.Point(356, 0);
+			this.levelLabel.Name = "levelLabel";
+			this.levelLabel.Size = new System.Drawing.Size(61, 17);
+			this.levelLabel.TabIndex = 8;
+			this.levelLabel.Text = "Level 1";
+			this.levelLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+			this.levelLabel.Visible = false;
+			// 
 			// WorldForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(782, 753);
+			this.Controls.Add(this.levelLabel);
 			this.Controls.Add(this.nextLevelButton);
 			this.Controls.Add(this.reverseLabel);
 			this.Controls.Add(this.menuButton);
@@ -168,5 +183,6 @@
         public System.Windows.Forms.Button menuButton;
         public System.Windows.Forms.Label reverseLabel;
         public System.Windows.Forms.Button nextLevelButton;
+        public System.Windows.Forms.Label levelLabel;
     }
 }

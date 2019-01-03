@@ -25,21 +25,25 @@ namespace SnakeGame
         {
             levels = new List<LevelConfig>() {
                 new LevelConfig() {
+                    Name = "Level 1",
                     VictoryCondition = LevelConfig.VictoryType.length,
                     VictoryThreshold = 10
                 },
                 new LevelConfig() {
+                    Name = "Level 2",
                     VictoryCondition = LevelConfig.VictoryType.points,
                     VictoryThreshold = 10
                 }
             };
             highScoreLevel = new LevelConfig() {
+                Name = "Endless Game",
                 MovementToBodyEnabled = false,
                 MovementToEdgeEnabled = false,
                 MultipleMovementEnabled = false,
                 VictoryCondition = LevelConfig.VictoryType.unlimited
             };
             testLevel = new LevelConfig() {
+                Name = "Test Playgrounds",
                 VictoryCondition = LevelConfig.VictoryType.unlimited,
                 TransparentAreas = new List<TransparentArea>() {
                     new TransparentArea(new Vector2(4, 4), new Vector2(10, 7))
@@ -73,6 +77,10 @@ namespace SnakeGame
             {
                 instance.passedLevels = instance.activeLevelNum + 1;
             }
+        }
+        public bool IsLevelGame ()
+        {
+            return instance.levels.Contains(instance.ActiveLevel);
         }
     }
 }

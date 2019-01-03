@@ -22,6 +22,7 @@ namespace SnakeGame
         private Label scoreLabel;
         private Label deathTitle;
         private Label reverseLabel;
+        private Label levelLabel;
         private Button restartButton;
         private Button menuButton;
         private Button nextLevelButton;
@@ -38,6 +39,7 @@ namespace SnakeGame
             scoreLabel = _worldForm.scoreLabel;
             deathTitle = _worldForm.deathTitle;
             reverseLabel = _worldForm.reverseLabel;
+            levelLabel = _worldForm.levelLabel;
             restartButton = _worldForm.restartButton;
             menuButton = _worldForm.menuButton;
             nextLevelButton = _worldForm.nextLevelButton;
@@ -169,6 +171,15 @@ namespace SnakeGame
             if (time > 0)
             {
                 instance.reverseLabel.Text = "Reversed Controls: " + time.ToString();
+            }
+        }
+        public static void UpdateLevelLabel ()
+        {
+            bool isPlayerGame = Configerator.instance.GameType == Configerator.Game.player;
+            instance.levelLabel.Visible = isPlayerGame;
+            if (isPlayerGame)
+            {
+                instance.levelLabel.Text = Configerator.instance.ActiveLevel.Name;
             }
         }
     }

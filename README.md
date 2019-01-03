@@ -21,7 +21,7 @@ start (DONE)
 can only play last unlocked level
 - Design reasonable number of levels (1 - 20)
 - Make UI element which indicates name of level you are currently 
-playing
+playing (DONE)
 
 Done so far: 
 - basic evolution algorithm for training snakes (needs to be perfected)

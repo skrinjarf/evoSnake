@@ -6,6 +6,8 @@ namespace SnakeGame.LevelSystem
 {
     public class LevelConfig
     {
+        public string Name { get; set; }
+
         public enum VictoryType { length, points, unlimited }
         public VictoryType VictoryCondition { get; set; }
         public int VictoryThreshold { get; set; }
