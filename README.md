@@ -10,7 +10,6 @@ new codebase)
 - Battling agains AI snake (together since this highly depends on all 
 our tasks)
 - Info window for all items (Ante)
-- Set predefined number of pauses for game (Ante)
 - Serialize whole game state so it can be saved even when user exits app
 
 Done so far: 
@@ -29,3 +28,4 @@ Done so far:
 - Build level progressions system
 - Level completion item
 - Set predefined number of lives for game
+- Set predefined number of pauses for game
