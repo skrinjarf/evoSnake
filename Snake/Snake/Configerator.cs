@@ -28,12 +28,12 @@ namespace SnakeGame
                 }
             };
             highScoreLevel = new LevelConfig() {
+                MovementToBodyEnabled = false,
+                MovementToEdgeEnabled = false,
+                MultipleMovementEnabled = false,
                 VictoryCondition = LevelConfig.VictoryType.unlimited
             };
             testLevel = new LevelConfig() {
-                MovementToBodyEnabled = true,
-                MovementToEdgeEnabled = true,
-                MultipleMovementEnabled = true,
                 VictoryCondition = LevelConfig.VictoryType.unlimited,
                 TransparentAreas = new List<TransparentArea>() {
                     new TransparentArea(new Vector2(4, 4), new Vector2(10, 7))
