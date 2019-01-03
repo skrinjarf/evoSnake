@@ -34,6 +34,13 @@ namespace SnakeGame
             OpenWorldForm();
         }
 
+        private void StartLevelGame (object sender, EventArgs e)
+        {
+            Configerator.instance.GameType = Configerator.Game.player;
+            Configerator.instance.StartLevel(0);
+            OpenWorldForm();
+        }
+
         private void StartHighScoreGame (object sender, EventArgs e)
         {
             Configerator.instance.GameType = Configerator.Game.player;
