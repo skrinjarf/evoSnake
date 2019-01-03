@@ -11,7 +11,6 @@ new codebase)
 our tasks)
 - Info window for all items (Ante)
 - Set predefined number of pauses for game (Ante)
-- Set predefined number of lives for game (Ante)
 - Serialize whole game state so it can be saved even when user exits app
 
 Done so far: 
@@ -29,3 +28,4 @@ Done so far:
 - Settings where user can set above mentioned controls
 - Build level progressions system
 - Level completion item
+- Set predefined number of lives for game
