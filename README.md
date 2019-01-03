@@ -4,24 +4,11 @@ Contributors: Ante Buterin, Filip Skrinjar
 
 Tasks for grabs:
 - Perfect evolution algortihm for training snakes
-- Build level progressions system (maybe even level editor if there is time)
-- Level completion item
 - Info window for all items
 - Battling agains AI snake
 - Set predefined number of pauses for game
 - Set predefined number of lives for game
-
-Level Progression System:
-- Build config files which hold info about level which loads on level 
-start (DONE)
-- Build simple progression from one level to another when one is won 
-(DONE)
-- What happens when you click 'Next Level' after last level (DONE)
-- Make somehow option to choose from all unlocked levels because now you 
-can only play last unlocked level (DONE)
-- Design reasonable number of levels (1 - 20)
-- Make UI element which indicates name of level you are currently 
-playing (DONE)
+- Design at least 20 levels
 
 Done so far: 
 - basic evolution algorithm for training snakes (needs to be perfected)
@@ -36,3 +23,5 @@ Done so far:
 - Implement wall obstacle logic
 - Places where snake can go through its body
 - Settings where user can set above mentioned controls
+- Build level progressions system
+- Level completion item
