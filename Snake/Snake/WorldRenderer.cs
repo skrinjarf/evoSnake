@@ -25,10 +25,12 @@ namespace SnakeGame
         private Label levelLabel;
         private Label lifeLabel;
         private Label pauseLeftLabel;
+        private Label knownItemLabel;
         private Button restartButton;
         private Button menuButton;
         private int menuButtonX;
         private Button nextLevelButton;
+        private Panel knownItemPanel;
 
         private WorldRenderer (World _world, WorldForm _worldForm)
         {
@@ -44,11 +46,13 @@ namespace SnakeGame
             reverseLabel = _worldForm.reverseLabel;
             levelLabel = _worldForm.levelLabel;
             lifeLabel = _worldForm.lifeLabel;
+            knownItemLabel = _worldForm.knownItemLabel;
             pauseLeftLabel = _worldForm.pauseLeftLabel;
             restartButton = _worldForm.restartButton;
             menuButton = _worldForm.menuButton;
             menuButtonX = menuButton.Location.X;
             nextLevelButton = _worldForm.nextLevelButton;
+            knownItemPanel = _worldForm.knownItemPanel;
         }
 
         public static void Init (World _world, WorldForm _worldForm)
@@ -102,7 +106,16 @@ namespace SnakeGame
         {
             foreach (Item item in Item.allItems)
             {
-                RenderPiece(item.Location(), item.Brush);
+                Brush brush;
+                if (item.GetType() == typeof(Food) || Configerator.instance.RecognitionType == Configerator.ItemRecognition.all)
+                {
+                    brush = item.Brush;
+                }
+                else
+                {
+                    brush = item.GetType() == Item.knownItem ? Brushes.Red : Brushes.Blue;
+                }
+                RenderPiece(item.Location(), brush);
             }
         }
 
@@ -223,6 +236,22 @@ namespace SnakeGame
             {
                 instance.deathTitle.Text = "PAUSED";
             }
+        }
+        public static void UpdateKnownItemLabel ()
+        {
+            if (Item.knownItem != null)
+            {
+                instance.knownItemLabel.Text = Item.knownItem.Name;
+            }
+        }
+        public static void UpdateKnownItemPanel (bool b)
+        {
+            if (Item.knownItem == null)
+            {
+                return;
+            }
+            instance.knownItemLabel.Visible = b;
+            instance.knownItemPanel.Visible = b;
         }
     }
 }

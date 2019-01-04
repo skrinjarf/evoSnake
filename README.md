@@ -9,7 +9,6 @@ core for this)
 new codebase)
 - Battling agains AI snake (together since this highly depends on all 
 our tasks)
-- Info window for all items (Ante)
 
 Done so far: 
 - basic evolution algorithm for training snakes (needs to be perfected)
@@ -29,3 +28,4 @@ Done so far:
 - Set predefined number of lives for game
 - Set predefined number of pauses for game
 - Serialize whole game state so it can be saved even when user exits app
+- Info window for all items

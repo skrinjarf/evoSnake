@@ -139,6 +139,7 @@ namespace SnakeGame.Entities
                         TimesToGrow++;
                         BodyParts.Dequeue();
                         length--;
+                        TryUpdateScore();
                     }
                     else
                     {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Drawing;
 using SnakeGame.Utils;
@@ -15,6 +16,7 @@ namespace SnakeGame.Items
 
         public static readonly Random rnd;
         public static List<Item> allItems;
+        public static Type knownItem;
 
         //initialize random class at start
         static Item ()
@@ -59,6 +61,16 @@ namespace SnakeGame.Items
         public static Item FindItem (Type type)
         {
             return allItems.Find(x => x.GetType() == type);
+        }
+        public static void UpdateKnownItem ()
+        {
+            var levelTypes = Configerator.instance.ActiveLevel.ItemProbabilityDistribution.Keys.ToList();
+            if (levelTypes.Count == 0)
+            {
+                knownItem = null;
+                return;
+            }
+            knownItem = levelTypes [rnd.Next(0, levelTypes.Count)];
         }
     }
 }

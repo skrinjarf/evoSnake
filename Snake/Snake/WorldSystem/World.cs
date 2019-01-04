@@ -42,6 +42,11 @@ namespace SnakeGame.WorldSystem
             }
         }
 
+        public void InitKnownItem ()
+        {
+            Item.UpdateKnownItem();
+        }
+
         public virtual void DoStep ()
         {
             UpdateSnake();

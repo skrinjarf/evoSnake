@@ -36,6 +36,11 @@ namespace SnakeGame
                 world.InitSnake();
                 world.InitWalls();
                 world.InitTransparentAreas();
+                if (Configerator.instance.RecognitionType == Configerator.ItemRecognition.onlyKnown)
+                {
+                    world.InitKnownItem();
+                    WorldRenderer.UpdateKnownItemLabel();
+                }
                 SnakeController.SetSnake(world.snake);
                 timer1.Interval = 1000 / 30;
             }
@@ -64,6 +69,14 @@ namespace SnakeGame
             {
                 SnakeController.MoveSnake(sender, e);
                 SnakeController.PauseSnake(sender, e);
+                SnakeController.ShowKnownItem(sender, e);
+            }
+        }
+        private void OnKeyUp (object sender, KeyEventArgs e)
+        {
+            if (Configerator.instance.GameType == Configerator.Game.player)
+            {
+                SnakeController.HideKnownItem(sender, e);
             }
         }
 

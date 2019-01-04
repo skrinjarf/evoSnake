@@ -48,8 +48,8 @@ namespace SnakeGame.Controllers
 
         private static void HandleMultipleMovement ()
         {
-            if (Configerator.instance.ActiveLevel.MultipleMovementEnabled && 
-                Keyboard.IsKeyDown(ControlSettings.controlMap[ControlSettings.Control.jump1]))
+            if (Configerator.instance.ActiveLevel.MultipleMovementEnabled &&
+                Keyboard.IsKeyDown(ControlSettings.controlMap [ControlSettings.Control.jump1]))
             {
                 instance.snake.MoveByAmmount(1);
             }
@@ -125,6 +125,21 @@ namespace SnakeGame.Controllers
                     Configerator.SaveConfig();
                     WorldRenderer.UpdatePausesLeftLabel();
                 }
+            }
+        }
+
+        public static void ShowKnownItem (object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.H && Configerator.instance.RecognitionType == Configerator.ItemRecognition.onlyKnown)
+            {
+                WorldRenderer.UpdateKnownItemPanel(true);
+            }
+        }
+        public static void HideKnownItem (object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.H && Configerator.instance.RecognitionType == Configerator.ItemRecognition.onlyKnown)
+            {
+                WorldRenderer.UpdateKnownItemPanel(false);
             }
         }
 
