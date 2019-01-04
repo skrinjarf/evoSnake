@@ -67,6 +67,7 @@ namespace SnakeGame.Items
             var levelTypes = Configerator.instance.ActiveLevel.ItemProbabilityDistribution.Keys.ToList();
             if (levelTypes.Count == 0)
             {
+                knownItem = null;
                 return;
             }
             knownItem = levelTypes [rnd.Next(0, levelTypes.Count)];

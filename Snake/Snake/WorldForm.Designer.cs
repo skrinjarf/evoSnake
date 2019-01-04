@@ -41,6 +41,8 @@
 			this.levelLabel = new System.Windows.Forms.Label();
 			this.lifeLabel = new System.Windows.Forms.Label();
 			this.pauseLeftLabel = new System.Windows.Forms.Label();
+			this.knownItemLabel = new System.Windows.Forms.Label();
+			this.knownItemPanel = new System.Windows.Forms.Panel();
 			this.SuspendLayout();
 			// 
 			// timer1
@@ -172,11 +174,37 @@
 			this.pauseLeftLabel.Text = "Pauses Left: 5";
 			this.pauseLeftLabel.Visible = false;
 			// 
+			// knownItemLabel
+			// 
+			this.knownItemLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.knownItemLabel.BackColor = System.Drawing.Color.Black;
+			this.knownItemLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.knownItemLabel.ForeColor = System.Drawing.Color.White;
+			this.knownItemLabel.Location = new System.Drawing.Point(610, 44);
+			this.knownItemLabel.Name = "knownItemLabel";
+			this.knownItemLabel.Size = new System.Drawing.Size(131, 17);
+			this.knownItemLabel.TabIndex = 11;
+			this.knownItemLabel.Text = "DIrectionModifier";
+			this.knownItemLabel.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			this.knownItemLabel.Visible = false;
+			// 
+			// knownItemPanel
+			// 
+			this.knownItemPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.knownItemPanel.BackColor = System.Drawing.Color.Red;
+			this.knownItemPanel.Location = new System.Drawing.Point(747, 39);
+			this.knownItemPanel.Name = "knownItemPanel";
+			this.knownItemPanel.Size = new System.Drawing.Size(22, 22);
+			this.knownItemPanel.TabIndex = 12;
+			this.knownItemPanel.Visible = false;
+			// 
 			// WorldForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(782, 753);
+			this.Controls.Add(this.knownItemPanel);
+			this.Controls.Add(this.knownItemLabel);
 			this.Controls.Add(this.pauseLeftLabel);
 			this.Controls.Add(this.lifeLabel);
 			this.Controls.Add(this.levelLabel);
@@ -193,6 +221,7 @@
 			this.Text = "WorldForm";
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
+			this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.OnKeyUp);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -212,5 +241,7 @@
         public System.Windows.Forms.Label levelLabel;
         public System.Windows.Forms.Label lifeLabel;
         public System.Windows.Forms.Label pauseLeftLabel;
+        public System.Windows.Forms.Label knownItemLabel;
+        public System.Windows.Forms.Panel knownItemPanel;
     }
 }
