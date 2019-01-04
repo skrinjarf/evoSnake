@@ -12,6 +12,8 @@ namespace SnakeGame
     {
         public enum Game { player, bot };
         public Game GameType { get; set; }
+        public enum ItemRecognition { all, onlyKnown };
+        public ItemRecognition RecognitionType { get; set; } = ItemRecognition.onlyKnown;
 
         public int LivesLeft { get; set; }
         private List<LevelConfig> levels;
@@ -115,8 +117,13 @@ namespace SnakeGame
                     new Wall(new Vector2(10, 14))
                 },
                 ItemProbabilityDistribution = new Dictionary<System.Type, double>() {
-                    { typeof(LengthModifier), 0.2 }
+                    { typeof(ControlsModifier), 0.2 },
+                    { typeof(DirectionModifier), 0.2 },
+                    { typeof(LengthModifier), 0.2 },
+                    { typeof(ScoreModifier), 0.2 }
                 },
+                ControlModifierTimeRange = new Vector2(10, 20),
+                PointsModificationRange = new Vector2(-2, 3),
                 LengthModificationRange = new Vector2(-5, -4)
             };
         }

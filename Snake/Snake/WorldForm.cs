@@ -36,6 +36,10 @@ namespace SnakeGame
                 world.InitSnake();
                 world.InitWalls();
                 world.InitTransparentAreas();
+                if (Configerator.instance.RecognitionType == Configerator.ItemRecognition.onlyKnown)
+                {
+                    world.InitKnownItem();
+                }
                 SnakeController.SetSnake(world.snake);
                 timer1.Interval = 1000 / 30;
             }

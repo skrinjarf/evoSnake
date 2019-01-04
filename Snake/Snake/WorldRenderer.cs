@@ -102,7 +102,16 @@ namespace SnakeGame
         {
             foreach (Item item in Item.allItems)
             {
-                RenderPiece(item.Location(), item.Brush);
+                Brush brush;
+                if (item.GetType() == typeof(Food) || Configerator.instance.RecognitionType == Configerator.ItemRecognition.all)
+                {
+                    brush = item.Brush;
+                }
+                else
+                {
+                    brush = item.GetType() == Item.knownItem ? Brushes.Red : Brushes.Blue;
+                }
+                RenderPiece(item.Location(), brush);
             }
         }
 
