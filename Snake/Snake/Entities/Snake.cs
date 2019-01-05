@@ -21,7 +21,7 @@ namespace SnakeGame.Entities
         internal Food CurrentFoodUnit { get; set; }
         public double VelocityModifier { get; set; } //kako igra napreduje zmija se krece sve brze. 
         public int TimesToGrow { get; set; }
-        public int Length { get; } // iz vana se moze samo procitat vrijednost duljine
+        public int Length { get { return length; } } // iz vana se moze samo procitat vrijednost duljine
 		public Vector2 BaseVelocity { get; set; } = new Vector2 (1, 0);
 		public double TimeLeft { get; set; }
 		
@@ -106,12 +106,20 @@ namespace SnakeGame.Entities
                 Die();
             }
 
-            Item potentialItem = Item.FindItem(NewHeadPosition);
-            if (potentialItem != null)
+            if (Configerator.instance.GameType == Configerator.Game.player)
             {
-                potentialItem.UseItem(this);
+                Item potentialItem = Item.FindItem(NewHeadPosition);
+                if (potentialItem != null)
+                {
+                    potentialItem.UseItem(this);
+                }
             }
-            
+            else if (NewHeadPosition == CurrentFoodUnit.Location())
+            {
+                CurrentFoodUnit.UseItem(this);
+            }
+
+
             ModifyLength(NewHeadPosition);
         }
 

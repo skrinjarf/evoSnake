@@ -60,7 +60,7 @@ namespace SnakeGame.Entities
         public void CalculateFitness ()
         {
             Fitness = (Length < 10) ? Math.Pow(age, 2) * Math.Pow(2, length) :
-                                      Math.Pow(age, 2) * fitnessKoef * (Length - 9);
+                                      Math.Pow(age, 2) * fitnessKoef * (length - 9);
         }
 
         //do crossover with partner Snake

@@ -32,6 +32,7 @@ namespace SnakeGame.WorldSystem
                 UpdateAlive();
                 if (Done())
                 {
+                    Items.Item.allItems.Clear();
                     GeneticAlgorithm();
                     WorldRenderer.UpdateGenerationLabel(gen);
                 }

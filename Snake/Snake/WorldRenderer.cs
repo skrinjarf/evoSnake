@@ -65,7 +65,10 @@ namespace SnakeGame
             instance.worldGraphics.Clear(instance.backgroundColor);
             RenderTransparentAreas();
             RenderSnake();
-            RenderItems();
+            if (Configerator.instance.GameType == Configerator.Game.player)
+            {
+                RenderItems();
+            }
             RenderWalls();
             e.Graphics.DrawImage(instance.worldField, 0, 20);
         }
@@ -79,7 +82,7 @@ namespace SnakeGame
                 int idx = 0;
                 foreach (BotSnake snake in botWorld.Species [0].Snakes)
                 {
-                    if (snake.isDead/* || idx++ > 0*/)
+                    if (snake.isDead || idx++ > 0)
                     {
                         continue;
                     }
