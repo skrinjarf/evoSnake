@@ -213,8 +213,9 @@ namespace SnakeGame
         public static void UpdateLifeLabel ()
         {
             bool isLevelGame = Configerator.instance.IsLevelGame();
-            instance.lifeLabel.Visible = isLevelGame;
-            if (isLevelGame)
+            bool isPlayerGame = Configerator.instance.GameType == Configerator.Game.player;
+            instance.lifeLabel.Visible = isLevelGame && isPlayerGame;
+            if (isLevelGame && isPlayerGame)
             {
                 instance.lifeLabel.Text = "Lives: " + Configerator.instance.LivesLeft.ToString();
             }
@@ -222,8 +223,9 @@ namespace SnakeGame
         public static void UpdatePausesLeftLabel ()
         {
             bool isLevelGame = Configerator.instance.IsLevelGame();
-            instance.pauseLeftLabel.Visible = isLevelGame;
-            if (isLevelGame)
+            bool isPlayerGame = Configerator.instance.GameType == Configerator.Game.player;
+            instance.pauseLeftLabel.Visible = isLevelGame && isPlayerGame;
+            if (isLevelGame && isPlayerGame)
             {
                 instance.pauseLeftLabel.Text = "Pauses Left: " + Configerator.instance.PausesLeft.ToString();
             }
