@@ -90,7 +90,7 @@ namespace SnakeGame.Evolution
             currentBest = 4;
             //globalBestFitness = 0;
             //currentBestFitness = 0;
-            //CurrentBestSnakeIdx = 0;
+            CurrentBestSnakeIdx = 0;
         }
 
         //helper function, determine global best snake

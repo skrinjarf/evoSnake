@@ -79,20 +79,29 @@ namespace SnakeGame
             {
                 BotWorld botWorld = (BotWorld)instance.World;
                 instance.snakeLabel.Text = "Best Snake Idx: " + botWorld.Species [0].CurrentBestSnakeIdx.ToString();
-                int idx = 0;
-                foreach (BotSnake snake in botWorld.Species [0].Snakes)
+                // COMENT THIS NOT TO RENDER JUST BEST CURRENT SNAKE
+                BotSnake snake = botWorld.Species [0].Snakes [botWorld.Species [0].CurrentBestSnakeIdx];
+                RenderPiece(snake.HeadPosition, Brushes.Red);
+                foreach (Vector2 part in snake.BodyParts)
                 {
-                    if (snake.isDead || idx++ > 0)
-                    {
-                        continue;
-                    }
-                    RenderPiece(snake.HeadPosition, Brushes.Red);
-                    foreach (Vector2 part in snake.BodyParts)
-                    {
-                        RenderPiece(part, Brushes.White);
-                    }
-                    RenderPiece(snake.CurrentFoodUnit.Location(), Brushes.Yellow);
+                    RenderPiece(part, Brushes.White);
                 }
+                RenderPiece(snake.CurrentFoodUnit.Location(), Brushes.Yellow);
+                // UNCOMMENT THIS TO RENDER ALL SNAKES
+                //int idx = 0;
+                //foreach (BotSnake snake in botWorld.Species [0].Snakes)
+                //{
+                //    if (snake.isDead || idx++ > 0)
+                //    {
+                //        continue;
+                //    }
+                //    RenderPiece(snake.HeadPosition, Brushes.Red);
+                //    foreach (Vector2 part in snake.BodyParts)
+                //    {
+                //        RenderPiece(part, Brushes.White);
+                //    }
+                //    RenderPiece(snake.CurrentFoodUnit.Location(), Brushes.Yellow);
+                //}
             }
             else
             {
