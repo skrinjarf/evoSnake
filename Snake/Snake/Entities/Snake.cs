@@ -209,6 +209,10 @@ namespace SnakeGame.Entities
                 }
                 WorldRenderer.ShowDeathDialog();
             }
+            else
+            {
+                CurrentFoodUnit = null;
+            }
         }
         
         public void AddPoints (int pointsToAdd)
