@@ -114,7 +114,7 @@ namespace SnakeGame.Entities
                     potentialItem.UseItem(this);
                 }
             }
-            else if (NewHeadPosition == CurrentFoodUnit.Location())
+            else if (!isDead && NewHeadPosition == CurrentFoodUnit.Location())
             {
                 CurrentFoodUnit.UseItem(this);
             }

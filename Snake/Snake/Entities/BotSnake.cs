@@ -59,7 +59,7 @@ namespace SnakeGame.Entities
         //calculate fitness of a snake
         public void CalculateFitness ()
         {
-            Fitness = (Length < 10) ? Math.Pow(age, 2) * Math.Pow(2, length) :
+            Fitness = (Length < 10) ? Math.Pow(age, 2) * 100 * Math.Pow(2, length) :
                                       Math.Pow(age, 2) * fitnessKoef * (length - 9);
         }
 
