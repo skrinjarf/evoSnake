@@ -64,6 +64,7 @@
     <Compile Include="Obstacles\Wall.cs" />
     <Compile Include="SaveSystem\GameData.cs" />
     <Compile Include="SaveSystem\SaveLoad.cs" />
+    <Compile Include="SaveSystem\SnakeBotData.cs" />
     <Compile Include="Utils\ANN.cs" />
     <Compile Include="Items\Food.cs" />
     <Compile Include="Form1.cs">

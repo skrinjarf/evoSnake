@@ -9,6 +9,7 @@ namespace SnakeGame.Evolution
     class SnakePopulation
     {
         private int currentGenerationNo = 1;
+        private int generationCounter = 1;
         private double globalBestFitness = 0;
         private double currentBestFitness = 0;
         private int currentBest = 4;
@@ -26,7 +27,7 @@ namespace SnakeGame.Evolution
         static SnakePopulation () { rnd = new Random(); }
 
         //construct
-        public SnakePopulation (int size, double mutationRate = 0.1) //default mutation rate 5% ->guess
+        public SnakePopulation (int size, double mutationRate = 0.15) //start with mutation rate of 15% and decrese it over time
         {
             //odredi snakePopulationId na random
             using (RNGCryptoServiceProvider rg = new RNGCryptoServiceProvider())
@@ -74,6 +75,15 @@ namespace SnakeGame.Evolution
             setBestSnake(); //determine the best snake so far and save it in globalBestSnake
             NextGen [0] = GlobalBestSnake.Clone();
 
+            //half mutation rate every 10 generations so that search space is searched more in the begining and we start convergence toward optimum later
+            if (generationCounter % 10 == 0 && PopulationMutationRate > 0.015) PopulationMutationRate *= 0.5; 
+            
+            //if after 40 generations snakes are still small, increse mutationRate so that we escape bad local optimum
+            if (generationCounter > 40 && GlobalBestSnake.Length < 8)
+            {
+                PopulationMutationRate *= 10;
+                generationCounter = 0; 
+            }  
             for (int i = 1; i < NextGen.Length; ++i)
             {
                 BotSnake firstPartner = selectSnake();
@@ -87,6 +97,7 @@ namespace SnakeGame.Evolution
             Snakes = (BotSnake [])NextGen.Clone();
             //update/reset population params
             currentGenerationNo++;
+            generationCounter++;
             currentBest = 4;
             //globalBestFitness = 0;
             //currentBestFitness = 0;

@@ -79,6 +79,20 @@
             ret.who = who.Clone();
             return ret;
         }
-
+        
+        //kopiraj tezine 
+        public void CloneData(ref double[,] Weights1, ref double[,] Weights2, ref double[,] Weights3)
+        {
+            for (int i = 0; i < 18; ++i)
+                for (int j = 0; j < 25; ++j)
+                {
+                    Weights1[i, j] = whi[i, j];
+                    if (j < 19)
+                    {
+                        Weights2[i, j] = whh[i, j];
+                        if(i < 4) Weights3[i, j] = who[i, j];
+                    }
+                }
+        }
     }
 }

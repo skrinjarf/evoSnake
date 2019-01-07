@@ -80,10 +80,9 @@ namespace SnakeGame.Entities
             return clonedSnake;
         }
 
-        public void SaveSnake ()
+        public void SaveSnakeData( ref double[,] Weights1, ref double[,] Weights2, ref double[,] Weights3)
         {
-            //___IMPLEMENT___
-            throw new NotImplementedException();
+            brain.CloneData(ref Weights1, ref Weights2, ref Weights3);
         }
 
         public void LoadSnake ()

@@ -1,6 +1,8 @@
 ﻿using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Windows.Forms;
+using Snake.SaveSystem;
+using SnakeGame.Entities;
 
 namespace SnakeGame.SaveSystem
 {
@@ -28,6 +30,31 @@ namespace SnakeGame.SaveSystem
             else
             {
                 return new GameData();
+            }
+        }
+
+        public static void SaveSnakeBot(BotSnake snake)
+        {
+            BinaryFormatter bf = new BinaryFormatter();
+            FileStream stream = new FileStream(Application.LocalUserAppDataPath + "\\config.snakeBotData", FileMode.Create);
+            SnakeBotData data = new SnakeBotData(snake);
+            bf.Serialize(stream, data);
+            stream.Close();
+        }
+
+        public static SnakeBotData LoadSnakeBot()
+        {
+            if (File.Exists(Application.LocalUserAppDataPath + "\\config.snakeBotData"))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                FileStream stream = new FileStream(Application.LocalUserAppDataPath + "\\config.snakeBotData", FileMode.Open);
+                SnakeBotData data = bf.Deserialize(stream) as SnakeBotData;
+                stream.Close();
+                return data;
+            }
+            else
+            {
+                return new SnakeBotData();
             }
         }
     }
