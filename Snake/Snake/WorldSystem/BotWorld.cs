@@ -1,6 +1,8 @@
 ﻿using SnakeGame.Utils;
 using SnakeGame.Entities;
 using SnakeGame.Evolution;
+using SnakeGame.SaveSystem;
+using System;
 
 namespace SnakeGame.WorldSystem
 {
@@ -9,6 +11,7 @@ namespace SnakeGame.WorldSystem
         private int gen = 0; // current generation
         private int maxGen;
         private int worldBestScore = 0; // the best score of the best snake out of all populations
+        private int bestSpeciesIdx = 0;
 
         internal SnakePopulation [] Species { get; set; }
 
@@ -36,7 +39,14 @@ namespace SnakeGame.WorldSystem
                     GeneticAlgorithm();
                     WorldRenderer.UpdateGenerationLabel(gen);
                 }
+            }else 
+            // if all generations were run, save the best snake from all species 
+            if (gen == maxGen)
+            {
+                BotSnake bestSnake = Species[bestSpeciesIdx].GlobalBestSnake;
+                SaveLoad.SaveSnakeBot(bestSnake);
             }
+            
         }
 
         public void UpdateAlive ()
@@ -56,7 +66,6 @@ namespace SnakeGame.WorldSystem
             }
             ++gen;
             SetTopScore();
-            // save top snake
         }
 
         public override void UpdateSnake ()
@@ -91,6 +100,7 @@ namespace SnakeGame.WorldSystem
                 }
             }
             worldBestScore = Species [maxIdx].GlobalBest;
+            bestSpeciesIdx = maxIdx;
         }
     }
 }
