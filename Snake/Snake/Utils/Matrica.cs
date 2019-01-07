@@ -5,16 +5,11 @@ namespace SnakeGame.Utils
 {
     class Matrica: IEnumerable
     {
-        private int rows = 0;
-        private int columns = 0;
         private double [,] data = new double [0, 0];
         private static readonly Random rnd;
 
         public int Rows { get; set; }
-        public int Columns
-        {
-            get; set;
-        }
+        public int Columns { get; set; }
         static Matrica () { rnd = new Random(); }
 
         //konstruktor od broja redaka i stupaca

@@ -1,7 +1,6 @@
 ﻿using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System.Windows.Forms;
-using Snake.SaveSystem;
 using SnakeGame.Entities;
 
 namespace SnakeGame.SaveSystem

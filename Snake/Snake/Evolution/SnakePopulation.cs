@@ -10,15 +10,13 @@ namespace SnakeGame.Evolution
     {
         private int currentGenerationNo = 1;
         private int generationCounter = 1;
-        private double globalBestFitness = 0;
-        private double currentBestFitness = 0;
         private int currentBest = 4;
         private int snakePopulationId;
         private static readonly Random rnd;
         public double PopulationMutationRate;
 
-        public double GlobalBestFitness { get => globalBestFitness; set => globalBestFitness = value; }
-		public BotSnake GlobalBestSnake { get; set; }
+        public double GlobalBestFitness { get; set; } = 0;
+        public BotSnake GlobalBestSnake { get; set; }
 		public BotSnake [] Snakes { get; set; }
 		public int CurrentBestSnakeIdx { get; set; } = 0;
 		public int GlobalBest { get; set; } = 4;
@@ -120,9 +118,9 @@ namespace SnakeGame.Evolution
                 }
             }
             //compare it to previous global best 
-            if (maxFitness > globalBestFitness)
+            if (maxFitness > GlobalBestFitness)
             {
-                globalBestFitness = maxFitness;
+                GlobalBestFitness = maxFitness;
                 GlobalBestSnake = Snakes [maxIdx].Clone();
             }
         }

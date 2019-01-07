@@ -1,7 +1,7 @@
 ﻿using System;
 using SnakeGame.Entities;
 
-namespace Snake.SaveSystem
+namespace SnakeGame.SaveSystem
 {
     [Serializable]
     public class SnakeBotData
