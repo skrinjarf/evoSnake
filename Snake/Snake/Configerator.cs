@@ -10,7 +10,7 @@ namespace SnakeGame
 {
     public class Configerator
     {
-        public enum Game { player, bot };
+        public enum Game { player, bot, test };
         public Game GameType { get; set; }
         public enum ItemRecognition { all, onlyKnown };
         public ItemRecognition RecognitionType { get; set; } = ItemRecognition.onlyKnown;

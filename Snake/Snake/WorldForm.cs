@@ -29,7 +29,14 @@ namespace SnakeGame
                 ((BotWorld)world).InitSpecies(1000, 1, 800);
                 timer1.Interval = 1000 / 60;
             }
-            else
+            else if (Configerator.instance.GameType == Configerator.Game.test)
+            {
+                world = new TestBotWorld(new Vector2(30, 30));
+                WorldRenderer.Init(world, this);
+                ((TestBotWorld)world).LoadTrainedSnake();
+                timer1.Interval = 1000 / 30;
+            }
+            else//GameType == player
             {
                 world = new World(new Vector2(30, 30));
                 WorldRenderer.Init(world, this);

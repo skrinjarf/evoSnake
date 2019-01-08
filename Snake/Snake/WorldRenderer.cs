@@ -103,6 +103,19 @@ namespace SnakeGame
                 //    RenderPiece(snake.CurrentFoodUnit.Location(), Brushes.Yellow);
                 //}
             }
+            else if (Configerator.instance.GameType == Configerator.Game.test)
+            {
+                TestBotWorld testBotWorld = (TestBotWorld)instance.World;
+                instance.snakeLabel.Text = "Testing evolved snake";
+                BotSnake snake = testBotWorld.snake;
+
+                RenderPiece(snake.HeadPosition, Brushes.Red);
+                foreach (Vector2 part in snake.BodyParts)
+                {
+                    RenderPiece(part, Brushes.White);
+                }
+                RenderPiece(snake.CurrentFoodUnit.Location(), Brushes.Yellow);
+            }
             else
             {
                 Snake snake = instance.World.snake;

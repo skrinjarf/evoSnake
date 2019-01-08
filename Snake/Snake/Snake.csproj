@@ -87,6 +87,7 @@
       <DependentUpon>WorldForm.cs</DependentUpon>
     </Compile>
     <Compile Include="WorldRenderer.cs" />
+    <Compile Include="WorldSystem\TestBotWorld.cs" />
     <Compile Include="WorldSystem\World.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

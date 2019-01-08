@@ -68,6 +68,7 @@ namespace SnakeGame.WorldSystem
             SetTopScore();
         }
 
+        //probably not used anywhere
         public override void UpdateSnake ()
         {
             ((BotSnake)snake).GetBrainInput();

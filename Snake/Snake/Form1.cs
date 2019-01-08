@@ -47,6 +47,11 @@ namespace SnakeGame
             Configerator.instance.GameType = Configerator.Game.bot;
             OpenWorldForm();
         }
+        private void TestTrainedSnake(object sender, EventArgs e)
+        {
+            Configerator.instance.GameType = Configerator.Game.test;
+            OpenWorldForm();
+        }
 
         private void StartLevelGame (object sender, EventArgs e)
         {
@@ -135,5 +140,7 @@ namespace SnakeGame
         {
             ControlSettings.controlMap [ControlSettings.Control.bodyJump] = (Key)controlJumpBody.SelectedItem;
         }
+
+        
     }
 }

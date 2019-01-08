@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using SnakeGame.SaveSystem;
 using SnakeGame.Utils;
 
 namespace SnakeGame.Entities
@@ -15,11 +16,11 @@ namespace SnakeGame.Entities
 
         public double Fitness { get; set; }
 
-        public BotSnake () : base()
+        public BotSnake (bool tested = false) : base()
         {
             brain = new ANN(24, 18, 4);
             Fitness = 0;
-            isTested = false;
+            isTested = tested ? true : false;
         }
 
         //mutiraj zmiju
@@ -80,15 +81,15 @@ namespace SnakeGame.Entities
             return clonedSnake;
         }
 
-        public void SaveSnakeData( ref double[,] Weights1, ref double[,] Weights2, ref double[,] Weights3)
+        public void SaveSnakeData (ref double[,] Weights1, ref double[,] Weights2, ref double[,] Weights3)
         {
-            brain.CloneData(ref Weights1, ref Weights2, ref Weights3);
+            brain.CloneDataInto(ref Weights1, ref Weights2, ref Weights3);
         }
 
-        public void LoadSnake ()
+        public void LoadSnakeData (SnakeBotData data)
         {
-            //___IMPLEMENT___
-            throw new NotImplementedException();
+            //call with reference to remove copy of weights
+            brain.InitializeWith(ref data.whi, ref data.whh, ref data.who);
         }
 
         public void GetBrainInput ()

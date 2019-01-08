@@ -1,4 +1,6 @@
-﻿namespace SnakeGame.Utils
+﻿using SnakeGame.SaveSystem;
+
+namespace SnakeGame.Utils
 {
     //ANN - Artificial neural network - mozak pojedine zmije - nalazi se u glavi zmije - 1 input, 2 hidden i 1 output layera, for now ... MUAHAHAHA
     class ANN
@@ -80,8 +82,8 @@
             return ret;
         }
         
-        //kopiraj tezine 
-        public void CloneData(ref double[,] Weights1, ref double[,] Weights2, ref double[,] Weights3)
+        //kopiraj tezine u matrice
+        public void CloneDataInto(ref double[,] Weights1, ref double[,] Weights2, ref double[,] Weights3)
         {
             for (int i = 0; i < 18; ++i)
                 for (int j = 0; j < 25; ++j)
@@ -91,6 +93,21 @@
                     {
                         Weights2[i, j] = whh[i, j];
                         if(i < 4) Weights3[i, j] = who[i, j];
+                    }
+                }
+        }
+
+        //postavi tezine iz danih matrica
+        public void InitializeWith(ref double[,] Weights1, ref double[,] Weights2, ref double[,] Weights3)
+        {
+            for (int i = 0; i < 18; ++i)
+                for (int j = 0; j < 25; ++j)
+                {
+                    whi[i, j] = Weights1[i, j];
+                    if (j < 19)
+                    {
+                        whh[i, j] = Weights2[i, j];
+                        if (i < 4) who[i, j] = Weights3[i, j];
                     }
                 }
         }

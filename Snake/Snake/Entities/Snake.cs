@@ -228,6 +228,10 @@ namespace SnakeGame.Entities
             {
                 return;
             }
+            if (Configerator.instance.GameType == Configerator.Game.test)
+            {
+                return;
+            }
             if (Configerator.instance.ActiveLevel.VictoryCondition == LevelConfig.VictoryType.points)
             {
                 WorldRenderer.UpdateScoreLabel(
@@ -246,6 +250,10 @@ namespace SnakeGame.Entities
         private void CheckForWin ()
         {
             if (Configerator.instance.GameType == Configerator.Game.bot)
+            {
+                return;
+            }
+            if (Configerator.instance.GameType == Configerator.Game.test)
             {
                 return;
             }
