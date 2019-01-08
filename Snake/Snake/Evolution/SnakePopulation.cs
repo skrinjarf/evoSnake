@@ -137,11 +137,10 @@ namespace SnakeGame.Evolution
             double randomValue = rnd.NextDouble() * fitnessSum; //random double in [0..fitnessSum>
 
             //shuffle the snakes so that only the fitness afects the likelihood of a snake being choosen 
-            List<BotSnake> tempList = Snakes.ToList();
-            //shuffle(tempList);
+            Shuffle(Snakes);
 
             double tempSum = 0;
-            foreach (BotSnake s in tempList)
+            foreach (BotSnake s in Snakes)
             {
                 tempSum += s.Fitness;
                 if (tempSum > randomValue)
@@ -152,20 +151,22 @@ namespace SnakeGame.Evolution
         }
 
         //helper function which shuffles lists of items using Fisher–Yates shuffle and secure random number generator
-        private void Shuffle (List<BotSnake> list)
+        private void Shuffle (BotSnake [] list)
         {
             RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
-            int n = list.Count;
-            while (n > 1)
+            
+            int upperBound = (int)Math.Ceiling(Math.Log(list.Length, 256));
+            for (int n = list.Length; n > 0; --n )
             {
-                byte [] box = new byte [1];
+                if (n < 256) upperBound = 1; //to reduce search time towards the end
+                byte[] box = new byte[upperBound];
                 do provider.GetBytes(box);
-                while (!(box [0] < n * (Byte.MaxValue / n)));
-                int k = (box [0] % n);
-                n--;
-                BotSnake value = list [k];
-                list [k] = list [n];
-                list [n] = value;
+                while (!(box[0] < n));
+
+                BotSnake temp = list[box[0]];
+                list[box[0]] = list[n-1];
+                list[n-1] = temp;
+
             }
         }
 
