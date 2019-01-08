@@ -11,7 +11,7 @@ namespace SnakeGame.Evolution
         private int currentGenerationNo = 1;
         private int generationCounter = 1;
         private int currentBest = 4;
-        private int snakePopulationId;
+        private readonly int snakePopulationId;
         private static readonly Random rnd;
         public double PopulationMutationRate;
 
@@ -51,7 +51,7 @@ namespace SnakeGame.Evolution
                     Snakes [i].CalculateNextMove();
                     Snakes [i].Move();
                 }
-            setCurrentBestSnake();
+            SetCurrentBestSnake();
         }
 
         //test if there is any snake alive
@@ -70,7 +70,7 @@ namespace SnakeGame.Evolution
         public void CreateNextGeneration ()
         {
             BotSnake [] NextGen = new BotSnake [Snakes.Length];
-            setBestSnake(); //determine the best snake so far and save it in globalBestSnake
+            SetBestSnake(); //determine the best snake so far and save it in globalBestSnake
             NextGen [0] = GlobalBestSnake.Clone();
 
             //half mutation rate every 10 generations so that search space is searched more in the begining and we start convergence toward optimum later
@@ -84,8 +84,8 @@ namespace SnakeGame.Evolution
             }  
             for (int i = 1; i < NextGen.Length; ++i)
             {
-                BotSnake firstPartner = selectSnake();
-                BotSnake secondPartner = selectSnake();
+                BotSnake firstPartner = SelectSnake();
+                BotSnake secondPartner = SelectSnake();
 
                 BotSnake child = firstPartner.Crossover(secondPartner);
                 child.Mutate(PopulationMutationRate);
@@ -103,7 +103,7 @@ namespace SnakeGame.Evolution
         }
 
         //helper function, determine global best snake
-        private void setBestSnake ()
+        private void SetBestSnake ()
         {
             double maxFitness = 0;
             int maxIdx = 0;
@@ -129,7 +129,7 @@ namespace SnakeGame.Evolution
         //selection inspired by simmulated annealing, pick random number less than the sum of all fitnesses
         //pick snakes randomly and add their fitnesses until the sum becomes greater than random value, than choose the last snake
         //probability of a snake being picked is herFitness/totalFitness 
-        private BotSnake selectSnake ()
+        private BotSnake SelectSnake ()
         {
             double fitnessSum = 0;
             foreach (BotSnake s in Snakes) fitnessSum += s.Fitness;
@@ -152,7 +152,7 @@ namespace SnakeGame.Evolution
         }
 
         //helper function which shuffles lists of items using Fisher–Yates shuffle and secure random number generator
-        private void shuffle (List<BotSnake> list)
+        private void Shuffle (List<BotSnake> list)
         {
             RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
             int n = list.Count;
@@ -174,7 +174,7 @@ namespace SnakeGame.Evolution
             foreach (BotSnake s in Snakes) s.Mutate(PopulationMutationRate);
         }
 
-        private void setCurrentBestSnake ()
+        private void SetCurrentBestSnake ()
         {
             if (!Done())
             {

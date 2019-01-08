@@ -65,21 +65,21 @@ namespace SnakeGame.Utils
         public ANN Crossover (ANN partner)
         {
             //napravi dijete cije su tezine dobivene crossoverom tezina this i partnera
-            ANN child = new ANN(brInput, brHidden, brOutput);
-            child.whi = whi.Crossover(partner.whi);
-            child.whh = whh.Crossover(partner.whh);
-            child.who = who.Crossover(partner.who);
-            return child;
+            return new ANN(brInput, brHidden, brOutput) {
+                whi = whi.Crossover(partner.whi),
+                whh = whh.Crossover(partner.whh),
+                who = who.Crossover(partner.who)
+            };
         }
 
         //kloniraj neuralnu
         public ANN Clone ()
         {
-            ANN ret = new ANN(brInput, brHidden, brOutput);
-            ret.whi = whi.Clone();
-            ret.whh = whh.Clone();
-            ret.who = who.Clone();
-            return ret;
+            return new ANN(brInput, brHidden, brOutput) {
+                whi = whi.Clone(),
+                whh = whh.Clone(),
+                who = who.Clone()
+            };
         }
         
         //kopiraj tezine u matrice

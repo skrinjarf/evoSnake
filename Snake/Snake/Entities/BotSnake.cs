@@ -11,7 +11,7 @@ namespace SnakeGame.Entities
         private ANN brain;
         private double [] brainInput = new double [24]; //za 8 smjerova gledanja, udaljenost do tijela, zida i hrane + trenutna brzina kretanja zmije
         private double [] brainOutput = new double [4]; //iduci korak, gore, dolje, lijevo, desno
-        private static double fitnessKoef = Math.Pow(2, 10);
+        private static readonly double fitnessKoef = Math.Pow(2, 10);
         public bool isTested;
 
         public double Fitness { get; set; }
@@ -66,19 +66,19 @@ namespace SnakeGame.Entities
 
         //do crossover with partner Snake
         public BotSnake Crossover (BotSnake partner)
-        {
-            BotSnake Child = new BotSnake();
-            Child.brain = brain.Crossover(partner.brain);
-            return Child;
+        { 
+            return new BotSnake {
+                brain = brain.Crossover(partner.brain)
+            };
         }
 
         //clone brain of current snake
         public BotSnake Clone ()
         {
-            BotSnake clonedSnake = new BotSnake();
-            clonedSnake.brain = brain.Clone();
-            clonedSnake.isDead = false;
-            return clonedSnake;
+            return new BotSnake {
+                brain = brain.Clone(),
+                isDead = false
+            };
         }
 
         public void SaveSnakeData (ref double[,] Weights1, ref double[,] Weights2, ref double[,] Weights3)
