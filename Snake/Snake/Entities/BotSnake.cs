@@ -11,10 +11,11 @@ namespace SnakeGame.Entities
         private ANN brain;
         private double [] brainInput = new double [24]; //za 8 smjerova gledanja, udaljenost do tijela, zida i hrane + trenutna brzina kretanja zmije
         private double [] brainOutput = new double [4]; //iduci korak, gore, dolje, lijevo, desno
-        private static readonly double fitnessKoef = Math.Pow(2, 10);
+        private static readonly ulong fitnessKoef = 1024; //Math.Pow(2,10)
+        private static readonly ulong ageKoef = 160000;  // Math.Pow(400, 2);
         public bool isTested;
 
-        public double Fitness { get; set; }
+        public ulong Fitness { get; set; }
 
         public BotSnake (bool tested = false) : base()
         {
@@ -60,8 +61,20 @@ namespace SnakeGame.Entities
         //calculate fitness of a snake
         public void CalculateFitness ()
         {
-            Fitness = (Length < 10) ? Math.Pow(age, 2) * 100 * Math.Pow(2, length) :
-                                      Math.Pow(age, 2) * fitnessKoef * (length - 9);
+                Fitness = (age < 200)? (ulong)age * (ulong)Math.Pow(Length, 2):
+                    200 * (ulong)Math.Pow(Length, 2);
+           /* if(age < 400)
+            {
+                Fitness = (Length < 10) ? (ulong)Math.Pow(age, 2) * (ulong)Math.Pow(2, length) :
+                                          (ulong)Math.Pow(age, 2) * fitnessKoef * (ulong)(length - 9);
+            }
+            else
+            {
+                Fitness = (Length < 10) ? ageKoef * (ulong)Math.Pow(2, length) :
+                                          ageKoef * fitnessKoef * (ulong)(length - 9);
+            }
+             */
+            //Fitness = (age > 0) ? (ulong)age * (ulong)Math.Pow(Length, 2) : 0;
         }
 
         //do crossover with partner Snake

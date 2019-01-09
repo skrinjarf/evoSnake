@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MersenneTwister, Version=1.0.6146.4688, Culture=neutral, PublicKeyToken=9c84633ec57842f3, processorArchitecture=MSIL">
+      <HintPath>..\packages\MersenneTwister.1.0.5\lib\portable-net45+netcore45+win8+wp8\MersenneTwister.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -106,6 +109,7 @@
     </EmbeddedResource>
     <None Include=".editorconfig" />
     <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -119,6 +123,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="LICENSES-MersenneTwister.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

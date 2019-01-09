@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
 using SnakeGame.Entities;
+
 
 namespace SnakeGame.Evolution
 {
@@ -12,7 +10,8 @@ namespace SnakeGame.Evolution
         private int generationCounter = 1;
         private int currentBest = 4;
         private readonly int snakePopulationId;
-        private static readonly Random rnd;
+
+
         public double PopulationMutationRate;
 
         public double GlobalBestFitness { get; set; } = 0;
@@ -20,21 +19,11 @@ namespace SnakeGame.Evolution
 		public BotSnake [] Snakes { get; set; }
 		public int CurrentBestSnakeIdx { get; set; } = 0;
 		public int GlobalBest { get; set; } = 4;
-
-        //static const for random number generator
-        static SnakePopulation () { rnd = new Random(); }
+        public ulong PopulationSumOfFitness { get; set; } = 0;
 
         //construct
-        public SnakePopulation (int size, double mutationRate = 0.15) //start with mutation rate of 15% and decrese it over time
+        public SnakePopulation (int size, double mutationRate = 0.01) //start with mutation rate of 1% 
         {
-            //odredi snakePopulationId na random
-            using (RNGCryptoServiceProvider rg = new RNGCryptoServiceProvider())
-            {
-                byte [] rno = new byte [4]; //alociraj 4 bytova za int
-                rg.GetBytes(rno);         //popuni ih sigurnim random vrijednostma   
-                snakePopulationId = BitConverter.ToInt32(rno, 0);
-            }
-
             Snakes = new BotSnake [size];
             for (int i = 0; i < Snakes.Length; ++i) Snakes [i] = new BotSnake();
             GlobalBestSnake = Snakes [0].Clone();
@@ -64,7 +53,12 @@ namespace SnakeGame.Evolution
         //calculate fitness of every snake
         public void PopulationCalculateFitness ()
         {
-            for (int i = 0; i < Snakes.Length; ++i) Snakes [i].CalculateFitness();
+            for (int i = 0; i < Snakes.Length; ++i)
+            {
+                Snakes[i].CalculateFitness();
+                PopulationSumOfFitness += Snakes[i].Fitness;
+                //moguce ubrzanje odmah nac najbolju zmiju da se izbijegne poziv setBestSnake sa O(n)
+            }
         }
 
         public void CreateNextGeneration ()
@@ -73,6 +67,7 @@ namespace SnakeGame.Evolution
             SetBestSnake(); //determine the best snake so far and save it in globalBestSnake
             NextGen [0] = GlobalBestSnake.Clone();
 
+            /*
             //half mutation rate every 10 generations so that search space is searched more in the begining and we start convergence toward optimum later
             if (generationCounter % 10 == 0 && PopulationMutationRate > 0.015) PopulationMutationRate *= 0.5; 
             
@@ -82,6 +77,7 @@ namespace SnakeGame.Evolution
                 PopulationMutationRate *= 10;
                 generationCounter = 0; 
             }  
+            */
             for (int i = 1; i < NextGen.Length; ++i)
             {
                 BotSnake firstPartner = SelectSnake();
@@ -97,6 +93,7 @@ namespace SnakeGame.Evolution
             currentGenerationNo++;
             generationCounter++;
             currentBest = 4;
+            PopulationSumOfFitness = 0;
             //globalBestFitness = 0;
             //currentBestFitness = 0;
             CurrentBestSnakeIdx = 0;
@@ -131,43 +128,17 @@ namespace SnakeGame.Evolution
         //probability of a snake being picked is herFitness/totalFitness 
         private BotSnake SelectSnake ()
         {
-            double fitnessSum = 0;
-            foreach (BotSnake s in Snakes) fitnessSum += s.Fitness;
+            int randomValue = MersenneTwister.Randoms.Next(0, (int)PopulationSumOfFitness);
 
-            double randomValue = rnd.NextDouble() * fitnessSum; //random double in [0..fitnessSum>
-
-            //shuffle the snakes so that only the fitness afects the likelihood of a snake being choosen 
-            Shuffle(Snakes);
-
-            double tempSum = 0;
+            int tempSum = 0;
             foreach (BotSnake s in Snakes)
             {
-                tempSum += s.Fitness;
-                if (tempSum > randomValue)
+                tempSum += (int)s.Fitness;
+                if (tempSum >= randomValue)
                     return s;
             }
             //an error occured, return null
             return null;
-        }
-
-        //helper function which shuffles lists of items using Fisher–Yates shuffle and secure random number generator
-        private void Shuffle (BotSnake [] list)
-        {
-            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
-            
-            int upperBound = (int)Math.Ceiling(Math.Log(list.Length, 256));
-            for (int n = list.Length; n > 0; --n )
-            {
-                if (n < 256) upperBound = 1; //to reduce search time towards the end
-                byte[] box = new byte[upperBound];
-                do provider.GetBytes(box);
-                while (!(box[0] < n));
-
-                BotSnake temp = list[box[0]];
-                list[box[0]] = list[n-1];
-                list[n-1] = temp;
-
-            }
         }
 
         public void MutatePopulation ()
