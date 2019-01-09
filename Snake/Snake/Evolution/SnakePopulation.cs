@@ -9,7 +9,6 @@ namespace SnakeGame.Evolution
         private int currentGenerationNo = 1;
         private int generationCounter = 1;
         private int currentBest = 4;
-        private readonly int snakePopulationId;
 
 
         public double PopulationMutationRate;
@@ -128,7 +127,7 @@ namespace SnakeGame.Evolution
         //probability of a snake being picked is herFitness/totalFitness 
         private BotSnake SelectSnake ()
         {
-            int randomValue = MersenneTwister.Randoms.Next(0, (int)PopulationSumOfFitness);
+            int randomValue = MersenneTwister.Randoms.Next(0, (int)PopulationSumOfFitness + 1); //gornja granica iskljucena
 
             int tempSum = 0;
             foreach (BotSnake s in Snakes)

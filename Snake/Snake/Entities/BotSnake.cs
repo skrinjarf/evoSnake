@@ -42,7 +42,7 @@ namespace SnakeGame.Entities
                     BaseVelocity.X = 1;
                     BaseVelocity.Y = 0;
                     break;
-                case 1://gore
+                case 1://dole
                     BaseVelocity.X = 0;
                     BaseVelocity.Y = 1;
                     break;
@@ -50,7 +50,7 @@ namespace SnakeGame.Entities
                     BaseVelocity.X = -1;
                     BaseVelocity.Y = 0;
                     break;
-                default://dole
+                default://gore
                     BaseVelocity.X = 0;
                     BaseVelocity.Y = -1;
                     break;
@@ -61,8 +61,8 @@ namespace SnakeGame.Entities
         //calculate fitness of a snake
         public void CalculateFitness ()
         {
-                Fitness = (age < 200)? (ulong)age * (ulong)Math.Pow(Length, 2):
-                    200 * (ulong)Math.Pow(Length, 2);
+                Fitness = (age < 200)? (ulong)age * (ulong)Math.Pow(2, length) :
+                    200 * (ulong)Math.Pow(2, length);
            /* if(age < 400)
             {
                 Fitness = (Length < 10) ? (ulong)Math.Pow(age, 2) * (ulong)Math.Pow(2, length) :
@@ -175,12 +175,12 @@ namespace SnakeGame.Entities
                 //if bodypart is found, return info about it
                 if (!foundBody && WillEatBody(SearchPosition))
                 {
-                    returnInfo [1] = 1 / distance;
+                    returnInfo [1] = 1 / (double)distance;
                     foundBody = true;
                 }
             }
             //after reaching the wall return info about it
-            returnInfo [2] = 1 / distance;
+            returnInfo [2] = 1 / (double)distance;
 
             return returnInfo;
         }

@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections;
 using MersenneTwister;
+using MathNet.Numerics.Distributions;
 
 namespace SnakeGame.Utils
 {
     class Matrica: IEnumerable
     {
         private double [,] data = new double [0, 0];
+        private static Normal normalDist;
 
         public int Rows { get; set; }
         public int Columns { get; set; }
         static Matrica () {
             var seed = new Guid();
-            // rng = new AccurateRandom(seed.GetHashCode());
             Randoms.Create(seed.GetHashCode(), RandomType.WellBalanced);
+           //normalDist = new Normal(0, 1, Randoms.WellBalanced);
+            normalDist = new Normal(0, 1);
         }
 
         //konstruktor od broja redaka i stupaca
@@ -268,15 +271,10 @@ namespace SnakeGame.Utils
             for (int i = 0; i < Rows; ++i)
                 for (int j = 0; j < Columns; ++j)
                 {
-                    double randomValue = Randoms.NextDouble();
-                    if (randomValue < 0.5)  //next double daje broj iz [0,1]
-                    {
-                        this[i, j] = randomValue;
-                    }
-                    else
-                    {
-                        this[i, j] = -randomValue;
-                    }
+                    double signChance = Randoms.NextDouble();
+                    double randomValue = Randoms.NextDouble(); //gornja granica je isključiva
+
+                    this[i, j] = (signChance < 0.5) ? randomValue : -randomValue; 
                 }
 
         }
@@ -285,15 +283,6 @@ namespace SnakeGame.Utils
         IEnumerator IEnumerable.GetEnumerator ()
         {
             return data.GetEnumerator();
-        }
-
-        //funkcija koja vraca random vrijednost po Gaussu koristeci Box-Muller transformaciju
-        public double stdGaussian ()
-        {
-            double u1 = 1.0 - Randoms.NextDouble(); //uniform(0,1] 
-            double u2 = 1.0 - Randoms.NextDouble();
-            double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
-            return randStdNormal;
         }
 
         //funkcija mutiranja za genetski algoritam
@@ -305,7 +294,8 @@ namespace SnakeGame.Utils
                     double randNum = Randoms.NextDouble();
                     if (randNum < mutationRate)
                     {
-                        this [i, j] += stdGaussian() / 5;
+                        //this [i, j] += normalDist.Sample() / 5;  //normalna distribucija putem Box-Muller trnasformacije uz mersenne twister RNG
+                        this[i, j] += normalDist.Sample();
                         //odrezi vrijednosti na [-1, 1]
                         if (this [i, j] > 1) this [i, j] = 1;
                         if (this [i, j] < -1) this [i, j] = -1;
