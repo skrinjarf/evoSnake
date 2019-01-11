@@ -56,13 +56,18 @@ namespace SnakeGame.Entities
                     break;
                     //promijeni odgovarajuce vrijednosti da se opterecujemo GC
             }
+            if ((!IsInsideGameArea(HeadPosition + BaseVelocity) || WillEatBody(HeadPosition + BaseVelocity)) &&
+                IsInsideGameArea(HeadPosition - BaseVelocity) &&
+                !WillEatBody(HeadPosition - BaseVelocity))
+            {
+                BaseVelocity *= -1;
+            }
         }
         
         //calculate fitness of a snake
         public void CalculateFitness ()
         {
-                Fitness = (age < 200)? (ulong)age * (ulong)Math.Pow(2, length) :
-                    200 * (ulong)Math.Pow(2, length);
+            Fitness = (ulong)Math.Pow(length, 2);
            /* if(age < 400)
             {
                 Fitness = (Length < 10) ? (ulong)Math.Pow(age, 2) * (ulong)Math.Pow(2, length) :
@@ -169,7 +174,7 @@ namespace SnakeGame.Entities
                 //if food is found return info about it
                 if (!foundFood && SearchPosition == CurrentFoodUnit.Location())
                 {
-                    returnInfo [0] = 1;
+                    returnInfo [0] = 10;
                     foundFood = true;
                 }
                 //if bodypart is found, return info about it
