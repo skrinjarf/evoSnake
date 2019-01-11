@@ -22,6 +22,22 @@ namespace SnakeGame.Entities
             brain = new ANN(24, 18, 4);
             Fitness = 0;
             isTested = tested ? true : false;
+            /*
+            bool overlapping;
+            do
+            {
+                overlapping = false;
+                CurrentFoodUnit = new Items.Food();
+                foreach (Vector2 part in BodyParts) if (CurrentFoodUnit.Location() == part)
+                    {
+                        overlapping = true;
+                        break;
+                    }
+                if (HeadPosition == CurrentFoodUnit.Location())
+                    overlapping = true;
+            } while (overlapping);
+            */
+             
         }
 
         //mutiraj zmiju
@@ -61,19 +77,22 @@ namespace SnakeGame.Entities
         //calculate fitness of a snake
         public void CalculateFitness ()
         {
-                Fitness = (age < 200)? (ulong)age * (ulong)Math.Pow(2, length) :
-                    200 * (ulong)Math.Pow(2, length);
-           /* if(age < 400)
-            {
-                Fitness = (Length < 10) ? (ulong)Math.Pow(age, 2) * (ulong)Math.Pow(2, length) :
-                                          (ulong)Math.Pow(age, 2) * fitnessKoef * (ulong)(length - 9);
-            }
-            else
-            {
-                Fitness = (Length < 10) ? ageKoef * (ulong)Math.Pow(2, length) :
-                                          ageKoef * fitnessKoef * (ulong)(length - 9);
-            }
-             */
+            Fitness = (age < 200) ? (ulong)age * (ulong)Math.Pow(length - 3, 2) :
+                                       200 * (ulong)Math.Pow(length - 3, 2);
+            /* Fitness = (age < 200) ? (ulong)age * (ulong)Math.Pow(2, length - 4) :
+                                     200 * (ulong)Math.Pow(2, length - 4);
+                                     */
+            /* if(age < 400)
+             {
+                 Fitness = (Length < 10) ? (ulong)Math.Pow(age, 2) * (ulong)Math.Pow(2, length) :
+                                           (ulong)Math.Pow(age, 2) * fitnessKoef * (ulong)(length - 9);
+             }
+             else
+             {
+                 Fitness = (Length < 10) ? ageKoef * (ulong)Math.Pow(2, length) :
+                                           ageKoef * fitnessKoef * (ulong)(length - 9);
+             }
+              */
             //Fitness = (age > 0) ? (ulong)age * (ulong)Math.Pow(Length, 2) : 0;
         }
 

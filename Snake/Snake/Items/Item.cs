@@ -30,13 +30,18 @@ namespace SnakeGame.Items
             Xpos = rnd.Next(0, WorldRenderer.instance.World.Dimensions.X);
             Ypos = rnd.Next(0, WorldRenderer.instance.World.Dimensions.Y);
             Vector2 pos = new Vector2(Xpos, Ypos);
+            
             while (Wall.AnyWall(pos) || FindItem(pos) != null)
             {
                 Xpos = rnd.Next(0, WorldRenderer.instance.World.Dimensions.X);
                 Ypos = rnd.Next(0, WorldRenderer.instance.World.Dimensions.Y);
                 pos = new Vector2(Xpos, Ypos);
             }
-            allItems.Add(this);
+            if(Configerator.instance.GameType != Configerator.Game.bot) //kod treniranja zmije se vrte "paralelno" pa allitems sprijecava da dvije razlicite zmije imaju hranu na istom mjestu
+            {
+                allItems.Add(this);
+            }
+            
         }
         ~Item ()
         {

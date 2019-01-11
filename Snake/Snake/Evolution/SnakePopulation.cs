@@ -9,6 +9,8 @@ namespace SnakeGame.Evolution
         private int currentGenerationNo = 1;
         private int generationCounter = 1;
         private int currentBest = 4;
+        private int numOfDeadSnakes = 0;
+        private double crossoverProbability = 0.8;
 
 
         public double PopulationMutationRate;
@@ -19,6 +21,7 @@ namespace SnakeGame.Evolution
 		public int CurrentBestSnakeIdx { get; set; } = 0;
 		public int GlobalBest { get; set; } = 4;
         public ulong PopulationSumOfFitness { get; set; } = 0;
+        
 
         //construct
         public SnakePopulation (int size, double mutationRate = 0.01) //start with mutation rate of 1% 
@@ -38,6 +41,7 @@ namespace SnakeGame.Evolution
                     Snakes [i].GetBrainInput();
                     Snakes [i].CalculateNextMove();
                     Snakes [i].Move();
+                    if (Snakes[i].isDead) numOfDeadSnakes++;
                 }
             SetCurrentBestSnake();
         }
@@ -45,8 +49,7 @@ namespace SnakeGame.Evolution
         //test if there is any snake alive
         public bool Done ()
         {
-            for (int i = 0; i < Snakes.Length; ++i) if (!Snakes [i].isDead) return false;
-            return true;
+            return numOfDeadSnakes == Snakes.Length;
         }
 
         //calculate fitness of every snake
@@ -80,9 +83,17 @@ namespace SnakeGame.Evolution
             for (int i = 1; i < NextGen.Length; ++i)
             {
                 BotSnake firstPartner = SelectSnake();
-                BotSnake secondPartner = SelectSnake();
+                BotSnake child;
 
-                BotSnake child = firstPartner.Crossover(secondPartner);
+                if (MersenneTwister.Randoms.NextDouble() < crossoverProbability)
+                {
+                    BotSnake secondPartner = SelectSnake();
+                    child = firstPartner.Crossover(secondPartner);
+                }
+                else
+                {
+                    child = firstPartner.Clone();
+                }
                 child.Mutate(PopulationMutationRate);
 
                 NextGen [i] = child;
@@ -94,7 +105,7 @@ namespace SnakeGame.Evolution
             currentBest = 4;
             PopulationSumOfFitness = 0;
             //globalBestFitness = 0;
-            //currentBestFitness = 0;
+            numOfDeadSnakes = 0;
             CurrentBestSnakeIdx = 0;
         }
 
@@ -147,7 +158,7 @@ namespace SnakeGame.Evolution
 
         private void SetCurrentBestSnake ()
         {
-            if (!Done())
+            if (!Done()) //samo na kraju generacije odredi najbolju, inace drzi nultu
             {
                 double max = 0;
                 int maxIdx = 0;

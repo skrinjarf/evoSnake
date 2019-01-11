@@ -86,7 +86,10 @@ namespace SnakeGame
                 {
                     RenderPiece(part, Brushes.White);
                 }
-                RenderPiece(snake.CurrentFoodUnit.Location(), Brushes.Yellow);
+                if (snake.CurrentFoodUnit != null)
+                {
+                    RenderPiece(snake.CurrentFoodUnit.Location(), Brushes.Yellow);
+                }
                 // UNCOMMENT THIS TO RENDER ALL SNAKES
                 //int idx = 0;
                 //foreach (BotSnake snake in botWorld.Species [0].Snakes)
