@@ -15,7 +15,7 @@ namespace SnakeGame.Entities
         private static readonly ulong ageKoef = 160000;  // Math.Pow(400, 2);
         public bool isTested;
 
-        public ulong Fitness { get; set; }
+        public double Fitness { get; set; }
 
         public BotSnake (bool tested = false) : base()
         {
@@ -77,8 +77,9 @@ namespace SnakeGame.Entities
         //calculate fitness of a snake
         public void CalculateFitness ()
         {
-            Fitness = (age < 200) ? (ulong)age * (ulong)Math.Pow(length - 3, 2) :
+           /* Fitness = (age < 200) ? (ulong)age * (ulong)Math.Pow(length - 3, 2) :
                                        200 * (ulong)Math.Pow(length - 3, 2);
+                                       */
             /* Fitness = (age < 200) ? (ulong)age * (ulong)Math.Pow(2, length - 4) :
                                      200 * (ulong)Math.Pow(2, length - 4);
                                      */

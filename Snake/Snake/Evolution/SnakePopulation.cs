@@ -20,7 +20,7 @@ namespace SnakeGame.Evolution
 		public BotSnake [] Snakes { get; set; }
 		public int CurrentBestSnakeIdx { get; set; } = 0;
 		public int GlobalBest { get; set; } = 4;
-        public ulong PopulationSumOfFitness { get; set; } = 0;
+        public double PopulationSumOfFitness { get; set; } = 0;
         
 
         //construct
@@ -36,13 +36,35 @@ namespace SnakeGame.Evolution
         public void UpdateAliveSnakes ()
         {
             for (int i = 0; i < Snakes.Length; ++i)
-                if (!Snakes [i].isDead)
+            {
+                if (!Snakes[i].isDead)
                 {
-                    Snakes [i].GetBrainInput();
-                    Snakes [i].CalculateNextMove();
-                    Snakes [i].Move();
-                    if (Snakes[i].isDead) numOfDeadSnakes++;
+                    var FoodLocation = Snakes[i].CurrentFoodUnit.Location();
+                    double previousDistanceToFood = (Snakes[i].HeadPosition - FoodLocation).Norm;
+                    Snakes[i].GetBrainInput();
+                    Snakes[i].CalculateNextMove();
+                    Snakes[i].Move();
+                    if (Snakes[i].isDead)
+                    {
+                        numOfDeadSnakes++;
+                        break;
+                    }
+                    if (FoodLocation == Snakes[i].CurrentFoodUnit.Location()) //ako je zmije pojela hranu se ne ulazi ovdije
+                    {
+                        double newDistanceToFood = (Snakes[i].HeadPosition - FoodLocation).Norm;
+                        if (newDistanceToFood < previousDistanceToFood)
+                        {
+                            Snakes[i].Fitness += 1;
+                        }
+                        else
+                        {
+                            Snakes[i].Fitness -= 1.5;
+                        }
+
+                    }
+
                 }
+            }
             SetCurrentBestSnake();
         }
 
@@ -57,9 +79,11 @@ namespace SnakeGame.Evolution
         {
             for (int i = 0; i < Snakes.Length; ++i)
             {
-                Snakes[i].CalculateFitness();
-                PopulationSumOfFitness += Snakes[i].Fitness;
-                //moguce ubrzanje odmah nac najbolju zmiju da se izbijegne poziv setBestSnake sa O(n)
+                //Snakes[i].CalculateFitness();
+                if(Snakes[i].Fitness > 0)
+                {
+                    PopulationSumOfFitness += Snakes[i].Fitness;
+                }
             }
         }
 
@@ -138,12 +162,14 @@ namespace SnakeGame.Evolution
         //probability of a snake being picked is herFitness/totalFitness 
         private BotSnake SelectSnake ()
         {
-            int randomValue = MersenneTwister.Randoms.Next(0, (int)PopulationSumOfFitness + 1); //gornja granica iskljucena
+            int randomValue = MersenneTwister.Randoms.Next(0, (int) Math.Floor(PopulationSumOfFitness)); 
 
-            int tempSum = 0;
+            double tempSum = 0;
             foreach (BotSnake s in Snakes)
             {
-                tempSum += (int)s.Fitness;
+                if (s.Fitness <= 0) continue;
+
+                tempSum += s.Fitness;
                 if (tempSum >= randomValue)
                     return s;
             }
