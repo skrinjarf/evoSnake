@@ -26,40 +26,11 @@ namespace SnakeGame.Utils
             
         }
 
-        //konstruktor iz 2D arraya
-        public Matrica (double [,] array)
-        {
-            data = array;
-            Rows = array.GetLength(0);
-            Columns = array.GetLength(1);
-        }
-
         //indexer
         public double this [int i, int j]
         {
             get { return data [i, j]; }
             set { data [i, j] = value; }
-        }
-
-        //ispis na ekran
-        public void Print ()
-        {
-            for (int i = 0; i < Rows; ++i)
-            {
-                for (int j = 0; j < Columns; ++j)
-                    Console.Write("{0} ", this [i, j]);
-                Console.WriteLine();
-            }
-            Console.WriteLine();
-        }
-
-        //mnozenje skalarom kroz operator
-        public static Matrica operator * (Matrica m, double a)
-        {
-            for (int i = 0; i < m.Rows; ++i)
-                for (int j = 0; j < m.Columns; ++j)
-                    m [i, j] *= a;   //u foreachu se ne moze mijenjat vrijednost
-            return m;
         }
 
         //mnozenje matrica kroz oprator
@@ -87,15 +58,6 @@ namespace SnakeGame.Utils
             }
 
             return ret;
-        }
-
-        //zbrajanje skalarom kroz operator
-        public static Matrica operator + (Matrica A, double x)
-        {
-            for (int i = 0; i < A.Rows; ++i)
-                for (int j = 0; j < A.Columns; ++j)
-                    A [i, j] *= x;   //u foreachu se ne moze mijenjat vrijednost
-            return A;
         }
 
         //zbrajanje matrica kroz operator
@@ -229,40 +191,23 @@ namespace SnakeGame.Utils
         }
 
         //sigmoidna funkcija za aktivaciju neuralne mreže
-        public static double SigmoidFunction (double x)
+        private static double SigmoidFunction (double x)
         {
             double y = 1 + Math.Pow(Math.E, -x);
             return 1 / y;
         }
 
+        private static double ReLU (double x)
+        {
+            return (x > 0) ? x : 0;
+        }
+
         //primijeni aktivacijsku funkciju na sve elemente matrice
-        public Matrica Activate ()
+        public void Activate ()
         {
-            Matrica ret = new Matrica(Rows, Columns);
             for (int i = 0; i < Rows; ++i)
                 for (int j = 0; j < Columns; ++j)
-                    ret [i, j] = Matrica.SigmoidFunction(this [i, j]);
-            return ret;
-        }
-
-        //
-        public Matrica SigmoidDerived ()
-        {
-            Matrica ret = new Matrica(Rows, Columns);
-            for (int i = 0; i < Rows; ++i)
-                for (int j = 0; j < Columns; ++j)
-                    ret [i, j] = this [i, j] * (1 - this [i, j]);
-            return ret;
-        }
-
-        //makni najdoljnji red matrice
-        public Matrica RemoveBottomRow ()
-        {
-            Matrica ret = new Matrica(Rows - 1, Columns);
-            for (int i = 0; i < ret.Rows; ++i)
-                for (int j = 0; j < Columns; ++j)
-                    ret [i, j] = this [i, j];
-            return ret;
+                    this [i, j] = ReLU(this [i, j]);
         }
 
         //randomiziraj vrijednosti matrice izmedu -1 i 1
@@ -271,10 +216,10 @@ namespace SnakeGame.Utils
             for (int i = 0; i < Rows; ++i)
                 for (int j = 0; j < Columns; ++j)
                 {
-                    double signChance = Randoms.NextDouble();
-                    double randomValue = Randoms.NextDouble(); //gornja granica je isključiva
-
-                    this[i, j] = (signChance < 0.5) ? randomValue : -randomValue; 
+                    //double signChance = Randoms.NextDouble();
+                    //double randomValue = Randoms.NextDouble(); //gornja granica je isključiva
+                    //this[i, j] = (signChance < 0.5) ? randomValue : -randomValue; 
+                    this[i, j] = Randoms.NextDouble();
                 }
 
         }
@@ -291,14 +236,14 @@ namespace SnakeGame.Utils
             for (int i = 0; i < Rows; ++i)
                 for (int j = 0; j < Columns; ++j)
                 {
-                    double randNum = Randoms.NextDouble();
-                    if (randNum < mutationRate)
+                    if (Randoms.NextDouble() < mutationRate)
                     {
-                        //this [i, j] += normalDist.Sample() / 5;  //normalna distribucija putem Box-Muller trnasformacije uz mersenne twister RNG
-                        this[i, j] += normalDist.Sample();
+                        this [i, j] += normalDist.Sample() / 5;  //normalna distribucija putem Box-Muller trnasformacije uz mersenne twister RNG
+                        //this[i, j] += normalDist.Sample();
                         //odrezi vrijednosti na [-1, 1]
                         if (this [i, j] > 1) this [i, j] = 1;
-                        if (this [i, j] < -1) this [i, j] = -1;
+                        //if (this [i, j] < -1) this [i, j] = -1;
+                        if (this[i, j] < 0) this[i, j] = 0;
                     }
                 }
         }

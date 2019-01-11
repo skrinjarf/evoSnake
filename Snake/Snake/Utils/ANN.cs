@@ -36,18 +36,18 @@ namespace SnakeGame.Utils
             inputV = inputV.AddBias();
 
             //hidden1 sloj
-            Matrica hiddenIn = whi * inputV;
-            Matrica hiddenOut = hiddenIn.Activate();
-            hiddenOut = hiddenOut.AddBias();
+            Matrica hidden1 = (whi * inputV);
+            hidden1.Activate();
+            hidden1 = hidden1.AddBias();
 
             //hidden2 sloj
-            Matrica hiddenIn2 = whh * hiddenOut;
-            Matrica hiddenOut2 = hiddenIn2.Activate();
-            hiddenOut2 = hiddenOut2.AddBias();
+            Matrica hidden2 = whh * hidden1;
+            hidden2.Activate();
+            hidden2 = hidden2.AddBias();
 
             //output sloj  
-            Matrica outIn = who * hiddenOut2;
-            Matrica output = outIn.Activate();
+            Matrica output = who * hidden2;
+            output.Activate();
 
             return output.ToArray();
         }
@@ -61,14 +61,13 @@ namespace SnakeGame.Utils
         }
 
         //crossover izmedu dvije neuralne
-        //crossover izmedu dvije neuralne
         public ANN Crossover (ANN partner)
         {
             //napravi dijete cije su tezine dobivene crossoverom tezina this i partnera
             return new ANN(brInput, brHidden, brOutput) {
-                whi = whi.Crossover(partner.whi),
-                whh = whh.Crossover(partner.whh),
-                who = who.Crossover(partner.who)
+                whi = this.whi.Crossover(partner.whi),
+                whh = this.whh.Crossover(partner.whh),
+                who = this.who.Crossover(partner.who)
             };
         }
 
@@ -76,9 +75,9 @@ namespace SnakeGame.Utils
         public ANN Clone ()
         {
             return new ANN(brInput, brHidden, brOutput) {
-                whi = whi.Clone(),
-                whh = whh.Clone(),
-                who = who.Clone()
+                whi = this.whi.Clone(),
+                whh = this.whh.Clone(),
+                who = this.who.Clone()
             };
         }
         

@@ -11,8 +11,8 @@ namespace SnakeGame.Entities
         private ANN brain;
         private double [] brainInput = new double [24]; //za 8 smjerova gledanja, udaljenost do tijela, zida i hrane + trenutna brzina kretanja zmije
         private double [] brainOutput = new double [4]; //iduci korak, gore, dolje, lijevo, desno
-        private static readonly ulong fitnessKoef = 1024; //Math.Pow(2,10)
-        private static readonly ulong ageKoef = 160000;  // Math.Pow(400, 2);
+        //private static readonly ulong fitnessKoef = 1024; //Math.Pow(2,10)
+        //private static readonly ulong ageKoef = 160000;  // Math.Pow(400, 2);
         public bool isTested;
 
         public ulong Fitness { get; set; }
@@ -22,21 +22,6 @@ namespace SnakeGame.Entities
             brain = new ANN(24, 18, 4);
             Fitness = 0;
             isTested = tested ? true : false;
-            /*
-            bool overlapping;
-            do
-            {
-                overlapping = false;
-                CurrentFoodUnit = new Items.Food();
-                foreach (Vector2 part in BodyParts) if (CurrentFoodUnit.Location() == part)
-                    {
-                        overlapping = true;
-                        break;
-                    }
-                if (HeadPosition == CurrentFoodUnit.Location())
-                    overlapping = true;
-            } while (overlapping);
-            */
              
         }
 
@@ -70,7 +55,6 @@ namespace SnakeGame.Entities
                     BaseVelocity.X = 0;
                     BaseVelocity.Y = -1;
                     break;
-                    //promijeni odgovarajuce vrijednosti da se opterecujemo GC
             }
         }
         
@@ -100,7 +84,7 @@ namespace SnakeGame.Entities
         public BotSnake Crossover (BotSnake partner)
         { 
             return new BotSnake {
-                brain = brain.Crossover(partner.brain)
+                brain = this.brain.Crossover(partner.brain)
             };
         }
 
@@ -108,7 +92,7 @@ namespace SnakeGame.Entities
         public BotSnake Clone ()
         {
             return new BotSnake {
-                brain = brain.Clone(),
+                brain = this.brain.Clone(),
                 isDead = false
             };
         }
@@ -132,17 +116,17 @@ namespace SnakeGame.Entities
             brainInput [0] = directionInfo [0];
             brainInput [1] = directionInfo [1];
             brainInput [2] = directionInfo [2];
-            //right up
+            //right down
             directionInfo = GetInputFromDirection(new Vector2(1, 1));
             brainInput [3] = directionInfo [0];
             brainInput [4] = directionInfo [1];
             brainInput [5] = directionInfo [2];
-            //up
+            //down
             directionInfo = GetInputFromDirection(new Vector2(0, 1));
             brainInput [6] = directionInfo [0];
             brainInput [7] = directionInfo [1];
             brainInput [8] = directionInfo [2];
-            //left up
+            //left down
             directionInfo = GetInputFromDirection(new Vector2(-1, 1));
             brainInput [9] = directionInfo [0];
             brainInput [10] = directionInfo [1];
@@ -152,17 +136,17 @@ namespace SnakeGame.Entities
             brainInput [12] = directionInfo [0];
             brainInput [13] = directionInfo [1];
             brainInput [14] = directionInfo [2];
-            //left down
+            //left up
             directionInfo = GetInputFromDirection(new Vector2(-1, -1));
             brainInput [15] = directionInfo [0];
             brainInput [16] = directionInfo [1];
             brainInput [17] = directionInfo [2];
-            //down
+            //up
             directionInfo = GetInputFromDirection(new Vector2(0, -1));
             brainInput [18] = directionInfo [0];
             brainInput [19] = directionInfo [1];
             brainInput [20] = directionInfo [2];
-            //down right
+            //up right
             directionInfo = GetInputFromDirection(new Vector2(1, -1));
             brainInput [21] = directionInfo [0];
             brainInput [22] = directionInfo [1];

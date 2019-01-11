@@ -55,18 +55,30 @@ namespace SnakeGame.Evolution
         //calculate fitness of every snake
         public void PopulationCalculateFitness ()
         {
+            double bestFitness = 0;
+            int bestIdx = 0;
             for (int i = 0; i < Snakes.Length; ++i)
             {
                 Snakes[i].CalculateFitness();
                 PopulationSumOfFitness += Snakes[i].Fitness;
-                //moguce ubrzanje odmah nac najbolju zmiju da se izbijegne poziv setBestSnake sa O(n)
+                if(Snakes[i].Fitness > bestFitness)
+                {
+                    bestFitness = Snakes[i].Fitness;
+                    bestIdx = i;
+                }
+            }
+
+            if (Snakes[bestIdx].Fitness > GlobalBestFitness)
+            {
+                GlobalBestFitness = bestFitness;
+                GlobalBestSnake = Snakes[bestIdx].Clone();
             }
         }
 
         public void CreateNextGeneration ()
         {
             BotSnake [] NextGen = new BotSnake [Snakes.Length];
-            SetBestSnake(); //determine the best snake so far and save it in globalBestSnake
+            
             NextGen [0] = GlobalBestSnake.Clone();
 
             /*
@@ -107,29 +119,6 @@ namespace SnakeGame.Evolution
             //globalBestFitness = 0;
             numOfDeadSnakes = 0;
             CurrentBestSnakeIdx = 0;
-        }
-
-        //helper function, determine global best snake
-        private void SetBestSnake ()
-        {
-            double maxFitness = 0;
-            int maxIdx = 0;
-
-            //locate the best snake in this gen
-            for (int i = 0; i < Snakes.Length; ++i)
-            {
-                if (Snakes [i].Fitness > maxFitness)
-                {
-                    maxFitness = Snakes [i].Fitness;
-                    maxIdx = i;
-                }
-            }
-            //compare it to previous global best 
-            if (maxFitness > GlobalBestFitness)
-            {
-                GlobalBestFitness = maxFitness;
-                GlobalBestSnake = Snakes [maxIdx].Clone();
-            }
         }
 
         //select snake for breeding based on their fitness. 
