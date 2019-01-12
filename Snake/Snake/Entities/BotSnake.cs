@@ -11,16 +11,18 @@ namespace SnakeGame.Entities
         private ANN brain;
         private double [] brainInput = new double [24]; //za 8 smjerova gledanja, udaljenost do tijela, zida i hrane + trenutna brzina kretanja zmije
         private double [] brainOutput = new double [4]; //iduci korak, gore, dolje, lijevo, desno
-        private static readonly double fitnessKoef = Math.Pow(2, 10);
+        //private static readonly ulong fitnessKoef = 1024; //Math.Pow(2,10)
+        //private static readonly ulong ageKoef = 160000;  // Math.Pow(400, 2);
         public bool isTested;
 
-        public double Fitness { get; set; }
+        public ulong Fitness { get; set; }
 
         public BotSnake (bool tested = false) : base()
         {
             brain = new ANN(24, 18, 4);
             Fitness = 0;
             isTested = tested ? true : false;
+             
         }
 
         //mutiraj zmiju
@@ -41,7 +43,7 @@ namespace SnakeGame.Entities
                     BaseVelocity.X = 1;
                     BaseVelocity.Y = 0;
                     break;
-                case 1://gore
+                case 1://dole
                     BaseVelocity.X = 0;
                     BaseVelocity.Y = 1;
                     break;
@@ -49,26 +51,40 @@ namespace SnakeGame.Entities
                     BaseVelocity.X = -1;
                     BaseVelocity.Y = 0;
                     break;
-                default://dole
+                default://gore
                     BaseVelocity.X = 0;
                     BaseVelocity.Y = -1;
                     break;
-                    //promijeni odgovarajuce vrijednosti da se opterecujemo GC
             }
         }
         
         //calculate fitness of a snake
         public void CalculateFitness ()
         {
-            Fitness = (Length < 10) ? Math.Pow(age, 2) * 100 * Math.Pow(2, length) :
-                                      Math.Pow(age, 2) * fitnessKoef * (length - 9);
+            Fitness = (age < 200) ? (ulong)age * (ulong)Math.Pow(length - 3, 2) :
+                                       200 * (ulong)Math.Pow(length - 3, 2);
+            /* Fitness = (age < 200) ? (ulong)age * (ulong)Math.Pow(2, length - 4) :
+                                     200 * (ulong)Math.Pow(2, length - 4);
+                                     */
+            /* if(age < 400)
+             {
+                 Fitness = (Length < 10) ? (ulong)Math.Pow(age, 2) * (ulong)Math.Pow(2, length) :
+                                           (ulong)Math.Pow(age, 2) * fitnessKoef * (ulong)(length - 9);
+             }
+             else
+             {
+                 Fitness = (Length < 10) ? ageKoef * (ulong)Math.Pow(2, length) :
+                                           ageKoef * fitnessKoef * (ulong)(length - 9);
+             }
+              */
+            //Fitness = (age > 0) ? (ulong)age * (ulong)Math.Pow(Length, 2) : 0;
         }
 
         //do crossover with partner Snake
         public BotSnake Crossover (BotSnake partner)
         { 
             return new BotSnake {
-                brain = brain.Crossover(partner.brain)
+                brain = this.brain.Crossover(partner.brain)
             };
         }
 
@@ -76,7 +92,7 @@ namespace SnakeGame.Entities
         public BotSnake Clone ()
         {
             return new BotSnake {
-                brain = brain.Clone(),
+                brain = this.brain.Clone(),
                 isDead = false
             };
         }
@@ -100,17 +116,17 @@ namespace SnakeGame.Entities
             brainInput [0] = directionInfo [0];
             brainInput [1] = directionInfo [1];
             brainInput [2] = directionInfo [2];
-            //right up
+            //right down
             directionInfo = GetInputFromDirection(new Vector2(1, 1));
             brainInput [3] = directionInfo [0];
             brainInput [4] = directionInfo [1];
             brainInput [5] = directionInfo [2];
-            //up
+            //down
             directionInfo = GetInputFromDirection(new Vector2(0, 1));
             brainInput [6] = directionInfo [0];
             brainInput [7] = directionInfo [1];
             brainInput [8] = directionInfo [2];
-            //left up
+            //left down
             directionInfo = GetInputFromDirection(new Vector2(-1, 1));
             brainInput [9] = directionInfo [0];
             brainInput [10] = directionInfo [1];
@@ -120,17 +136,17 @@ namespace SnakeGame.Entities
             brainInput [12] = directionInfo [0];
             brainInput [13] = directionInfo [1];
             brainInput [14] = directionInfo [2];
-            //left down
+            //left up
             directionInfo = GetInputFromDirection(new Vector2(-1, -1));
             brainInput [15] = directionInfo [0];
             brainInput [16] = directionInfo [1];
             brainInput [17] = directionInfo [2];
-            //down
+            //up
             directionInfo = GetInputFromDirection(new Vector2(0, -1));
             brainInput [18] = directionInfo [0];
             brainInput [19] = directionInfo [1];
             brainInput [20] = directionInfo [2];
-            //down right
+            //up right
             directionInfo = GetInputFromDirection(new Vector2(1, -1));
             brainInput [21] = directionInfo [0];
             brainInput [22] = directionInfo [1];
@@ -162,12 +178,12 @@ namespace SnakeGame.Entities
                 //if bodypart is found, return info about it
                 if (!foundBody && WillEatBody(SearchPosition))
                 {
-                    returnInfo [1] = 1 / distance;
+                    returnInfo [1] = 1 / (double)distance;
                     foundBody = true;
                 }
             }
             //after reaching the wall return info about it
-            returnInfo [2] = 1 / distance;
+            returnInfo [2] = 1 / (double)distance;
 
             return returnInfo;
         }

@@ -10,7 +10,7 @@ namespace SnakeGame.Utils
         private readonly int brOutput;
 
         public Matrica whi;
-        public Matrica whh;
+       // public Matrica whh;
         public Matrica who;
 
         //konstruktor
@@ -20,12 +20,12 @@ namespace SnakeGame.Utils
 
             //+1 za bias
             whi = new Matrica(brHidden, brInput + 1); //sa desna mnozi input da dobijemo hidden
-            whh = new Matrica(brHidden, brHidden + 1); //sa desna mnozi prvi hidden layer da dobijemo drugi hidden
+           // whh = new Matrica(brHidden, brHidden + 1); //sa desna mnozi prvi hidden layer da dobijemo drugi hidden
             who = new Matrica(brOutput, brHidden + 1);
 
             //postavi tezine na random 
             whi.Randomize();
-            whh.Randomize();
+           // whh.Randomize();
             who.Randomize();
         }
 
@@ -36,18 +36,18 @@ namespace SnakeGame.Utils
             inputV = inputV.AddBias();
 
             //hidden1 sloj
-            Matrica hiddenIn = whi * inputV;
-            Matrica hiddenOut = hiddenIn.Activate();
-            hiddenOut = hiddenOut.AddBias();
+            Matrica hidden1 = (whi * inputV);
+            hidden1.Activate();
+            hidden1 = hidden1.AddBias();
 
             //hidden2 sloj
-            Matrica hiddenIn2 = whh * hiddenOut;
-            Matrica hiddenOut2 = hiddenIn2.Activate();
-            hiddenOut2 = hiddenOut2.AddBias();
+            /*Matrica hidden2 = whh * hidden1;
+            hidden2.Activate();
+            hidden2 = hidden2.AddBias();*/
 
             //output sloj  
-            Matrica outIn = who * hiddenOut2;
-            Matrica output = outIn.Activate();
+            Matrica output = who * hidden1;
+            output.Activate();
 
             return output.ToArray();
         }
@@ -56,19 +56,18 @@ namespace SnakeGame.Utils
         public void Mutate (double mutationRate)
         {
             whi.Mutate(mutationRate);
-            whh.Mutate(mutationRate);
+            //whh.Mutate(mutationRate);
             who.Mutate(mutationRate);
         }
 
-        //crossover izmedu dvije neuralne
         //crossover izmedu dvije neuralne
         public ANN Crossover (ANN partner)
         {
             //napravi dijete cije su tezine dobivene crossoverom tezina this i partnera
             return new ANN(brInput, brHidden, brOutput) {
-                whi = whi.Crossover(partner.whi),
-                whh = whh.Crossover(partner.whh),
-                who = who.Crossover(partner.who)
+                whi = this.whi.Crossover(partner.whi),
+               // whh = this.whh.Crossover(partner.whh),
+                who = this.who.Crossover(partner.who)
             };
         }
 
@@ -76,9 +75,9 @@ namespace SnakeGame.Utils
         public ANN Clone ()
         {
             return new ANN(brInput, brHidden, brOutput) {
-                whi = whi.Clone(),
-                whh = whh.Clone(),
-                who = who.Clone()
+                whi = this.whi.Clone(),
+                //whh = this.whh.Clone(),
+                who = this.who.Clone()
             };
         }
         
@@ -91,7 +90,7 @@ namespace SnakeGame.Utils
                     Weights1[i, j] = whi[i, j];
                     if (j < 19)
                     {
-                        Weights2[i, j] = whh[i, j];
+                        //Weights2[i, j] = whh[i, j];
                         if(i < 4) Weights3[i, j] = who[i, j];
                     }
                 }
@@ -106,7 +105,7 @@ namespace SnakeGame.Utils
                     whi[i, j] = Weights1[i, j];
                     if (j < 19)
                     {
-                        whh[i, j] = Weights2[i, j];
+                      //  whh[i, j] = Weights2[i, j];
                         if (i < 4) who[i, j] = Weights3[i, j];
                     }
                 }

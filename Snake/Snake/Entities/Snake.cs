@@ -17,7 +17,7 @@ namespace SnakeGame.Entities
         public Vector2 HeadPosition { get; set; }
         public Vector2 NewHeadPosition { get; set; }
         public Queue<Vector2> BodyParts { get; set; }
-        public bool isDead;
+        public bool isDead { get; set; }
         internal Food CurrentFoodUnit { get; set; }
         public double VelocityModifier { get; set; } //kako igra napreduje zmija se krece sve brze. 
         public int TimesToGrow { get; set; }
@@ -61,7 +61,7 @@ namespace SnakeGame.Entities
                 Die();
             }
 
-            MoveByAmmount(1);
+            MoveByOne();
         }
 
         public void MoveToEdge ()

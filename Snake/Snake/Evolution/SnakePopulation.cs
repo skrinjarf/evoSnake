@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
 using SnakeGame.Entities;
+
 
 namespace SnakeGame.Evolution
 {
@@ -11,8 +9,10 @@ namespace SnakeGame.Evolution
         private int currentGenerationNo = 1;
         private int generationCounter = 1;
         private int currentBest = 4;
-        private readonly int snakePopulationId;
-        private static readonly Random rnd;
+        private int numOfDeadSnakes = 0;
+        private double crossoverProbability = 0.8;
+
+
         public double PopulationMutationRate;
 
         public double GlobalBestFitness { get; set; } = 0;
@@ -20,21 +20,12 @@ namespace SnakeGame.Evolution
 		public BotSnake [] Snakes { get; set; }
 		public int CurrentBestSnakeIdx { get; set; } = 0;
 		public int GlobalBest { get; set; } = 4;
-
-        //static const for random number generator
-        static SnakePopulation () { rnd = new Random(); }
+        public ulong PopulationSumOfFitness { get; set; } = 0;
+        
 
         //construct
-        public SnakePopulation (int size, double mutationRate = 0.15) //start with mutation rate of 15% and decrese it over time
+        public SnakePopulation (int size, double mutationRate = 0.01) //start with mutation rate of 1% 
         {
-            //odredi snakePopulationId na random
-            using (RNGCryptoServiceProvider rg = new RNGCryptoServiceProvider())
-            {
-                byte [] rno = new byte [4]; //alociraj 4 bytova za int
-                rg.GetBytes(rno);         //popuni ih sigurnim random vrijednostma   
-                snakePopulationId = BitConverter.ToInt32(rno, 0);
-            }
-
             Snakes = new BotSnake [size];
             for (int i = 0; i < Snakes.Length; ++i) Snakes [i] = new BotSnake();
             GlobalBestSnake = Snakes [0].Clone();
@@ -50,6 +41,7 @@ namespace SnakeGame.Evolution
                     Snakes [i].GetBrainInput();
                     Snakes [i].CalculateNextMove();
                     Snakes [i].Move();
+                    if (Snakes[i].isDead) numOfDeadSnakes++;
                 }
             SetCurrentBestSnake();
         }
@@ -57,22 +49,39 @@ namespace SnakeGame.Evolution
         //test if there is any snake alive
         public bool Done ()
         {
-            for (int i = 0; i < Snakes.Length; ++i) if (!Snakes [i].isDead) return false;
-            return true;
+            return numOfDeadSnakes == Snakes.Length;
         }
 
         //calculate fitness of every snake
         public void PopulationCalculateFitness ()
         {
-            for (int i = 0; i < Snakes.Length; ++i) Snakes [i].CalculateFitness();
+            double bestFitness = 0;
+            int bestIdx = 0;
+            for (int i = 0; i < Snakes.Length; ++i)
+            {
+                Snakes[i].CalculateFitness();
+                PopulationSumOfFitness += Snakes[i].Fitness;
+                if(Snakes[i].Fitness > bestFitness)
+                {
+                    bestFitness = Snakes[i].Fitness;
+                    bestIdx = i;
+                }
+            }
+
+            if (Snakes[bestIdx].Fitness > GlobalBestFitness)
+            {
+                GlobalBestFitness = bestFitness;
+                GlobalBestSnake = Snakes[bestIdx].Clone();
+            }
         }
 
         public void CreateNextGeneration ()
         {
             BotSnake [] NextGen = new BotSnake [Snakes.Length];
-            SetBestSnake(); //determine the best snake so far and save it in globalBestSnake
+            
             NextGen [0] = GlobalBestSnake.Clone();
 
+            /*
             //half mutation rate every 10 generations so that search space is searched more in the begining and we start convergence toward optimum later
             if (generationCounter % 10 == 0 && PopulationMutationRate > 0.015) PopulationMutationRate *= 0.5; 
             
@@ -82,12 +91,21 @@ namespace SnakeGame.Evolution
                 PopulationMutationRate *= 10;
                 generationCounter = 0; 
             }  
+            */
             for (int i = 1; i < NextGen.Length; ++i)
             {
                 BotSnake firstPartner = SelectSnake();
-                BotSnake secondPartner = SelectSnake();
+                BotSnake child;
 
-                BotSnake child = firstPartner.Crossover(secondPartner);
+                if (MersenneTwister.Randoms.NextDouble() < crossoverProbability)
+                {
+                    BotSnake secondPartner = SelectSnake();
+                    child = firstPartner.Crossover(secondPartner);
+                }
+                else
+                {
+                    child = firstPartner.Clone();
+                }
                 child.Mutate(PopulationMutationRate);
 
                 NextGen [i] = child;
@@ -97,32 +115,10 @@ namespace SnakeGame.Evolution
             currentGenerationNo++;
             generationCounter++;
             currentBest = 4;
+            PopulationSumOfFitness = 0;
             //globalBestFitness = 0;
-            //currentBestFitness = 0;
+            numOfDeadSnakes = 0;
             CurrentBestSnakeIdx = 0;
-        }
-
-        //helper function, determine global best snake
-        private void SetBestSnake ()
-        {
-            double maxFitness = 0;
-            int maxIdx = 0;
-
-            //locate the best snake in this gen
-            for (int i = 0; i < Snakes.Length; ++i)
-            {
-                if (Snakes [i].Fitness > maxFitness)
-                {
-                    maxFitness = Snakes [i].Fitness;
-                    maxIdx = i;
-                }
-            }
-            //compare it to previous global best 
-            if (maxFitness > GlobalBestFitness)
-            {
-                GlobalBestFitness = maxFitness;
-                GlobalBestSnake = Snakes [maxIdx].Clone();
-            }
         }
 
         //select snake for breeding based on their fitness. 
@@ -131,42 +127,17 @@ namespace SnakeGame.Evolution
         //probability of a snake being picked is herFitness/totalFitness 
         private BotSnake SelectSnake ()
         {
-            double fitnessSum = 0;
-            foreach (BotSnake s in Snakes) fitnessSum += s.Fitness;
+            int randomValue = MersenneTwister.Randoms.Next(0, (int)PopulationSumOfFitness + 1); //gornja granica iskljucena
 
-            double randomValue = rnd.NextDouble() * fitnessSum; //random double in [0..fitnessSum>
-
-            //shuffle the snakes so that only the fitness afects the likelihood of a snake being choosen 
-            List<BotSnake> tempList = Snakes.ToList();
-            //shuffle(tempList);
-
-            double tempSum = 0;
-            foreach (BotSnake s in tempList)
+            int tempSum = 0;
+            foreach (BotSnake s in Snakes)
             {
-                tempSum += s.Fitness;
-                if (tempSum > randomValue)
+                tempSum += (int)s.Fitness;
+                if (tempSum >= randomValue)
                     return s;
             }
             //an error occured, return null
             return null;
-        }
-
-        //helper function which shuffles lists of items using Fisher–Yates shuffle and secure random number generator
-        private void Shuffle (List<BotSnake> list)
-        {
-            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
-            int n = list.Count;
-            while (n > 1)
-            {
-                byte [] box = new byte [1];
-                do provider.GetBytes(box);
-                while (!(box [0] < n * (Byte.MaxValue / n)));
-                int k = (box [0] % n);
-                n--;
-                BotSnake value = list [k];
-                list [k] = list [n];
-                list [n] = value;
-            }
         }
 
         public void MutatePopulation ()
@@ -176,7 +147,7 @@ namespace SnakeGame.Evolution
 
         private void SetCurrentBestSnake ()
         {
-            if (!Done())
+            if (!Done()) //samo na kraju generacije odredi najbolju, inace drzi nultu
             {
                 double max = 0;
                 int maxIdx = 0;

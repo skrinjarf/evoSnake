@@ -26,7 +26,7 @@ namespace SnakeGame
             {
                 world = new BotWorld(new Vector2(30, 30));
                 WorldRenderer.Init(world, this);
-                ((BotWorld)world).InitSpecies(1000, 1, 800);
+                ((BotWorld)world).InitSpecies(100, 1, 2000);
                 timer1.Interval = 1000 / 60;
             }
             else if (Configerator.instance.GameType == Configerator.Game.test)

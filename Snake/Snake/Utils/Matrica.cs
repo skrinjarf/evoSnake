@@ -1,29 +1,29 @@
 ﻿using System;
 using System.Collections;
+using MersenneTwister;
+using MathNet.Numerics.Distributions;
 
 namespace SnakeGame.Utils
 {
     class Matrica: IEnumerable
     {
         private double [,] data = new double [0, 0];
-        private static readonly Random rnd;
+        private static Normal normalDist;
 
         public int Rows { get; set; }
         public int Columns { get; set; }
-        static Matrica () { rnd = new Random(); }
+        static Matrica () {
+            var seed = new Guid();
+            Randoms.Create(seed.GetHashCode(), RandomType.WellBalanced);
+           //normalDist = new Normal(0, 1, Randoms.WellBalanced);
+            normalDist = new Normal(0, 1);
+        }
 
         //konstruktor od broja redaka i stupaca
         public Matrica (int rows, int columns)
         {
             Rows = rows; Columns = columns; data = new double [Rows, Columns];
-        }
-
-        //konstruktor iz 2D arraya
-        public Matrica (double [,] array)
-        {
-            data = array;
-            Rows = array.GetLength(0);
-            Columns = array.GetLength(1);
+            
         }
 
         //indexer
@@ -31,27 +31,6 @@ namespace SnakeGame.Utils
         {
             get { return data [i, j]; }
             set { data [i, j] = value; }
-        }
-
-        //ispis na ekran
-        public void Print ()
-        {
-            for (int i = 0; i < Rows; ++i)
-            {
-                for (int j = 0; j < Columns; ++j)
-                    Console.Write("{0} ", this [i, j]);
-                Console.WriteLine();
-            }
-            Console.WriteLine();
-        }
-
-        //mnozenje skalarom kroz operator
-        public static Matrica operator * (Matrica m, double a)
-        {
-            for (int i = 0; i < m.Rows; ++i)
-                for (int j = 0; j < m.Columns; ++j)
-                    m [i, j] *= a;   //u foreachu se ne moze mijenjat vrijednost
-            return m;
         }
 
         //mnozenje matrica kroz oprator
@@ -79,15 +58,6 @@ namespace SnakeGame.Utils
             }
 
             return ret;
-        }
-
-        //zbrajanje skalarom kroz operator
-        public static Matrica operator + (Matrica A, double x)
-        {
-            for (int i = 0; i < A.Rows; ++i)
-                for (int j = 0; j < A.Columns; ++j)
-                    A [i, j] *= x;   //u foreachu se ne moze mijenjat vrijednost
-            return A;
         }
 
         //zbrajanje matrica kroz operator
@@ -221,63 +191,36 @@ namespace SnakeGame.Utils
         }
 
         //sigmoidna funkcija za aktivaciju neuralne mreže
-        public static double SigmoidFunction (double x)
+        private static double SigmoidFunction (double x)
         {
             double y = 1 + Math.Pow(Math.E, -x);
             return 1 / y;
         }
 
+        private static double ReLU (double x)
+        {
+            return (x > 0) ? x : 0;
+        }
+
         //primijeni aktivacijsku funkciju na sve elemente matrice
-        public Matrica Activate ()
+        public void Activate ()
         {
-            Matrica ret = new Matrica(Rows, Columns);
             for (int i = 0; i < Rows; ++i)
                 for (int j = 0; j < Columns; ++j)
-                    ret [i, j] = Matrica.SigmoidFunction(this [i, j]);
-            return ret;
-        }
-
-        //
-        public Matrica SigmoidDerived ()
-        {
-            Matrica ret = new Matrica(Rows, Columns);
-            for (int i = 0; i < Rows; ++i)
-                for (int j = 0; j < Columns; ++j)
-                    ret [i, j] = this [i, j] * (1 - this [i, j]);
-            return ret;
-        }
-
-        //makni najdoljnji red matrice
-        public Matrica RemoveBottomRow ()
-        {
-            Matrica ret = new Matrica(Rows - 1, Columns);
-            for (int i = 0; i < ret.Rows; ++i)
-                for (int j = 0; j < Columns; ++j)
-                    ret [i, j] = this [i, j];
-            return ret;
+                    this [i, j] = ReLU(this [i, j]);
         }
 
         //randomiziraj vrijednosti matrice izmedu -1 i 1
         public void Randomize ()
         {
-            //RNGCryptoServiceProvider koristi secure random brojeve umjesto pseudo ali je tesko napravit da bude u rasponu
-            //using (RNGCryptoServiceProvider rg = new RNGCryptoServiceProvider())
-            //{
-            //    byte[] rno = new byte[8]; //alociraj 8 bytova za double
-            //    rg.GetBytes(rno);         //popuni ih sigurnim ran   
-            //    double randomvalue = BitConverter.ToDouble(rno, 0);
-            //}
             for (int i = 0; i < Rows; ++i)
                 for (int j = 0; j < Columns; ++j)
-                    if (rnd.NextDouble() < 0.5)  //next double daje broj iz [0,1]
-                    {
-                        this [i, j] = rnd.NextDouble();
-                    }
-                    else
-                    {
-                        this [i, j] = -rnd.NextDouble();
-                    }
-
+                {
+                    double signChance = Randoms.NextDouble();
+                    double randomValue = Randoms.NextDouble(); //gornja granica je isključiva
+                    this[i, j] = (signChance < 0.5) ? randomValue : -randomValue; 
+                    //this[i, j] = Randoms.NextDouble();
+                }
 
         }
 
@@ -287,28 +230,20 @@ namespace SnakeGame.Utils
             return data.GetEnumerator();
         }
 
-        //funkcija koja vraca random vrijednost po Gaussu koristeci Box-Muller transformaciju
-        public double stdGaussian ()
-        {
-            double u1 = 1.0 - rnd.NextDouble(); //uniform(0,1] 
-            double u2 = 1.0 - rnd.NextDouble();
-            double randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2); //random normal(0,1)
-            return randStdNormal;
-        }
-
         //funkcija mutiranja za genetski algoritam
         public void Mutate (double mutationRate)
         {
             for (int i = 0; i < Rows; ++i)
                 for (int j = 0; j < Columns; ++j)
                 {
-                    double randNum = rnd.NextDouble();
-                    if (randNum < mutationRate)
+                    if (Randoms.NextDouble() < mutationRate)
                     {
-                        this [i, j] += stdGaussian() / 5;
+                        this [i, j] += normalDist.Sample() / 5;  //normalna distribucija putem Box-Muller trnasformacije uz mersenne twister RNG
+                        //this[i, j] += normalDist.Sample();
                         //odrezi vrijednosti na [-1, 1]
                         if (this [i, j] > 1) this [i, j] = 1;
                         if (this [i, j] < -1) this [i, j] = -1;
+                        //if (this[i, j] < 0) this[i, j] = 0;
                     }
                 }
         }
@@ -318,8 +253,8 @@ namespace SnakeGame.Utils
         public Matrica Crossover (Matrica partner)
         {
             Matrica child = new Matrica(Rows, Columns);
-            int randR = rnd.Next(Rows); //random redak
-            int randC = rnd.Next(Columns); //random stupac
+            int randR = Randoms.Next(Rows); //random redak
+            int randC = Randoms.Next(Columns); //random stupac
 
             for (int i = 0; i < Rows; ++i)
                 for (int j = 0; j < Columns; ++j)

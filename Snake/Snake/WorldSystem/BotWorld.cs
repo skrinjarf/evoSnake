@@ -69,12 +69,12 @@ namespace SnakeGame.WorldSystem
         }
 
         //probably not used anywhere
-        public override void UpdateSnake ()
+        /*public override void UpdateSnake ()
         {
             ((BotSnake)snake).GetBrainInput();
             ((BotSnake)snake).CalculateNextMove();
             snake.Move();
-        }
+        }*/
 
         public bool Done ()
         {
