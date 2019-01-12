@@ -216,10 +216,10 @@ namespace SnakeGame.Utils
             for (int i = 0; i < Rows; ++i)
                 for (int j = 0; j < Columns; ++j)
                 {
-                    //double signChance = Randoms.NextDouble();
-                    //double randomValue = Randoms.NextDouble(); //gornja granica je isključiva
-                    //this[i, j] = (signChance < 0.5) ? randomValue : -randomValue; 
-                    this[i, j] = Randoms.NextDouble();
+                    double signChance = Randoms.NextDouble();
+                    double randomValue = Randoms.NextDouble(); //gornja granica je isključiva
+                    this[i, j] = (signChance < 0.5) ? randomValue : -randomValue; 
+                    //this[i, j] = Randoms.NextDouble();
                 }
 
         }
@@ -242,8 +242,8 @@ namespace SnakeGame.Utils
                         //this[i, j] += normalDist.Sample();
                         //odrezi vrijednosti na [-1, 1]
                         if (this [i, j] > 1) this [i, j] = 1;
-                        //if (this [i, j] < -1) this [i, j] = -1;
-                        if (this[i, j] < 0) this[i, j] = 0;
+                        if (this [i, j] < -1) this [i, j] = -1;
+                        //if (this[i, j] < 0) this[i, j] = 0;
                     }
                 }
         }

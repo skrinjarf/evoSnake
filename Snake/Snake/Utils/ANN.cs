@@ -10,7 +10,7 @@ namespace SnakeGame.Utils
         private readonly int brOutput;
 
         public Matrica whi;
-        public Matrica whh;
+       // public Matrica whh;
         public Matrica who;
 
         //konstruktor
@@ -20,12 +20,12 @@ namespace SnakeGame.Utils
 
             //+1 za bias
             whi = new Matrica(brHidden, brInput + 1); //sa desna mnozi input da dobijemo hidden
-            whh = new Matrica(brHidden, brHidden + 1); //sa desna mnozi prvi hidden layer da dobijemo drugi hidden
+           // whh = new Matrica(brHidden, brHidden + 1); //sa desna mnozi prvi hidden layer da dobijemo drugi hidden
             who = new Matrica(brOutput, brHidden + 1);
 
             //postavi tezine na random 
             whi.Randomize();
-            whh.Randomize();
+           // whh.Randomize();
             who.Randomize();
         }
 
@@ -41,12 +41,12 @@ namespace SnakeGame.Utils
             hidden1 = hidden1.AddBias();
 
             //hidden2 sloj
-            Matrica hidden2 = whh * hidden1;
+            /*Matrica hidden2 = whh * hidden1;
             hidden2.Activate();
-            hidden2 = hidden2.AddBias();
+            hidden2 = hidden2.AddBias();*/
 
             //output sloj  
-            Matrica output = who * hidden2;
+            Matrica output = who * hidden1;
             output.Activate();
 
             return output.ToArray();
@@ -56,7 +56,7 @@ namespace SnakeGame.Utils
         public void Mutate (double mutationRate)
         {
             whi.Mutate(mutationRate);
-            whh.Mutate(mutationRate);
+            //whh.Mutate(mutationRate);
             who.Mutate(mutationRate);
         }
 
@@ -66,7 +66,7 @@ namespace SnakeGame.Utils
             //napravi dijete cije su tezine dobivene crossoverom tezina this i partnera
             return new ANN(brInput, brHidden, brOutput) {
                 whi = this.whi.Crossover(partner.whi),
-                whh = this.whh.Crossover(partner.whh),
+               // whh = this.whh.Crossover(partner.whh),
                 who = this.who.Crossover(partner.who)
             };
         }
@@ -76,7 +76,7 @@ namespace SnakeGame.Utils
         {
             return new ANN(brInput, brHidden, brOutput) {
                 whi = this.whi.Clone(),
-                whh = this.whh.Clone(),
+                //whh = this.whh.Clone(),
                 who = this.who.Clone()
             };
         }
@@ -90,7 +90,7 @@ namespace SnakeGame.Utils
                     Weights1[i, j] = whi[i, j];
                     if (j < 19)
                     {
-                        Weights2[i, j] = whh[i, j];
+                        //Weights2[i, j] = whh[i, j];
                         if(i < 4) Weights3[i, j] = who[i, j];
                     }
                 }
@@ -105,7 +105,7 @@ namespace SnakeGame.Utils
                     whi[i, j] = Weights1[i, j];
                     if (j < 19)
                     {
-                        whh[i, j] = Weights2[i, j];
+                      //  whh[i, j] = Weights2[i, j];
                         if (i < 4) who[i, j] = Weights3[i, j];
                     }
                 }
