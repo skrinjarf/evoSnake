@@ -15,6 +15,7 @@ namespace SnakeGame.Entities
         //private static readonly ulong ageKoef = 160000;  // Math.Pow(400, 2);
         public bool isTested;
 
+        public bool Help { get; set; } = true;
         public ulong Fitness { get; set; }
 
         public BotSnake (bool tested = false) : base()
@@ -56,6 +57,16 @@ namespace SnakeGame.Entities
                     BaseVelocity.Y = -1;
                     break;
             }
+            if (Help)
+            {
+                if ((!IsInsideGameArea(HeadPosition + BaseVelocity) || WillEatBody(HeadPosition + BaseVelocity)) &&
+                                IsInsideGameArea(HeadPosition - BaseVelocity) &&
+                                !WillEatBody(HeadPosition - BaseVelocity))
+                {
+                    BaseVelocity *= -1;
+                }
+            }
+
         }
         
         //calculate fitness of a snake
@@ -172,7 +183,7 @@ namespace SnakeGame.Entities
                 //if food is found return info about it
                 if (!foundFood && SearchPosition == CurrentFoodUnit.Location())
                 {
-                    returnInfo [0] = 1;
+                    returnInfo [0] = 10;
                     foundFood = true;
                 }
                 //if bodypart is found, return info about it
@@ -183,7 +194,7 @@ namespace SnakeGame.Entities
                 }
             }
             //after reaching the wall return info about it
-            returnInfo [2] = 1 / (double)distance;
+            returnInfo [2] = 1 - (1 / (double)distance);
 
             return returnInfo;
         }

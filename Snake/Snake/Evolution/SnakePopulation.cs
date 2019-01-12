@@ -174,5 +174,11 @@ namespace SnakeGame.Evolution
             }
         }
 
+        public void RemoveHelp()
+        {
+            for (int i = 0; i < Snakes.Length; ++i)
+                Snakes[i].Help = false;
+        }
+
     }
 }

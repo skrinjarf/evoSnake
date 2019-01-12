@@ -38,6 +38,7 @@ namespace SnakeGame.WorldSystem
                     Items.Item.allItems.Clear();
                     GeneticAlgorithm();
                     WorldRenderer.UpdateGenerationLabel(gen);
+                    if (gen > 10) RemoveHelp();
                 }
             }else 
             // if all generations were run, save the best snake from all species 
@@ -102,6 +103,12 @@ namespace SnakeGame.WorldSystem
             }
             worldBestScore = Species [maxIdx].GlobalBest;
             bestSpeciesIdx = maxIdx;
+        }
+
+        void RemoveHelp()
+        {
+            for (int i = 0; i < Species.Length; ++i)
+                Species[i].RemoveHelp();
         }
     }
 }

@@ -19,6 +19,7 @@ namespace SnakeGame.WorldSystem
             snake = new BotSnake(true);
             SnakeBotData data = SaveLoad.LoadSnakeBot();
             snake.LoadSnakeData(data);
+            snake.Help = false;
         }
 
         public override void DoStep()
