@@ -6,8 +6,6 @@ Detected bugs:
 unhandled exception when snake dies in test mode
 
 Tasks for grabs:
-- Design at least 10 levels (Filip since this will make him familiar to 
-new codebase)
 - Battling agains AI snake (together since this highly depends on all 
 our tasks)
 
@@ -31,3 +29,4 @@ Done so far:
 - Set predefined number of pauses for game
 - Serialize whole game state so it can be saved even when user exits app
 - Info window for all items
+- Design at least 10 levels
