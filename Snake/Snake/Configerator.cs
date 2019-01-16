@@ -261,6 +261,10 @@ namespace SnakeGame
                     new TransparentArea(new Vector2(8, 8), new Vector2(12, 12)),
                     new TransparentArea(new Vector2(19, 8), new Vector2(23, 12))
                     }
+                }, new LevelConfig() {
+                    Name = "Level 10",
+                    VictoryCondition = LevelConfig.VictoryType.unlimited,
+                    EnemySnakeEnabled = true
                 }
             };
             highScoreLevel = new LevelConfig() {

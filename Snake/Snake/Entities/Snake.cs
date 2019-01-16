@@ -200,7 +200,7 @@ namespace SnakeGame.Entities
             return Wall.allWalls.Find(x => x.Position == position) != null;
         }
 
-        private void Die ()
+        public virtual void Die ()
         {
             isDead = true;
             if (Configerator.instance.GameType == Configerator.Game.player)
@@ -210,11 +210,11 @@ namespace SnakeGame.Entities
                     Configerator.instance.LevelLost();
                     WorldRenderer.UpdateLifeLabel();
                 }
+                if (Configerator.instance.ActiveLevel.EnemySnakeEnabled)
+                {
+                    WorldRenderer.instance.World.enemySnake.isDead = true;
+                }
                 WorldRenderer.ShowDeathDialog();
-            }
-            else
-            {
-                CurrentFoodUnit = null;
             }
         }
         

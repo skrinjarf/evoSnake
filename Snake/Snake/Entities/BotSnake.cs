@@ -186,5 +186,19 @@ namespace SnakeGame.Entities
 
             return returnInfo;
         }
+
+        public override void Die ()
+        {
+            isDead = true;
+            if (Configerator.instance.GameType == Configerator.Game.player)
+            {
+                WorldRenderer.instance.World.snake.isDead = true;
+                WorldRenderer.ShowVicoryDialog();
+            }
+            else
+            {
+                CurrentFoodUnit = null;
+            }
+        }
     }
 }
