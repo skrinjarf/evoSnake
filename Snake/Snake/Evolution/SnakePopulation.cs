@@ -24,7 +24,7 @@ namespace SnakeGame.Evolution
         
 
         //construct
-        public SnakePopulation (int size, double mutationRate = 0.01) //start with mutation rate of 1% 
+        public SnakePopulation (int size, double mutationRate = 0.07) //start with mutation rate of 1% 
         {
             Snakes = new BotSnake [size];
             for (int i = 0; i < Snakes.Length; ++i) Snakes [i] = new BotSnake();
@@ -80,6 +80,8 @@ namespace SnakeGame.Evolution
             BotSnake [] NextGen = new BotSnake [Snakes.Length];
             
             NextGen [0] = GlobalBestSnake.Clone();
+
+            if (PopulationMutationRate > 0.01) PopulationMutationRate -= 0.01;
 
             /*
             //half mutation rate every 10 generations so that search space is searched more in the begining and we start convergence toward optimum later
