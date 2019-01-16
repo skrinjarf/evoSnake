@@ -25,5 +25,7 @@ namespace SnakeGame.LevelSystem
 
         public List<Wall> Walls { get; set; }
         public List<TransparentArea> TransparentAreas { get; set; }
+
+        public bool EnemySnakeEnabled { get; set; }
     }
 }

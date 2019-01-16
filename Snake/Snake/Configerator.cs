@@ -273,25 +273,7 @@ namespace SnakeGame
             testLevel = new LevelConfig() {
                 Name = "Test Playgrounds",
                 VictoryCondition = LevelConfig.VictoryType.unlimited,
-                TransparentAreas = new List<TransparentArea>() {
-                    new TransparentArea(new Vector2(4, 4), new Vector2(10, 7))
-                },
-                Walls = new List<Wall>() {
-                    new Wall(new Vector2(10, 10)),
-                    new Wall(new Vector2(10, 11)),
-                    new Wall(new Vector2(10, 12)),
-                    new Wall(new Vector2(10, 13)),
-                    new Wall(new Vector2(10, 14))
-                },
-                ItemProbabilityDistribution = new Dictionary<System.Type, double>() {
-                    { typeof(ControlsModifier), 0.2 },
-                    { typeof(DirectionModifier), 0.2 },
-                    { typeof(LengthModifier), 0.2 },
-                    { typeof(ScoreModifier), 0.2 }
-                },
-                ControlModifierTimeRange = new Vector2(10, 20),
-                PointsModificationRange = new Vector2(-2, 3),
-                LengthModificationRange = new Vector2(-5, -4)
+                EnemySnakeEnabled = true
             };
         }
         private void LoadConfig ()

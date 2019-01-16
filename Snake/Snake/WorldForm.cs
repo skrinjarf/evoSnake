@@ -48,6 +48,7 @@ namespace SnakeGame
                     world.InitKnownItem();
                     WorldRenderer.UpdateKnownItemLabel();
                 }
+                world.InitEnemySnake();
                 SnakeController.SetSnake(world.snake);
                 timer1.Interval = 1000 / 20;
             }

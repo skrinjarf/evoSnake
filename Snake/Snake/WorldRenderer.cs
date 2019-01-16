@@ -127,6 +127,15 @@ namespace SnakeGame
                 {
                     RenderPiece(part, Brushes.White);
                 }
+                if (instance.World.enemySnake != null)
+                {
+                    BotSnake enemySnake = instance.World.enemySnake;
+                    RenderPiece(enemySnake.HeadPosition, Brushes.Red);
+                    foreach (Vector2 part in enemySnake.BodyParts)
+                    {
+                        RenderPiece(part, Brushes.White);
+                    }
+                }
             }
         }
 

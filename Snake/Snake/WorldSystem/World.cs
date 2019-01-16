@@ -5,6 +5,7 @@ using SnakeGame.Items;
 using SnakeGame.Controllers;
 using SnakeGame.Obstacles;
 using SnakeGame.Effects;
+using SnakeGame.SaveSystem;
 
 namespace SnakeGame.WorldSystem
 {
@@ -12,6 +13,7 @@ namespace SnakeGame.WorldSystem
     {
         public Vector2 Dimensions;
         public Snake snake;
+        public BotSnake enemySnake;
 
         public World (Vector2 dimensions)
         {
@@ -47,6 +49,16 @@ namespace SnakeGame.WorldSystem
             Item.UpdateKnownItem();
         }
 
+        public void InitEnemySnake ()
+        {
+            if (Configerator.instance.ActiveLevel.EnemySnakeEnabled)
+            {
+                enemySnake = new BotSnake();
+                SnakeBotData data = SaveLoad.LoadSnakeBot();
+                enemySnake.LoadSnakeData(data);
+            }
+        }
+
         public virtual void DoStep ()
         {
             UpdateSnake();
@@ -58,6 +70,12 @@ namespace SnakeGame.WorldSystem
         public virtual void UpdateSnake ()
         {
             snake.Move();
+            if (enemySnake != null)
+            {
+                enemySnake.GetBrainInput();
+                enemySnake.CalculateNextMove();
+                enemySnake.Move();
+            }
         }
     }
 }
