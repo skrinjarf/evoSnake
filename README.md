@@ -6,8 +6,6 @@ Detected bugs:
 unhandled exception when snake dies in test mode
 
 Tasks for grabs:
-- Battling agains AI snake (together since this highly depends on all 
-our tasks)
 
 Done so far: 
 - basic evolution algorithm for training snakes (needs to be perfected)
@@ -30,3 +28,4 @@ Done so far:
 - Serialize whole game state so it can be saved even when user exits app
 - Info window for all items
 - Design at least 10 levels
+- Battling against AI snake
