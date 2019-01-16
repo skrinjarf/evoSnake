@@ -23,12 +23,22 @@ namespace SnakeGame.Items
             snake.TimeLeft += 100;
             snake.TimesToGrow += 1;
             snake.AddPoints(1);
-            snake.CurrentFoodUnit = CreateNewFoodUnit();
+            if (Configerator.instance.ActiveLevel.EnemySnakeEnabled)
+            {
+                WorldRenderer.instance.World.snake.CurrentFoodUnit =
+                    WorldRenderer.instance.World.enemySnake.CurrentFoodUnit =
+                        CreateNewFoodUnit();
+            }
+            else
+            {
+                snake.CurrentFoodUnit = CreateNewFoodUnit();
+            }
             //if the food spawned on the snake, spawn it again
             while (snake.BodyParts.Contains(snake.CurrentFoodUnit.Location()) ||
                     snake.HeadPosition == snake.CurrentFoodUnit.Location() ||
                     snake.NewHeadPosition == snake.CurrentFoodUnit.Location())
             {
+                allItems.Remove(snake.CurrentFoodUnit);
                 snake.CurrentFoodUnit = CreateNewFoodUnit();
             }
         }

@@ -25,7 +25,7 @@ namespace SnakeGame.Entities
 		public Vector2 BaseVelocity { get; set; } = new Vector2 (1, 0);
 		public double TimeLeft { get; set; }
 		
-		public Snake ()
+		public Snake (bool initFood = true)
         {
             Vector2 dims = WorldRenderer.instance.World.Dimensions;
             HeadPosition = new Vector2(dims.X / 2, dims.Y / 2);
@@ -42,7 +42,10 @@ namespace SnakeGame.Entities
             BodyParts.Enqueue(HeadPosition - new Vector2(3, 0));
             BodyParts.Enqueue(HeadPosition - new Vector2(2, 0));
             BodyParts.Enqueue(HeadPosition - new Vector2(1, 0));
-            CurrentFoodUnit = new Food();
+            if (initFood)
+            {
+                CurrentFoodUnit = new Food();
+            }
             VelocityModifier = 1;
             TimesToGrow = 0;
         }

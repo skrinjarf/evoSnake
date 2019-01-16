@@ -53,7 +53,8 @@ namespace SnakeGame.WorldSystem
         {
             if (Configerator.instance.ActiveLevel.EnemySnakeEnabled)
             {
-                enemySnake = new BotSnake();
+                enemySnake = new BotSnake(false);
+                enemySnake.CurrentFoodUnit = snake.CurrentFoodUnit;
                 SnakeBotData data = SaveLoad.LoadSnakeBot();
                 enemySnake.LoadSnakeData(data);
             }

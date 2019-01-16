@@ -17,7 +17,7 @@ namespace SnakeGame.Entities
 
         public ulong Fitness { get; set; }
 
-        public BotSnake (bool tested = false) : base()
+        public BotSnake (bool initFood = true, bool tested = false) : base(initFood)
         {
             brain = new ANN(24, 18, 12, 4);
             Fitness = 0;
