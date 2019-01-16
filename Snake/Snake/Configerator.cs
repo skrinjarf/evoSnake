@@ -200,6 +200,7 @@ namespace SnakeGame
                         { typeof(ControlsModifier), 0.02 },
                         { typeof(DirectionModifier), 0.05 }
                     },
+                    PointsModificationRange = new Vector2(-2, 5),
                     LengthModificationRange = new Vector2(-2, 5),
                     ControlModifierTimeRange = new Vector2(10, 20),
                     Walls = new List<Wall>() {
@@ -258,7 +259,7 @@ namespace SnakeGame
                     TransparentAreas = new List<TransparentArea>() {
                     new TransparentArea(new Vector2(14, 14), new Vector2(17, 17)),
                     new TransparentArea(new Vector2(8, 8), new Vector2(12, 12)),
-                    new TransparentArea(new Vector2(19, 8), new Vector2(23, 17))
+                    new TransparentArea(new Vector2(19, 8), new Vector2(23, 12))
                     }
                 }
             };
