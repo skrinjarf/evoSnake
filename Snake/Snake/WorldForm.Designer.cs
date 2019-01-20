@@ -230,7 +230,7 @@
 			this.Controls.Add(this.generationLabel);
 			this.DoubleBuffered = true;
 			this.Name = "WorldForm";
-			this.Text = "WorldForm";
+			this.Text = "Snake";
 			this.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint);
 			this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
 			this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.OnKeyUp);
