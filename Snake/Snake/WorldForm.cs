@@ -52,6 +52,7 @@ namespace SnakeGame
                 SnakeController.SetSnake(world.snake);
                 timer1.Interval = 1000 / 20;
             }
+            WorldRenderer.UpdateHighScoreLabel();
             WorldRenderer.UpdateLevelLabel();
             WorldRenderer.UpdateLifeLabel();
             WorldRenderer.UpdatePausesLeftLabel();

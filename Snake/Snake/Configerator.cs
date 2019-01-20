@@ -24,6 +24,7 @@ namespace SnakeGame
         public int PassedLevels { get; set; }
         public bool GamePaused { get; set; }
         public int PausesLeft { get; set; }
+        public int HighScore { get; set; }
 
         public static Configerator instance = new Configerator();
 
@@ -286,6 +287,7 @@ namespace SnakeGame
             LivesLeft = data.livesLeft;
             PassedLevels = data.passedLevels;
             PausesLeft = data.pausesLeft;
+            HighScore = data.highScore;
         }
         public static void SaveConfig ()
         {
@@ -338,6 +340,10 @@ namespace SnakeGame
         public bool IsLevelGame ()
         {
             return instance.levels.Contains(instance.ActiveLevel);
+        }
+        public bool IsHighScoreGame ()
+        {
+            return ActiveLevel == highScoreLevel;
         }
     }
 }

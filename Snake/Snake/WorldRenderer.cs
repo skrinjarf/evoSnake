@@ -20,6 +20,7 @@ namespace SnakeGame
         private Label generationLabel;
         private Label snakeLabel;
         private Label scoreLabel;
+        private Label highScoreLabel;
         private Label deathTitle;
         private Label reverseLabel;
         private Label levelLabel;
@@ -42,6 +43,7 @@ namespace SnakeGame
             generationLabel = _worldForm.generationLabel;
             snakeLabel = _worldForm.snakeLabel;
             scoreLabel = _worldForm.scoreLabel;
+            highScoreLabel = _worldForm.highScoreLabel;
             deathTitle = _worldForm.deathTitle;
             reverseLabel = _worldForm.reverseLabel;
             levelLabel = _worldForm.levelLabel;
@@ -191,6 +193,12 @@ namespace SnakeGame
         public static void UpdateScoreLabel (string str)
         {
             instance.scoreLabel.Text = str;
+        }
+
+        public static void UpdateHighScoreLabel ()
+        {
+            instance.highScoreLabel.Visible = Configerator.instance.IsHighScoreGame();
+            instance.highScoreLabel.Text = "High Score: " + Configerator.instance.HighScore.ToString();
         }
 
         public static void ShowDeathDialog ()

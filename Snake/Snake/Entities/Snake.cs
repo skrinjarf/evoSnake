@@ -210,6 +210,12 @@ namespace SnakeGame.Entities
                     Configerator.instance.LevelLost();
                     WorldRenderer.UpdateLifeLabel();
                 }
+                else if (Configerator.instance.IsHighScoreGame())
+                {
+                    Configerator.instance.HighScore = Math.Max(Configerator.instance.HighScore, score);
+                    WorldRenderer.UpdateHighScoreLabel();
+                    Configerator.SaveConfig();
+                }
                 if (Configerator.instance.ActiveLevel.EnemySnakeEnabled)
                 {
                     WorldRenderer.instance.World.enemySnake.isDead = true;
