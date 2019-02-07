@@ -19,7 +19,7 @@ namespace SnakeGame.Entities
 
         public BotSnake (bool initFood = true, bool tested = false) : base(initFood)
         {
-            brain = new ANN(24, 18, 12, 4);
+            brain = new ANN(24, 18, 16, 4);
             Fitness = 0;
             isTested = tested ? true : false;
         }
