@@ -45,7 +45,9 @@ namespace SnakeGame
         private void TrainSnakes (object sender, EventArgs e)
         {
             Configerator.instance.GameType = Configerator.Game.bot;
-            OpenWorldForm();
+            int GenNum = (int)numericGenNum.Value;
+            int PopSize = (int)numericPopNum.Value;
+            OpenWorldForm(GenNum, PopSize);
         }
         private void TestTrainedSnake(object sender, EventArgs e)
         {
@@ -74,9 +76,9 @@ namespace SnakeGame
             OpenWorldForm();
         }
 
-        private void OpenWorldForm ()
+        private void OpenWorldForm (int genNum = 0, int popSize = 1000)
         {
-            WorldForm form = new WorldForm(this);
+            WorldForm form = new WorldForm(this, popSize, genNum);
             form.Show();
         }
 

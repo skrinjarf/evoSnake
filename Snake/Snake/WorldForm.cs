@@ -10,12 +10,16 @@ namespace SnakeGame
     {
         private Form1 form1;
         private World world;
+        int PopSize;
+        int GenSize;
         
-        public WorldForm (Form1 _form1)
+        public WorldForm (Form1 _form1, int popSize, int genSize)
         {
             form1 = _form1;
             InitializeComponent();
             KeyPreview = true;
+            PopSize = popSize;
+            GenSize = genSize;
             StartGame();
         }
 
@@ -26,7 +30,7 @@ namespace SnakeGame
             {
                 world = new BotWorld(new Vector2(30, 30));
                 WorldRenderer.Init(world, this);
-                ((BotWorld)world).InitSpecies(100, 1, 10000);
+                ((BotWorld)world).InitSpecies(GenSize, 1, PopSize);
                 timer1.Interval = 1000 / 60;
             }
             else if (Configerator.instance.GameType == Configerator.Game.test)

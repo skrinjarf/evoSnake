@@ -23,7 +23,7 @@ namespace SnakeGame.Items
             snake.TimeLeft += 100;
             snake.TimesToGrow += 1;
             snake.AddPoints(1);
-            if (Configerator.instance.ActiveLevel.EnemySnakeEnabled)
+            if (Configerator.instance.ActiveLevel != null && Configerator.instance.ActiveLevel.EnemySnakeEnabled)
             {
                 WorldRenderer.instance.World.snake.CurrentFoodUnit =
                     WorldRenderer.instance.World.enemySnake.CurrentFoodUnit =
