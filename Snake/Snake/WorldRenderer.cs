@@ -119,7 +119,11 @@ namespace SnakeGame
                 {
                     RenderPiece(part, Brushes.White);
                 }
-                RenderPiece(snake.CurrentFoodUnit.Location(), Brushes.Yellow);
+                if(snake.CurrentFoodUnit != null)
+                {
+                    RenderPiece(snake.CurrentFoodUnit.Location(), Brushes.Yellow);
+                }
+                
             }
             else
             {
